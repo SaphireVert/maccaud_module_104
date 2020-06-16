@@ -13,7 +13,7 @@ def index():
 
 @obj_mon_application.route('/')
 @obj_mon_application.route('/essai')
-def home_dans_routes_pour_exemple_hommage_m_el_vyn_mal_herbe():
+def home_dans_routes_pour_exemple():
     return render_template("home.html")
 
 # OM 2020.04.09 Pour une démonstration du traitement d'erreurs avec "raise"
