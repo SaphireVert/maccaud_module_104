@@ -88,7 +88,7 @@ class GestionGenres():
             print(valeur_id_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Commande MySql pour afficher le genre sélectionné dans le tableau dans le formulaire HTML
-            str_sql_id_genre = "SELECT id_genre, intitule_genre FROM t_genres WHERE id_genre = %(value_id_genre)s"
+            str_sql_id_genre = "SELECT id_sexe, sexe FROM sexe WHERE id_sexe = %(value_id_genre)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -116,7 +116,7 @@ class GestionGenres():
             # OM 2019.04.02 Commande MySql pour la MODIFICATION de la valeur "CLAVIOTTEE" dans le champ "nameEditIntituleGenreHTML" du form HTML "GenresEdit.html"
             # le "%s" permet d'éviter des injections SQL "simples"
             # <td><input type = "text" name = "nameEditIntituleGenreHTML" value="{{ row.intitule_genre }}"/></td>
-            str_sql_update_intitulegenre = "UPDATE t_genres SET intitule_genre = %(value_name_genre)s WHERE id_genre = %(value_id_genre)s"
+            str_sql_update_intitulegenre = "UPDATE sexe SET sexe = %(value_name_genre)s WHERE id_sexe = %(value_id_genre)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -154,7 +154,7 @@ class GestionGenres():
 
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Commande MySql pour afficher le genre sélectionné dans le tableau dans le formulaire HTML
-            str_sql_select_id_genre = "SELECT id_genre, intitule_genre FROM t_genres WHERE id_genre = %(value_id_genre)s"
+            str_sql_select_id_genre = "SELECT id_sexe, sexe FROM sexe WHERE id_sexe = %(value_id_genre)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -186,7 +186,7 @@ class GestionGenres():
             # OM 2019.04.02 Commande MySql pour EFFACER la valeur sélectionnée par le "bouton" du form HTML "GenresEdit.html"
             # le "%s" permet d'éviter des injections SQL "simples"
             # <td><input type = "text" name = "nameEditIntituleGenreHTML" value="{{ row.intitule_genre }}"/></td>
-            str_sql_delete_intitulegenre = "DELETE FROM t_genres WHERE id_genre = %(value_id_genre)s"
+            str_sql_delete_intitulegenre = "DELETE FROM sexe WHERE id_sexe = %(value_id_genre)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
