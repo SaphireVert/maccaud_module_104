@@ -30,7 +30,7 @@ class GestionGenres():
                 # Afficher soit la liste des genres dans l'ordre inverse ou simplement le genre sélectionné
                 # par l'action edit
                 if valeur_order_by == "ASC" and id_genre_sel == 0:
-                    strsql_genres_afficher = """SELECT id_genre, intitule_genre FROM t_genres ORDER BY id_genre ASC"""
+                    strsql_genres_afficher = """SELECT id_sexe, sexe FROM sexe ORDER BY id_sexe ASC"""
                     mc_afficher.execute(strsql_genres_afficher)
                 elif valeur_order_by == "ASC":
                     # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
@@ -39,11 +39,11 @@ class GestionGenres():
                     # donc, je précise les champs à afficher
                     # Constitution d'un dictionnaire pour associer l'id du genre sélectionné avec un nom de variable
                     valeur_id_genre_selected_dictionnaire = {"value_id_genre_selected": id_genre_sel}
-                    strsql_genres_afficher = """SELECT id_genre, intitule_genre FROM t_genres  WHERE id_genre = %(value_id_genre_selected)s"""
+                    strsql_genres_afficher = """SELECT id_sexe, sexe FROM sexe  WHERE id_sexe = %(value_id_genre_selected)s"""
                     # Envoi de la commande MySql
                     mc_afficher.execute(strsql_genres_afficher, valeur_id_genre_selected_dictionnaire)
                 else:
-                    strsql_genres_afficher = """SELECT id_genre, intitule_genre FROM t_genres ORDER BY id_genre DESC"""
+                    strsql_genres_afficher = """SELECT id_sexe, sexe FROM sexe ORDER BY id_sexe DESC"""
                     # Envoi de la commande MySql
                     mc_afficher.execute(strsql_genres_afficher)
                 # Récupère les données de la requête.
@@ -68,7 +68,7 @@ class GestionGenres():
         try:
             print(valeurs_insertion_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
-            strsql_insert_genre = """INSERT INTO t_genres (id_genre,intitule_genre) VALUES (NULL,%(value_intitule_genre)s)"""
+            strsql_insert_genre = """INSERT INTO sexe (id_sexe,sexe) VALUES (NULL,%(value_intitule_genre)s)"""
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
             # ainsi quand elle aura terminé l'insertion des données le destructeur de la classe "MaBaseDeDonnee"
