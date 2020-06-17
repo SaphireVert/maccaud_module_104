@@ -1,21 +1,21 @@
 {% extends "base.html" %}
-{% block title %}DELETE GENRE{% endblock %}
+{% block title %}DELETE sexe{% endblock %}
 {% block body %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-				Effacer ce genre.
+				Effacer ce sexe.
 			</p>
-			<form method="POST" action="{{ url_for('genres_delete') }}">
+			<form method="POST" action="{{ url_for('sexe_delete') }}">
                 <table class="table table-bordered table-sm">
                     <thead>
                         <tr>
                             <th>
-                                id genre
+                                id sexe
                             </th>
                             <th>
-                                Genre
+                                sexe
                             </th>
                         </tr>
                     </thead>
@@ -23,10 +23,10 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="hidden" name="id_genre_delete_html" value="{{ row.id_genre }}"/>
+                                    <input type="hidden" name="id_sexe_delete_html" value="{{ row.id_sexe }}"/>
                                 </td>
                                 <td>
-                                    {{ row.intitule_genre }}
+                                    {{ row.intitule_sexe }}
                                 </td>
                                 <td>
                                     <button class="btn btn-danger" type="submit">EFFACER</button>

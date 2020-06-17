@@ -50,19 +50,19 @@ INSERT INTO `t_films` (`id_film`, `nom_film`, `duree_film`, `description_film`, 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `t_genres`
+-- Structure de la table `t_sexe`
 --
 
-CREATE TABLE `t_genres` (
-  `id_genre` int(11) NOT NULL,
-  `intitule_genre` varchar(50) DEFAULT NULL
+CREATE TABLE `t_sexe` (
+  `id_sexe` int(11) NOT NULL,
+  `intitule_sexe` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `t_genres`
+-- Contenu de la table `t_sexe`
 --
 
-INSERT INTO `t_genres` (`id_genre`, `intitule_genre`) VALUES
+INSERT INTO `t_sexe` (`id_sexe`, `intitule_sexe`) VALUES
 (1, 'action'),
 (15, 'anime'),
 (4, 'aventure'),
@@ -84,21 +84,21 @@ INSERT INTO `t_genres` (`id_genre`, `intitule_genre`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `t_genres_films`
+-- Structure de la table `t_sexe_films`
 --
 
-CREATE TABLE `t_genres_films` (
-  `id_genre_film` int(11) NOT NULL,
-  `fk_genre` int(11) DEFAULT NULL,
+CREATE TABLE `t_sexe_films` (
+  `id_sexe_film` int(11) NOT NULL,
+  `fk_sexe` int(11) DEFAULT NULL,
   `fk_film` int(11) DEFAULT NULL,
-  `date_insert_genre` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `date_insert_sexe` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `t_genres_films`
+-- Contenu de la table `t_sexe_films`
 --
 
-INSERT INTO `t_genres_films` (`id_genre_film`, `fk_genre`, `fk_film`, `date_insert_genre`) VALUES
+INSERT INTO `t_sexe_films` (`id_sexe_film`, `fk_sexe`, `fk_film`, `date_insert_sexe`) VALUES
 (141, 14, 3, '2020-02-12 21:30:33'),
 (142, 1, 4, '2020-02-12 21:31:31'),
 (143, 4, 4, '2020-02-12 21:31:31'),
@@ -128,18 +128,18 @@ ALTER TABLE `t_films`
   ADD PRIMARY KEY (`id_film`);
 
 --
--- Index pour la table `t_genres`
+-- Index pour la table `t_sexe`
 --
-ALTER TABLE `t_genres`
-  ADD PRIMARY KEY (`id_genre`),
-  ADD UNIQUE KEY `intitule_genre` (`intitule_genre`);
+ALTER TABLE `t_sexe`
+  ADD PRIMARY KEY (`id_sexe`),
+  ADD UNIQUE KEY `intitule_sexe` (`intitule_sexe`);
 
 --
--- Index pour la table `t_genres_films`
+-- Index pour la table `t_sexe_films`
 --
-ALTER TABLE `t_genres_films`
-  ADD PRIMARY KEY (`id_genre_film`),
-  ADD KEY `fk_genre` (`fk_genre`),
+ALTER TABLE `t_sexe_films`
+  ADD PRIMARY KEY (`id_sexe_film`),
+  ADD KEY `fk_sexe` (`fk_sexe`),
   ADD KEY `fk_film` (`fk_film`);
 
 --
@@ -152,22 +152,22 @@ ALTER TABLE `t_genres_films`
 ALTER TABLE `t_films`
   MODIFY `id_film` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
--- AUTO_INCREMENT pour la table `t_genres`
+-- AUTO_INCREMENT pour la table `t_sexe`
 --
-ALTER TABLE `t_genres`
-  MODIFY `id_genre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
+ALTER TABLE `t_sexe`
+  MODIFY `id_sexe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
 --
--- AUTO_INCREMENT pour la table `t_genres_films`
+-- AUTO_INCREMENT pour la table `t_sexe_films`
 --
-ALTER TABLE `t_genres_films`
-  MODIFY `id_genre_film` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
+ALTER TABLE `t_sexe_films`
+  MODIFY `id_sexe_film` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
 --
 -- Contraintes pour les tables exportées
 --
 
 --
--- Contraintes pour la table `t_genres_films`
+-- Contraintes pour la table `t_sexe_films`
 --
-ALTER TABLE `t_genres_films`
-  ADD CONSTRAINT `t_genres_films_ibfk_1` FOREIGN KEY (`fk_genre`) REFERENCES `t_genres` (`id_genre`),
-  ADD CONSTRAINT `t_genres_films_ibfk_2` FOREIGN KEY (`fk_film`) REFERENCES `t_films` (`id_film`);
+ALTER TABLE `t_sexe_films`
+  ADD CONSTRAINT `t_sexe_films_ibfk_1` FOREIGN KEY (`fk_sexe`) REFERENCES `t_sexe` (`id_sexe`),
+  ADD CONSTRAINT `t_sexe_films_ibfk_2` FOREIGN KEY (`fk_film`) REFERENCES `t_films` (`id_film`);
