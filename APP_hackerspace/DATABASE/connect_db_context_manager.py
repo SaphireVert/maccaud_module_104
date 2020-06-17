@@ -9,7 +9,7 @@
 # Le coeur du système pour la connexion à la BD
 # Si on utilise MAMP il faut choisir import mysql.connector
 # https://dev.mysql.com/downloads/connector/python/
-from APP_FILMS.DATABASE.erreurs import *
+from APP_hackerspace.DATABASE.erreurs import *
 # Petits messages "flash", échange entre Python et Jinja dans une page en HTML
 from flask import flash
 

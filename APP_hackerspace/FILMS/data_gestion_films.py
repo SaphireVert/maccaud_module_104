@@ -3,8 +3,8 @@
 
 
 from flask import flash
-from APP_FILMS.DATABASE.connect_db_context_manager import MaBaseDeDonnee
-from APP_FILMS.DATABASE.erreurs import *
+from APP_hackerspace.DATABASE.connect_db_context_manager import MaBaseDeDonnee
+from APP_hackerspace.DATABASE.erreurs import *
 
 
 

@@ -1,8 +1,8 @@
 # data_gestion_sexe.py
 # OM 2020.04.09 Permet de gérer (CRUD) les données de la table "t_sexe"
 from flask import flash
-from APP_FILMS.DATABASE.connect_db_context_manager import MaBaseDeDonnee
-from APP_FILMS.DATABASE.erreurs import *
+from APP_hackerspace.DATABASE.connect_db_context_manager import MaBaseDeDonnee
+from APP_hackerspace.DATABASE.erreurs import *
 
 
 class Gestionsexe():

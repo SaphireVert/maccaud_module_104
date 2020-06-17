@@ -2,8 +2,8 @@
 # OM 2020.04.02 Pour faire des tests divers et variés.
 
 from flask import render_template,session
-from APP_FILMS import obj_mon_application
-from APP_FILMS.DATABASE.erreurs import *
+from APP_hackerspace import obj_mon_application
+from APP_hackerspace.DATABASE.erreurs import *
 
 
 @obj_mon_application.route('/index')

@@ -2,9 +2,9 @@
 # OM 2020.04.06 Gestions des "routes" FLASK pour les sexe.
 
 from flask import render_template, flash, redirect, url_for, request
-from APP_FILMS import obj_mon_application
-from APP_FILMS.sexe.data_gestion_sexe import Gestionsexe
-from APP_FILMS.DATABASE.erreurs import *
+from APP_hackerspace import obj_mon_application
+from APP_hackerspace.sexe.data_gestion_sexe import Gestionsexe
+from APP_hackerspace.DATABASE.erreurs import *
 # OM 2020.04.10 Pour utiliser les expressions régulières REGEX
 import re
 

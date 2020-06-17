@@ -2,8 +2,8 @@
 # OM 2020.04.22 Permet de gérer (CRUD) les données de la table intermédiaire "t_sexe_films"
 
 from flask import flash
-from APP_FILMS.DATABASE.connect_db_context_manager import MaBaseDeDonnee
-from APP_FILMS.DATABASE.erreurs import *
+from APP_hackerspace.DATABASE.connect_db_context_manager import MaBaseDeDonnee
+from APP_hackerspace.DATABASE.erreurs import *
 
 
 class GestionsexeFilms():

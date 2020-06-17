@@ -3,8 +3,8 @@
 
 import pymysql
 from flask import render_template, flash, request
-from APP_FILMS import obj_mon_application
-from APP_FILMS.FILMS.data_gestion_films import GestionFilms
+from APP_hackerspace import obj_mon_application
+from APP_hackerspace.FILMS.data_gestion_films import GestionFilms
 
 # OM 2020.04.16 Afficher un avertissement sympa...mais contraignant
 # Pour la tester http://127.0.0.1:5005/avertissement_sympa_pour_geeks

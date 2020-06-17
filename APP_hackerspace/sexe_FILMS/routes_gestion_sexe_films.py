@@ -2,9 +2,9 @@
 # OM 2020.04.16 Gestions des "routes" FLASK pour la table intermédiaire qui associe les films et les sexe.
 
 from flask import render_template, request, flash, session
-from APP_FILMS import obj_mon_application
-from APP_FILMS.sexe.data_gestion_sexe import Gestionsexe
-from APP_FILMS.sexe_FILMS.data_gestion_sexe_films import GestionsexeFilms
+from APP_hackerspace import obj_mon_application
+from APP_hackerspace.sexe.data_gestion_sexe import Gestionsexe
+from APP_hackerspace.sexe_FILMS.data_gestion_sexe_films import GestionsexeFilms
 
 
 # ---------------------------------------------------------------------------------------------------
