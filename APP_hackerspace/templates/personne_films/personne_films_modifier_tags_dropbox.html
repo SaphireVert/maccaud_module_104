@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} Afficher FILMS sexe {% endblock %}
+{% block title %} Afficher FILMS personne {% endblock %}
 {% block head %}
     <!--
         OM 2020.05.04
@@ -106,15 +106,15 @@
     <div class="row mx-md-n5">
       <div class="col px-md-5">
           <div class="p-3">
-            <form id="form_tags_select_confirm" action="{{ url_for('gf_update_sexe_film_selected') }}" method="POST">
+            <form id="form_tags_select_confirm" action="{{ url_for('gf_update_personne_film_selected') }}" method="POST">
                 <div class="qtagselect isw360">
                     <select id="OM_JTSD" name="name_select_tags" class="qtagselect__select" multiple>
-                        {% for row in data_sexe_non_attribues %}
-                            <option value="{{ row.id_sexe }}" name="name_tags_non_attribues_html" class="isblue" >{{ row.intitule_sexe }}</option>
+                        {% for row in data_personne_non_attribues %}
+                            <option value="{{ row.id_personne }}" name="name_tags_non_attribues_html" class="isblue" >{{ row.intitule_personne }}</option>
                         {% endfor %}
 
-                        {% for row in data_sexe_attribues %}
-                            <option value="{{ row.id_sexe }}" name="name_tags_attribues_html" class="ispurple" selected>{{ row.intitule_sexe }}</option>
+                        {% for row in data_personne_attribues %}
+                            <option value="{{ row.id_personne }}" name="name_tags_attribues_html" class="ispurple" selected>{{ row.intitule_personne }}</option>
                         {% endfor %}
                     </select>
                 </div>

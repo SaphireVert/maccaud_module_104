@@ -50,19 +50,19 @@ INSERT INTO `t_films` (`id_film`, `nom_film`, `duree_film`, `description_film`, 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `t_sexe`
+-- Structure de la table `t_personne`
 --
 
-CREATE TABLE `t_sexe` (
-  `id_sexe` int(11) NOT NULL,
-  `intitule_sexe` varchar(50) DEFAULT NULL
+CREATE TABLE `t_personne` (
+  `id_personne` int(11) NOT NULL,
+  `intitule_personne` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `t_sexe`
+-- Contenu de la table `t_personne`
 --
 
-INSERT INTO `t_sexe` (`id_sexe`, `intitule_sexe`) VALUES
+INSERT INTO `t_personne` (`id_personne`, `intitule_personne`) VALUES
 (1, 'action'),
 (15, 'anime'),
 (4, 'aventure'),
@@ -84,21 +84,21 @@ INSERT INTO `t_sexe` (`id_sexe`, `intitule_sexe`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `t_sexe_films`
+-- Structure de la table `t_personne_films`
 --
 
-CREATE TABLE `t_sexe_films` (
-  `id_sexe_film` int(11) NOT NULL,
-  `fk_sexe` int(11) DEFAULT NULL,
+CREATE TABLE `t_personne_films` (
+  `id_personne_film` int(11) NOT NULL,
+  `fk_personne` int(11) DEFAULT NULL,
   `fk_film` int(11) DEFAULT NULL,
-  `date_insert_sexe` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `date_insert_personne` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `t_sexe_films`
+-- Contenu de la table `t_personne_films`
 --
 
-INSERT INTO `t_sexe_films` (`id_sexe_film`, `fk_sexe`, `fk_film`, `date_insert_sexe`) VALUES
+INSERT INTO `t_personne_films` (`id_personne_film`, `fk_personne`, `fk_film`, `date_insert_personne`) VALUES
 (141, 14, 3, '2020-02-12 21:30:33'),
 (142, 1, 4, '2020-02-12 21:31:31'),
 (143, 4, 4, '2020-02-12 21:31:31'),
@@ -128,18 +128,18 @@ ALTER TABLE `t_films`
   ADD PRIMARY KEY (`id_film`);
 
 --
--- Index pour la table `t_sexe`
+-- Index pour la table `t_personne`
 --
-ALTER TABLE `t_sexe`
-  ADD PRIMARY KEY (`id_sexe`),
-  ADD UNIQUE KEY `intitule_sexe` (`intitule_sexe`);
+ALTER TABLE `t_personne`
+  ADD PRIMARY KEY (`id_personne`),
+  ADD UNIQUE KEY `intitule_personne` (`intitule_personne`);
 
 --
--- Index pour la table `t_sexe_films`
+-- Index pour la table `t_personne_films`
 --
-ALTER TABLE `t_sexe_films`
-  ADD PRIMARY KEY (`id_sexe_film`),
-  ADD KEY `fk_sexe` (`fk_sexe`),
+ALTER TABLE `t_personne_films`
+  ADD PRIMARY KEY (`id_personne_film`),
+  ADD KEY `fk_personne` (`fk_personne`),
   ADD KEY `fk_film` (`fk_film`);
 
 --
@@ -152,22 +152,22 @@ ALTER TABLE `t_sexe_films`
 ALTER TABLE `t_films`
   MODIFY `id_film` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
--- AUTO_INCREMENT pour la table `t_sexe`
+-- AUTO_INCREMENT pour la table `t_personne`
 --
-ALTER TABLE `t_sexe`
-  MODIFY `id_sexe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
+ALTER TABLE `t_personne`
+  MODIFY `id_personne` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
 --
--- AUTO_INCREMENT pour la table `t_sexe_films`
+-- AUTO_INCREMENT pour la table `t_personne_films`
 --
-ALTER TABLE `t_sexe_films`
-  MODIFY `id_sexe_film` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
+ALTER TABLE `t_personne_films`
+  MODIFY `id_personne_film` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
 --
 -- Contraintes pour les tables exportées
 --
 
 --
--- Contraintes pour la table `t_sexe_films`
+-- Contraintes pour la table `t_personne_films`
 --
-ALTER TABLE `t_sexe_films`
-  ADD CONSTRAINT `t_sexe_films_ibfk_1` FOREIGN KEY (`fk_sexe`) REFERENCES `t_sexe` (`id_sexe`),
-  ADD CONSTRAINT `t_sexe_films_ibfk_2` FOREIGN KEY (`fk_film`) REFERENCES `t_films` (`id_film`);
+ALTER TABLE `t_personne_films`
+  ADD CONSTRAINT `t_personne_films_ibfk_1` FOREIGN KEY (`fk_personne`) REFERENCES `t_personne` (`id_personne`),
+  ADD CONSTRAINT `t_personne_films_ibfk_2` FOREIGN KEY (`fk_film`) REFERENCES `t_films` (`id_film`);

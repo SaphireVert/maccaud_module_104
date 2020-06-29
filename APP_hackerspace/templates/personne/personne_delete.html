@@ -1,21 +1,21 @@
 {% extends "base.html" %}
-{% block title %}Edit sexe{% endblock %}
+{% block title %}DELETE personne{% endblock %}
 {% block body %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-				Modifier ce sexe.
+				Effacer ce personne.
 			</p>
-			<form method="POST" action="{{ url_for('sexe_update') }}">
+			<form method="POST" action="{{ url_for('personne_delete') }}">
                 <table class="table table-bordered table-sm">
                     <thead>
                         <tr>
                             <th>
-                                id sexe
+                                id personne
                             </th>
                             <th>
-                                sexe
+                                personne
                             </th>
                         </tr>
                     </thead>
@@ -23,13 +23,13 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="hidden" name="id_sexe_edit_html" value="{{ row.id_sexe }}"/>
+                                    <input type="hidden" name="id_personne_delete_html" value="{{ row.id_personne }}"/>
                                 </td>
                                 <td>
-                                    <input type = "text" name = "name_edit_intitule_sexe_html" value="{{ row.intitule_sexe }}"/>
+                                    {{ row.intitule_personne }}
                                 </td>
                                 <td>
-                                    <button class="btn btn-warning" type="submit">Update</button>
+                                    <button class="btn btn-danger" type="submit">EFFACER</button>
                                 </td>
                             </tr>
                         </tbody>
