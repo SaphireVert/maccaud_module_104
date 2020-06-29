@@ -39,11 +39,11 @@ class Gestionpersonne():
                     # donc, je précise les champs à afficher
                     # Constitution d'un dictionnaire pour associer l'id du personne sélectionné avec un nom de variable
                     valeur_id_personne_selected_dictionnaire = {"value_id_personne_selected": id_personne_sel}
-                    strsql_personne_afficher = """SELECT id_personne, personne FROM personne  WHERE id_personne = %(value_id_personne_selected)s"""
+                    strsql_personne_afficher = """SELECT id_personne, nom FROM personne  WHERE id_personne = %(value_id_personne_selected)s"""
                     # Envoi de la commande MySql
                     mc_afficher.execute(strsql_personne_afficher, valeur_id_personne_selected_dictionnaire)
                 else:
-                    strsql_personne_afficher = """SELECT id_personne, personne FROM personne ORDER BY id_personne DESC"""
+                    strsql_personne_afficher = """SELECT id_personne, nom FROM personne ORDER BY id_personne DESC"""
                     # Envoi de la commande MySql
                     mc_afficher.execute(strsql_personne_afficher)
                 # Récupère les données de la requête.
@@ -68,7 +68,7 @@ class Gestionpersonne():
         try:
             print(valeurs_insertion_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
-            strsql_insert_personne = """INSERT INTO personne (id_personne,personne) VALUES (NULL,%(value_intitule_personne)s)"""
+            strsql_insert_personne = """INSERT INTO personne (id_personne,nom,prenom,date_naissance) VALUES (NULL, %(value_intitule_personne)s, %(value_intitule_personne)s, 20200616 )"""
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
             # ainsi quand elle aura terminé l'insertion des données le destructeur de la classe "MaBaseDeDonnee"
@@ -88,7 +88,7 @@ class Gestionpersonne():
             print(valeur_id_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Commande MySql pour afficher le personne sélectionné dans le tableau dans le formulaire HTML
-            str_sql_id_personne = "SELECT id_personne, personne FROM personne WHERE id_personne = %(value_id_personne)s"
+            str_sql_id_personne = "SELECT id_personne, nom FROM personne WHERE id_personne = %(value_id_personne)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -154,7 +154,7 @@ class Gestionpersonne():
 
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Commande MySql pour afficher le personne sélectionné dans le tableau dans le formulaire HTML
-            str_sql_select_id_personne = "SELECT id_personne, personne FROM personne WHERE id_personne = %(value_id_personne)s"
+            str_sql_select_id_personne = "SELECT id_personne, nom FROM personne WHERE id_personne = %(value_id_personne)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
