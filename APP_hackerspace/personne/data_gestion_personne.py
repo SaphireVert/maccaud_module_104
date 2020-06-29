@@ -116,8 +116,8 @@ class Gestionpersonne():
             # OM 2019.04.02 Commande MySql pour la MODIFICATION de la valeur "CLAVIOTTEE" dans le champ "nameEditIntitulepersonneHTML" du form HTML "personneEdit.html"
             # le "%s" permet d'éviter des injections SQL "simples"
             # <td><input type = "text" name = "nameEditIntitulepersonneHTML" value="{{ row.intitule_personne }}"/></td>
-            str_sql_update_intitulepersonne = "UPDATE personne SET personne = %(value_name_personne)s WHERE id_personne = %(value_id_personne)s"
-
+            str_sql_update_intitulepersonne = "UPDATE personne SET nom = %(value_name_personne)s WHERE id_personne = %(value_id_personne)s"
+ 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
             # ainsi quand elle aura terminé l'insertion des données le destructeur de la classe "MaBaseDeDonnee"

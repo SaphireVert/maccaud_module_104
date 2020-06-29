@@ -88,7 +88,7 @@ class Gestionpersonne():
             print(valeur_id_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Commande MySql pour afficher le personne sélectionné dans le tableau dans le formulaire HTML
-            str_sql_id_personne = "SELECT id_personne, personne FROM personne WHERE id_personne = %(value_id_personne)s"
+            str_sql_id_personne = "SELECT id_personne, nom FROM personne WHERE id_personne = %(value_id_personne)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
