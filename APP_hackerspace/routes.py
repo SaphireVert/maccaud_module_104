@@ -2,8 +2,8 @@
 # OM 2020.04.02 Pour faire des tests divers et variés.
 
 from flask import render_template,session
-from APP_FILMS import obj_mon_application
-from APP_FILMS.DATABASE.erreurs import *
+from APP_hackerspace import obj_mon_application
+from APP_hackerspace.DATABASE.erreurs import *
 
 
 @obj_mon_application.route('/index')
@@ -13,7 +13,7 @@ def index():
 
 @obj_mon_application.route('/')
 @obj_mon_application.route('/essai')
-def home_dans_routes_pour_exemple_hommage_m_el_vyn_mal_herbe():
+def home_dans_routes_pour_exemple():
     return render_template("home.html")
 
 # OM 2020.04.09 Pour une démonstration du traitement d'erreurs avec "raise"

@@ -9,7 +9,7 @@
 # Le coeur du système pour la connexion à la BD
 # Si on utilise MAMP il faut choisir import mysql.connector
 # https://dev.mysql.com/downloads/connector/python/
-from APP_FILMS.DATABASE.erreurs import *
+from APP_hackerspace.DATABASE.erreurs import *
 # Petits messages "flash", échange entre Python et Jinja dans une page en HTML
 from flask import flash
 
@@ -20,7 +20,7 @@ class MaBaseDeDonnee():
         self.host = '127.0.0.1'
         self.user = 'root'
         self.password = 'root'
-        self.db = "NOM_PRENOM_SUJET_BD_104_2020"
+        self.db = "cosandey_jerome_hackerspace_bd_104_2020"
 
         self.connexion_bd = None
         try:

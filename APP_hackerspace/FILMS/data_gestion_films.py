@@ -3,8 +3,8 @@
 
 
 from flask import flash
-from APP_FILMS.DATABASE.connect_db_context_manager import MaBaseDeDonnee
-from APP_FILMS.DATABASE.erreurs import *
+from APP_hackerspace.DATABASE.connect_db_context_manager import MaBaseDeDonnee
+from APP_hackerspace.DATABASE.erreurs import *
 
 
 
@@ -18,7 +18,7 @@ class GestionFilms():
         except Exception as erreur:
             flash("Dans Gestion films ...terrible erreur, il faut connecter une base de donnée", "danger")
             # DEBUG bon marché : Pour afficher un message dans la console.
-            print(f"Exception grave Classe constructeur GestionGenres {erreur.args[0]}")
+            print(f"Exception grave Classe constructeur Gestionsexe {erreur.args[0]}")
             raise MaBdErreurConnexion(f"{msg_erreurs['ErreurConnexionBD']['message']} {erreur.args[0]}")
 
         print("Classe constructeur GestionFilms ")
