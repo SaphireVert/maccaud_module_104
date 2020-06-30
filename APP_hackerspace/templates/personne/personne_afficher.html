@@ -15,16 +15,22 @@
                             id
                         </th>
                         <th class="align-middle">
-                            personne
+                            nom
+                        </th>
+												<th class="align-middle">
+                            prénom
+                        </th>
+												<th class="align-middle">
+                            date de naissance
                         </th>
                         <th class="align-middle">
-
+														add
                         </th>
                         <th class="align-middle">
-
+														edit
                         </th>
                         <th class="align-middle">
-
+														delete
                         </th>
                     </tr>
                 </thead>
@@ -38,6 +44,12 @@
 						</td>
 						<td class="align-middle">
 							{{ row.nom }}
+						</td>
+						<td class="align-middle">
+							{{ row.prenom }}
+						</td>
+						<td class="align-middle">
+							{{ row.date_naissance }}
 						</td>
 						<td class="text-center" class="align-middle">
 							<a class="btn btn-primary" href="{{ url_for('personne_add') }}" role="button">Ajouter</a>

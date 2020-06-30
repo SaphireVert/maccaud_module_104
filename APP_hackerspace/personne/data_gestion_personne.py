@@ -30,7 +30,7 @@ class Gestionpersonne():
                 # Afficher soit la liste des personne dans l'ordre inverse ou simplement le personne sélectionné
                 # par l'action edit
                 if valeur_order_by == "ASC" and id_personne_sel == 0:
-                    strsql_personne_afficher = """SELECT id_personne, nom FROM personne ORDER BY id_personne ASC"""
+                    strsql_personne_afficher = """SELECT id_personne, nom, prenom, date_naissance FROM personne ORDER BY id_personne ASC"""
                     mc_afficher.execute(strsql_personne_afficher)
                 elif valeur_order_by == "ASC":
                     # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
