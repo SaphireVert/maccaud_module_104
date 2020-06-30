@@ -72,6 +72,8 @@ def personne_add ():
             obj_actions_personne = Gestionpersonne()
             # OM 2020.04.09 Récupère le contenu du champ dans le formulaire HTML "personne_add.html"
             name_personne = request.form['name_personne_html']
+            prenom_personne = request.form['prenom_personne_html']
+            date_naissance_personne = request.form['date_naissance_personne_html']
             # On ne doit pas accepter des valeurs vides, des valeurs avec des chiffres,
             # des valeurs avec des caractères qui ne sont pas des lettres.
             # Pour comprendre [A-Za-zÀ-ÖØ-öø-ÿ] il faut se reporter à la table ASCII https://www.ascii-code.com/
@@ -86,7 +88,7 @@ def personne_add ():
             else:
 
                 # Constitution d'un dictionnaire et insertion dans la BD
-                valeurs_insertion_dictionnaire = {"value_intitule_personne": name_personne}
+                valeurs_insertion_dictionnaire = {"value_intitule_personne": name_personne, "value_intitule_prenom": prenom_personne, "value_intitule_date_naissance": date_naissance_personne}
                 obj_actions_personne.add_personne_data(valeurs_insertion_dictionnaire)
 
                 # OM 2019.03.25 Les 2 lignes ci-après permettent de donner un sentiment rassurant aux utilisateurs.
