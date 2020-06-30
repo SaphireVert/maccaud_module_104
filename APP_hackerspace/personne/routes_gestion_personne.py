@@ -36,11 +36,11 @@ def personne_afficher(order_by,id_personne_sel):
                 flash("""La table "t_personne" est vide. !!""", "warning")
             elif not data_personne and id_personne_sel > 0:
                 # Si l'utilisateur change l'id_personne dans l'URL et que le personne n'existe pas,
-                flash(f"Le personne demandé n'existe pas !!", "warning")
+                flash(f"Le personne demandée n'existe pas !!", "warning")
             else:
                 # Dans tous les autres cas, c'est que la table "t_personne" est vide.
                 # OM 2020.04.09 La ligne ci-dessous permet de donner un sentiment rassurant aux utilisateurs.
-                flash(f"Données personne affichés !!", "success")
+                flash(f"Données personne affichées !!", "success")
 
 
         except Exception as erreur:
