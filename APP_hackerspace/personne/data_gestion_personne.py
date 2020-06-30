@@ -68,7 +68,7 @@ class Gestionpersonne():
         try:
             print(valeurs_insertion_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
-            strsql_insert_personne = """INSERT INTO personne (id_personne,nom,prenom,date_naissance) VALUES (NULL, %(value_intitule_personne)s, %(value_intitule_prenom)s, %(value_intitule_date_naissance)s )"""
+            strsql_insert_personne = """INSERT INTO personne (id_personne,nom,prenom,date_naissance) VALUES (NULL, %(value_intitule_nom)s, %(value_intitule_prenom)s, %(value_intitule_date_naissance)s )"""
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
             # ainsi quand elle aura terminé l'insertion des données le destructeur de la classe "MaBaseDeDonnee"
@@ -117,7 +117,7 @@ class Gestionpersonne():
             # le "%s" permet d'éviter des injections SQL "simples"
             # <td><input type = "text" name = "nameEditIntitulepersonneHTML" value="{{ row.intitule_personne }}"/></td>
             str_sql_update_intitulepersonne = "UPDATE personne SET nom = %(value_name_personne)s WHERE id_personne = %(value_id_personne)s"
- 
+
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
             # ainsi quand elle aura terminé l'insertion des données le destructeur de la classe "MaBaseDeDonnee"

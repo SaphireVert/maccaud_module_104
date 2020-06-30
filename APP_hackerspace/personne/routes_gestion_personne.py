@@ -88,7 +88,7 @@ def personne_add ():
             else:
 
                 # Constitution d'un dictionnaire et insertion dans la BD
-                valeurs_insertion_dictionnaire = {"value_intitule_personne": name_personne, "value_intitule_prenom": prenom_personne, "value_intitule_date_naissance": date_naissance_personne}
+                valeurs_insertion_dictionnaire = {"value_intitule_nom": name_personne, "value_intitule_prenom": prenom_personne, "value_intitule_date_naissance": date_naissance_personne}
                 obj_actions_personne.add_personne_data(valeurs_insertion_dictionnaire)
 
                 # OM 2019.03.25 Les 2 lignes ci-après permettent de donner un sentiment rassurant aux utilisateurs.
