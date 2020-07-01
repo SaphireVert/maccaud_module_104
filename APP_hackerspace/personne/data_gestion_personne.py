@@ -88,7 +88,7 @@ class Gestionpersonne():
             print(valeur_id_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Commande MySql pour afficher le personne sélectionné dans le tableau dans le formulaire HTML
-            str_sql_id_personne = "SELECT id_personne, nom FROM personne WHERE id_personne = %(value_id_personne)s"
+            str_sql_id_personne = "SELECT id_personne, nom, prenom, date_naissance FROM personne WHERE id_personne = %(value_id_personne)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -116,7 +116,7 @@ class Gestionpersonne():
             # OM 2019.04.02 Commande MySql pour la MODIFICATION de la valeur "CLAVIOTTEE" dans le champ "nameEditIntitulepersonneHTML" du form HTML "personneEdit.html"
             # le "%s" permet d'éviter des injections SQL "simples"
             # <td><input type = "text" name = "nameEditIntitulepersonneHTML" value="{{ row.intitule_personne }}"/></td>
-            str_sql_update_intitulepersonne = "UPDATE personne SET nom = %(value_name_personne)s WHERE id_personne = %(value_id_personne)s"
+            str_sql_update_intitulepersonne = "UPDATE personne SET nom = %(value_name_personne)s, prenom = %(value_prenom_personne)s, date_naissance = %(value_date_naissance_personne)s WHERE id_personne = %(value_id_personne)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"

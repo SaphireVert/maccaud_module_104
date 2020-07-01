@@ -17,6 +17,12 @@
                             <th>
                                 nom
                             </th>
+                            <th>
+                                prénom
+                            </th>
+                            <th>
+                                date de naissance
+                            </th>
                         </tr>
                     </thead>
                     {% for row in data %}
@@ -27,6 +33,12 @@
                                 </td>
                                 <td>
                                     <input type = "text" name = "name_edit_intitule_personne_html" value="{{ row.nom }}"/>
+                                </td>
+                                <td>
+                                    <input type = "text" name = "prenom_personne_edit_html" value="{{ row.prenom }}"/>
+                                </td>
+                                <td>
+                                    <input type = "text" name = "date_naissance_personne_edit_html" value="{{ row.date_naissance }}"/>
                                 </td>
                                 <td>
                                     <button class="btn btn-warning" type="submit">Update</button>

@@ -142,6 +142,7 @@ def personne_edit ():
             # <a href="{{ url_for('personne_edit', id_personne_edit_html=row.id_personne) }}">Edit</a>
             id_personne_edit = request.values['id_personne_edit_html']
 
+
             # Pour afficher dans la console la valeur de "id_personne_edit", une façon simple de se rassurer,
             # sans utiliser le DEBUGGER
             print(id_personne_edit)
@@ -201,7 +202,9 @@ def personne_update ():
 
             # Récupère le contenu du champ "intitule_personne" dans le formulaire HTML "personneEdit.html"
             name_personne = request.values['name_edit_intitule_personne_html']
-            valeur_edit_list = [{'id_personne': id_personne_edit, 'intitule_personne': name_personne}]
+            prenom_personne = request.values['prenom_personne_edit_html']
+            date_naissance_personne = request.values['date_naissance_personne_edit_html']
+            # valeur_update_dictionnaire = {"value_id_personne": id_personne_edit, "value_name_personne": name_personne, "value_prenom_personne": prenom_personne, "value_date_naissance_personne": date_naissance_personne}
             # On ne doit pas accepter des valeurs vides, des valeurs avec des chiffres,
             # des valeurs avec des caractères qui ne sont pas des lettres.
             # Pour comprendre [A-Za-zÀ-ÖØ-öø-ÿ] il faut se reporter à la table ASCII https://www.ascii-code.com/
@@ -227,7 +230,7 @@ def personne_update ():
                 return render_template('personne/personne_edit.html', data=valeur_edit_list)
             else:
                 # Constitution d'un dictionnaire et insertion dans la BD
-                valeur_update_dictionnaire = {"value_id_personne": id_personne_edit, "value_name_personne": name_personne}
+                valeur_update_dictionnaire = {"value_id_personne": id_personne_edit, "value_name_personne": name_personne, "value_prenom_personne": prenom_personne, "value_date_naissance_personne": date_naissance_personne}
 
                 # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données.
                 obj_actions_personne = Gestionpersonne()
