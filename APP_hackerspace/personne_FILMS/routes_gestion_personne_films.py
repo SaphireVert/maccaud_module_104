@@ -11,16 +11,16 @@ from APP_hackerspace.personne_FILMS.data_gestion_personne_films import Gestionpe
 # OM 2020.04.26 Définition d'une "route" /personne_coordonnees_afficher_concat
 # Récupère la liste de tous les films et de tous les personne associés aux films.
 # ---------------------------------------------------------------------------------------------------
-@obj_mon_application.route("/personne_coordonnees_afficher_concat/<int:id_film_sel>", methods=['GET', 'POST'])
-def personne_coordonnees_afficher_concat (id_film_sel):
-    print("id_film_sel ", id_film_sel)
+@obj_mon_application.route("/personne_coordonnees_afficher_concat/<int:id_coordonnees_sel>", methods=['GET', 'POST'])
+def personne_coordonnees_afficher_concat (id_coordonnees_sel):
+    print("id_coordonnees_sel ", id_coordonnees_sel)
     if request.method == "GET":
         try:
             # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données.
             obj_actions_personne = GestionpersonneFilms()
             # Récupère les données grâce à une requête MySql définie dans la classe Gestionpersonne()
             # Fichier data_gestion_personne.py
-            data_personne_coordonnees_afficher_concat = obj_actions_personne.nom_coordonnees_afficher_data_concat(id_film_sel)
+            data_personne_coordonnees_afficher_concat = obj_actions_personne.nom_coordonnees_afficher_data_concat(id_coordonnees_sel)
             # DEBUG bon marché : Pour afficher le résultat et son type.
             print(" data personne", data_personne_coordonnees_afficher_concat, "type ", type(data_personne_coordonnees_afficher_concat))
 
@@ -64,18 +64,18 @@ def gf_edit_personne_film_selected ():
             # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données de la table intermédiaire.
             obj_actions_personne = GestionpersonneFilms()
 
-            # OM 2020.04.21 Récupère la valeur de "id_film" du formulaire html "personne_coordonnees_afficher.html"
-            # l'utilisateur clique sur le lien "Modifier personne de ce film" et on récupère la valeur de "id_film" grâce à la variable "id_film_personne_edit_html"
-            # <a href="{{ url_for('gf_edit_personne_film_selected', id_film_personne_edit_html=row.id_film) }}">Modifier les personne de ce film</a>
-            id_film_personne_edit = request.values['id_film_personne_edit_html']
+            # OM 2020.04.21 Récupère la valeur de "id_coordonnees" du formulaire html "personne_coordonnees_afficher.html"
+            # l'utilisateur clique sur le lien "Modifier personne de ce film" et on récupère la valeur de "id_coordonnees" grâce à la variable "id_coordonnees_personne_edit_html"
+            # <a href="{{ url_for('gf_edit_personne_film_selected', id_coordonnees_personne_edit_html=row.id_coordonnees) }}">Modifier les personne de ce film</a>
+            id_coordonnees_personne_edit = request.values['id_coordonnees_personne_edit_html']
 
             # OM 2020.04.21 Mémorise l'id du film dans une variable de session
             # (ici la sécurité de l'application n'est pas engagée)
             # il faut éviter de stocker des données sensibles dans des variables de sessions.
-            session['session_id_film_personne_edit'] = id_film_personne_edit
+            session['session_id_coordonnees_personne_edit'] = id_coordonnees_personne_edit
 
             # Constitution d'un dictionnaire pour associer l'id du film sélectionné avec un nom de variable
-            valeur_id_film_selected_dictionnaire = {"value_id_film_selected": id_film_personne_edit}
+            valeur_id_coordonnees_selected_dictionnaire = {"value_id_coordonnees_selected": id_coordonnees_personne_edit}
 
             # Récupère les données grâce à 3 requêtes MySql définie dans la classe GestionpersonneFilms()
             # 1) Sélection du film choisi
@@ -84,9 +84,9 @@ def gf_edit_personne_film_selected ():
             # Fichier data_gestion_personne_films.py
             # ATTENTION à l'ordre d'assignation des variables retournées par la fonction "personne_coordonnees_afficher_data"
             data_personne_film_selected, data_personne_films_non_attribues, data_personne_films_attribues = \
-                obj_actions_personne.nom_coordonnees_afficher_data(valeur_id_film_selected_dictionnaire)
+                obj_actions_personne.nom_coordonnees_afficher_data(valeur_id_coordonnees_selected_dictionnaire)
 
-            lst_data_film_selected = [item['id_film'] for item in data_personne_film_selected]
+            lst_data_film_selected = [item['id_coordonnees'] for item in data_personne_film_selected]
             # DEBUG bon marché : Pour afficher le résultat et son type.
             print("lst_data_film_selected  ", lst_data_film_selected,
                   type(lst_data_film_selected))
@@ -155,8 +155,8 @@ def gf_update_personne_film_selected ():
     if request.method == "POST":
         try:
             # Récupère l'id du film sélectionné
-            id_film_selected = session['session_id_film_personne_edit']
-            print("session['session_id_film_personne_edit'] ", session['session_id_film_personne_edit'])
+            id_coordonnees_selected = session['session_id_coordonnees_personne_edit']
+            print("session['session_id_coordonnees_personne_edit'] ", session['session_id_coordonnees_personne_edit'])
 
             # Récupère la liste des personne qui ne sont pas associés au film sélectionné.
             old_lst_data_personne_films_non_attribues = session['session_lst_data_personne_films_non_attribues']
@@ -202,26 +202,26 @@ def gf_update_personne_film_selected ():
             for id_personne_ins in lst_diff_personne_insert_a:
                 # Constitution d'un dictionnaire pour associer l'id du film sélectionné avec un nom de variable
                 # et "id_personne_ins" (l'id du personne dans la liste) associé à une variable.
-                valeurs_film_sel_personne_sel_dictionnaire = {"value_fk_film": id_film_selected,
+                valeurs_film_sel_personne_sel_dictionnaire = {"value_fk_film": id_coordonnees_selected,
                                                            "value_fk_personne": id_personne_ins}
                 # Insérer une association entre un(des) personne(s) et le film sélectionner.
-                obj_actions_personne.nom_films_add(valeurs_film_sel_personne_sel_dictionnaire)
+                obj_actions_personne.telephones_add(valeurs_film_sel_personne_sel_dictionnaire)
 
             # Pour le film sélectionné, parcourir la liste des personne à EFFACER dans la "t_personne_films".
             # Si la liste est vide, la boucle n'est pas parcourue.
             for id_personne_del in lst_diff_personne_delete_b:
                 # Constitution d'un dictionnaire pour associer l'id du film sélectionné avec un nom de variable
                 # et "id_personne_del" (l'id du personne dans la liste) associé à une variable.
-                valeurs_film_sel_personne_sel_dictionnaire = {"value_fk_film": id_film_selected,
+                valeurs_film_sel_personne_sel_dictionnaire = {"value_fk_film": id_coordonnees_selected,
                                                            "value_fk_personne": id_personne_del}
                 # Effacer une association entre un(des) personne(s) et le film sélectionner.
-                obj_actions_personne.nom_films_delete(valeurs_film_sel_personne_sel_dictionnaire)
+                obj_actions_personne.telephones_delete(valeurs_film_sel_personne_sel_dictionnaire)
 
             # Récupère les données grâce à une requête MySql définie dans la classe Gestionpersonne()
             # Fichier data_gestion_personne.py
             # Afficher seulement le film dont les personne sont modifiés, ainsi l'utilisateur voit directement
             # les changements qu'il a demandés.
-            data_personne_coordonnees_afficher_concat = obj_actions_personne.nom_coordonnees_afficher_data_concat(id_film_selected)
+            data_personne_coordonnees_afficher_concat = obj_actions_personne.nom_coordonnees_afficher_data_concat(id_coordonnees_selected)
             # DEBUG bon marché : Pour afficher le résultat et son type.
             print(" data personne", data_personne_coordonnees_afficher_concat, "type ", type(data_personne_coordonnees_afficher_concat))
 

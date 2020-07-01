@@ -30,7 +30,7 @@ class GestionFilms():
             # la commande MySql classique est "SELECT * FROM coordonnees"
             # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
             # donc, je précise les champs à afficher
-            strsql_coordonnees_afficher = """SELECT id_film, nom_film, duree_film, description_film,
+            strsql_coordonnees_afficher = """SELECT id_coordonnees, telephone, mail, adresse,
                                         cover_link_film, date_sortie_film FROM coordonnees"""
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             with MaBaseDeDonnee().connexion_bd.cursor() as mc_afficher:
@@ -59,13 +59,13 @@ class GestionFilms():
     def add_film(self, valeurs_insertion_dictionnaire):
         try:
             # # Définitions d'un dictionnaire pour passer les valeurs en paramètres de façon un "peu" sécurisée dans la BD
-            # valeurs_insertion_dictionnaire = {'value_nom_film': valeur_ins_1, 'value_duree_film': valeur_ins_2,
+            # valeurs_insertion_dictionnaire = {'value_telephone': valeur_ins_1, 'value_mail': valeur_ins_2,
             #                                   'date_sortie_film': valeur_ins_3}
             # Montre à la personne qui développe que les valeurs à insérer sont bien à disposition.
             print(valeurs_insertion_dictionnaire)
-            str_sql_insert = "INSERT INTO coordonnees (id_film, nom_film, duree_film, description_film, " \
-                             "cover_link_film, date_sortie_film) VALUES (NULL, %(value_nom_film)s, %(value_duree_film)s, " \
-                             "%(value_description_film)s, %(value_cover_link_film)s, %(value_date_sortie_film)s)"
+            str_sql_insert = "INSERT INTO coordonnees (id_coordonnees, telephone, mail, adresse, " \
+                             "cover_link_film, date_sortie_film) VALUES (NULL, %(value_telephone)s, %(value_mail)s, " \
+                             "%(value_adresse)s, %(value_cover_link_film)s, %(value_date_sortie_film)s)"
             with MaBaseDeDonnee() as ma_bd_curseur:
                 # OM Méthode "execute" définie simplement pour raccourcir la ligne de code
                 # ligne de code normale : ma_bd_moi.connexion_bd.cursor(str_sql_insert, valeurs_insertion_dictionnaire)

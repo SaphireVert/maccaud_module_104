@@ -51,8 +51,8 @@ class GestionpersonneFilms():
             # Ainsi on peut avoir un message d'erreur personnalisé.
             raise MaBdErreurConnexion(f"DGG gad pei {msg_erreurs['ErreurConnexionBD']['message']} {erreur.args[1]}")
 
-    def personne_coordonnees_afficher_data (self, valeur_id_film_selected_dict):
-        print("valeur_id_film_selected_dict...", valeur_id_film_selected_dict)
+    def personne_coordonnees_afficher_data (self, valeur_id_coordonnees_selected_dict):
+        print("valeur_id_coordonnees_selected_dict...", valeur_id_coordonnees_selected_dict)
         try:
 
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
@@ -60,26 +60,26 @@ class GestionpersonneFilms():
             # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
             # donc, je précise les champs à afficher
 
-            strsql_film_selected = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film, GROUP_CONCAT(id_personne) as personneFilms FROM t_personne_films AS T1
-                                        INNER JOIN coordonnees AS T2 ON T2.id_film = T1.fk_film
+            strsql_film_selected = """SELECT id_coordonnees, telephone, mail, adresse, cover_link_film, date_sortie_film, GROUP_CONCAT(id_personne) as personneFilms FROM t_personne_films AS T1
+                                        INNER JOIN coordonnees AS T2 ON T2.id_coordonnees = T1.fk_film
                                         INNER JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
-                                        WHERE id_film = %(value_id_film_selected)s"""
+                                        WHERE id_coordonnees = %(value_id_coordonnees_selected)s"""
 
             strsql_personne_films_non_attribues = """SELECT id_personne, intitule_personne FROM t_personne
                                                     WHERE id_personne not in(SELECT id_personne as idpersonneFilms FROM t_personne_films AS T1
-                                                    INNER JOIN coordonnees AS T2 ON T2.id_film = T1.fk_film
+                                                    INNER JOIN coordonnees AS T2 ON T2.id_coordonnees = T1.fk_film
                                                     INNER JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
-                                                    WHERE id_film = %(value_id_film_selected)s)"""
+                                                    WHERE id_coordonnees = %(value_id_coordonnees_selected)s)"""
 
-            strsql_personne_films_attribues = """SELECT id_film, id_personne, intitule_personne FROM t_personne_films AS T1
-                                            INNER JOIN coordonnees AS T2 ON T2.id_film = T1.fk_film
+            strsql_personne_films_attribues = """SELECT id_coordonnees, id_personne, intitule_personne FROM t_personne_films AS T1
+                                            INNER JOIN coordonnees AS T2 ON T2.id_coordonnees = T1.fk_film
                                             INNER JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
-                                            WHERE id_film = %(value_id_film_selected)s"""
+                                            WHERE id_coordonnees = %(value_id_coordonnees_selected)s"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             with MaBaseDeDonnee().connexion_bd.cursor() as mc_afficher:
                 # Envoi de la commande MySql
-                mc_afficher.execute(strsql_personne_films_non_attribues, valeur_id_film_selected_dict)
+                mc_afficher.execute(strsql_personne_films_non_attribues, valeur_id_coordonnees_selected_dict)
                 # Récupère les données de la requête.
                 data_personne_films_non_attribues = mc_afficher.fetchall()
                 # Affichage dans la console
@@ -87,14 +87,14 @@ class GestionpersonneFilms():
                       type(data_personne_films_non_attribues))
 
                 # Envoi de la commande MySql
-                mc_afficher.execute(strsql_film_selected, valeur_id_film_selected_dict)
+                mc_afficher.execute(strsql_film_selected, valeur_id_coordonnees_selected_dict)
                 # Récupère les données de la requête.
                 data_film_selected = mc_afficher.fetchall()
                 # Affichage dans la console
                 print("data_film_selected  ", data_film_selected, " Type : ", type(data_film_selected))
 
                 # Envoi de la commande MySql
-                mc_afficher.execute(strsql_personne_films_attribues, valeur_id_film_selected_dict)
+                mc_afficher.execute(strsql_personne_films_attribues, valeur_id_coordonnees_selected_dict)
                 # Récupère les données de la requête.
                 data_personne_films_attribues = mc_afficher.fetchall()
                 # Affichage dans la console
@@ -115,32 +115,32 @@ class GestionpersonneFilms():
             # Ainsi on peut avoir un message d'erreur personnalisé.
             raise MaBdErreurConnexion(f"DGGF gfad pei {msg_erreurs['ErreurConnexionBD']['message']} {erreur.args[1]}")
 
-    def personne_coordonnees_afficher_data_concat (self, id_film_selected):
-        print("id_film_selected  ", id_film_selected)
+    def personne_coordonnees_afficher_data_concat (self, id_coordonnees_selected):
+        print("id_coordonnees_selected  ", id_coordonnees_selected)
         try:
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # la commande MySql classique est "SELECT * FROM t_personne"
             # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
             # donc, je précise les champs à afficher
 
-            strsql_personne_coordonnees_afficher_data_concat = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film,
+            strsql_personne_coordonnees_afficher_data_concat = """SELECT id_coordonnees, telephone, mail, adresse, cover_link_film, date_sortie_film,
                                                             GROUP_CONCAT(intitule_personne) as personneFilms FROM t_personne_films AS T1
-                                                            RIGHT JOIN coordonnees AS T2 ON T2.id_film = T1.fk_film
+                                                            RIGHT JOIN coordonnees AS T2 ON T2.id_coordonnees = T1.fk_film
                                                             LEFT JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
-                                                            GROUP BY id_film"""
+                                                            GROUP BY id_coordonnees"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             with MaBaseDeDonnee().connexion_bd.cursor() as mc_afficher:
                 # le paramètre 0 permet d'afficher tous les films
                 # Sinon le paramètre représente la valeur de l'id du film
-                if id_film_selected == 0:
+                if id_coordonnees_selected == 0:
                     mc_afficher.execute(strsql_personne_coordonnees_afficher_data_concat)
                 else:
                     # Constitution d'un dictionnaire pour associer l'id du film sélectionné avec un nom de variable
-                    valeur_id_film_selected_dictionnaire = {"value_id_film_selected": id_film_selected}
-                    strsql_personne_coordonnees_afficher_data_concat += """ HAVING id_film= %(value_id_film_selected)s"""
+                    valeur_id_coordonnees_selected_dictionnaire = {"value_id_coordonnees_selected": id_coordonnees_selected}
+                    strsql_personne_coordonnees_afficher_data_concat += """ HAVING id_coordonnees= %(value_id_coordonnees_selected)s"""
                     # Envoi de la commande MySql
-                    mc_afficher.execute(strsql_personne_coordonnees_afficher_data_concat, valeur_id_film_selected_dictionnaire)
+                    mc_afficher.execute(strsql_personne_coordonnees_afficher_data_concat, valeur_id_coordonnees_selected_dictionnaire)
 
                 # Récupère les données de la requête.
                 data_personne_coordonnees_afficher_concat = mc_afficher.fetchall()
@@ -169,7 +169,7 @@ class GestionpersonneFilms():
         try:
             print(valeurs_insertion_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
-            # Insérer une (des) nouvelle(s) association(s) entre "id_film" et "id_personne" dans la "t_personne_film"
+            # Insérer une (des) nouvelle(s) association(s) entre "id_coordonnees" et "id_personne" dans la "t_personne_film"
             strsql_insert_personne_film = """INSERT INTO t_personne_films (id_personne_film, fk_personne, fk_film)
                                             VALUES (NULL, %(value_fk_personne)s, %(value_fk_film)s)"""
 
@@ -191,7 +191,7 @@ class GestionpersonneFilms():
         try:
             print(valeurs_insertion_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
-            # Effacer une (des) association(s) existantes entre "id_film" et "id_personne" dans la "t_personne_film"
+            # Effacer une (des) association(s) existantes entre "id_coordonnees" et "id_personne" dans la "t_personne_film"
             strsql_delete_personne_film = """DELETE FROM t_personne_films WHERE fk_personne = %(value_fk_personne)s AND fk_film = %(value_fk_film)s"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".

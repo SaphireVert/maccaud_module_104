@@ -32,19 +32,19 @@
 			<tbody>
 				<tr>
 					  <th class="align-middle">
-						  {{ row.id_film }}
+						  {{ row.id_coordonnees }}
 					  </th>
 					  <th class="align-middle">
-						{{ row.nom_film }}
+						{{ row.telephone }}
 					  </th>
 					  <th class="align-middle">
-						{{ row.duree_film|default("", True) }}
+						{{ row.mail|default("", True) }}
 					  </th>
 					  <th class="align-middle">
 						{{ row.date_sortie_film|default("", True) }}
 					  </th>
 					  <th class="align-middle">
-						{{ row.description_film|default("", True) }}
+						{{ row.adresse|default("", True) }}
 					  </th>
 					  <th class="align-middle">
 <!--						<img class="img-thumbnail" src={{ row.cover_link_film|default(None, True) }} style="border: 0;display: block;width:auto;max-height:450px;" alt = "Covid-19 grand semi-confinement mod 104">-->
@@ -61,7 +61,7 @@
 					  </th>
 					<tr>
 						<td class="align-middle">
-							<a class="btn btn-warning" href="{{ url_for('gf_edit_personne_film_selected', id_film_personne_edit_html=row.id_film) }}" role="button">Modifier</a>
+							<a class="btn btn-warning" href="{{ url_for('gf_edit_personne_film_selected', id_coordonnees_personne_edit_html=row.id_coordonnees) }}" role="button">Modifier</a>
 						</td>
 						<td class="align-middle" colspan="5">
 							{{ row.personneFilms|default("PAS DE personne", True) }}
