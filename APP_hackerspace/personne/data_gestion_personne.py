@@ -43,7 +43,7 @@ class Gestionpersonne():
                     # Envoi de la commande MySql
                     mc_afficher.execute(strsql_personne_afficher, valeur_id_personne_selected_dictionnaire)
                 else:
-                    strsql_personne_afficher = """SELECT id_personne, nom FROM personne ORDER BY id_personne DESC"""
+                    strsql_personne_afficher = """SELECT id_personne, nom, prenom, date_naissance FROM personne ORDER BY id_personne DESC"""
                     # Envoi de la commande MySql
                     mc_afficher.execute(strsql_personne_afficher)
                 # Récupère les données de la requête.

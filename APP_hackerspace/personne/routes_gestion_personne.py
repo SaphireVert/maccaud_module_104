@@ -97,7 +97,7 @@ def personne_add ():
                 # On va interpréter la "route" 'personne_afficher', car l'utilisateur
                 # doit voir le nouveau personne qu'il vient d'insérer. Et on l'affiche de manière
                 # à voir le dernier élément inséré.
-                return redirect(url_for('personne_afficher', order_by='ASC', id_personne_sel=0))
+                return redirect(url_for('personne_afficher', order_by='DESC', id_personne_sel=0))
 
         # OM 2020.04.16 ATTENTION à l'ordre des excepts, il est très important de respecter l'ordre.
         except pymysql.err.IntegrityError as erreur:
