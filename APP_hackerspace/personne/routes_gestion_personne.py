@@ -242,7 +242,7 @@ def personne_update ():
                 # Message ci-après permettent de donner un sentiment rassurant aux utilisateurs.
                 flash(f"Valeur personne modifiée. ", "success")
                 # On affiche les personne avec celui qui vient d'être edité en tête de liste. (DESC)
-                return redirect(url_for('personne_afficher', order_by="ASC", id_personne_sel=id_personne_edit))
+                return redirect(url_for('personne_afficher', order_by="DESC", id_personne_sel=id_personne_edit))
 
         except (Exception,
                 # pymysql.err.OperationalError,
