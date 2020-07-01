@@ -17,9 +17,9 @@ def avertissement_sympa_pour_geeks():
 
 
 # OM 2020.04.16 Afficher les films
-# Pour la tester http://127.0.0.1:5005/films_afficher
-@obj_mon_application.route("/films_afficher")
-def films_afficher():
+# Pour la tester http://127.0.0.1:5005/coordonnees_afficher
+@obj_mon_application.route("/coordonnees_afficher")
+def coordonnees_afficher():
     # OM 2020.04.09 Pour savoir si les données d'un formulaire sont un affichage
     # ou un envoi de donnée par des champs du formulaire HTML.
     if request.method == "GET":
@@ -28,7 +28,7 @@ def films_afficher():
             obj_actions_films = GestionFilms()
             # Récupère les données grâce à une requête MySql définie dans la classe GestionFilms()
             # Fichier data_gestion_films.py
-            data_films = obj_actions_films.films_afficher_data()
+            data_films = obj_actions_films.coordonnees_afficher_data()
             # DEBUG bon marché : Pour afficher un message dans la console.
             print(" data films", data_films, "type ", type(data_films))
             # Différencier les messages si la table est vide.
@@ -45,7 +45,7 @@ def films_afficher():
             raise Exception(f"RGF Erreur générale. {erreur}","danger")
 
     # OM 2020.04.07 Envoie la page "HTML" au serveur.
-    return render_template("films/films_afficher.html", data=data_films)
+    return render_template("films/coordonnees_afficher.html", data=data_films)
 
 
 # OM 2020.04.06 Pour une simple démo. On insère deux fois des valeurs dans la table films

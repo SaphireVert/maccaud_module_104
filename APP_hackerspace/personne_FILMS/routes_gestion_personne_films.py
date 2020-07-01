@@ -8,11 +8,11 @@ from APP_hackerspace.personne_FILMS.data_gestion_personne_films import Gestionpe
 
 
 # ---------------------------------------------------------------------------------------------------
-# OM 2020.04.26 Définition d'une "route" /personne_films_afficher_concat
+# OM 2020.04.26 Définition d'une "route" /personne_coordonnees_afficher_concat
 # Récupère la liste de tous les films et de tous les personne associés aux films.
 # ---------------------------------------------------------------------------------------------------
-@obj_mon_application.route("/personne_films_afficher_concat/<int:id_film_sel>", methods=['GET', 'POST'])
-def personne_films_afficher_concat (id_film_sel):
+@obj_mon_application.route("/personne_coordonnees_afficher_concat/<int:id_film_sel>", methods=['GET', 'POST'])
+def personne_coordonnees_afficher_concat (id_film_sel):
     print("id_film_sel ", id_film_sel)
     if request.method == "GET":
         try:
@@ -20,12 +20,12 @@ def personne_films_afficher_concat (id_film_sel):
             obj_actions_personne = GestionpersonneFilms()
             # Récupère les données grâce à une requête MySql définie dans la classe Gestionpersonne()
             # Fichier data_gestion_personne.py
-            data_personne_films_afficher_concat = obj_actions_personne.nom_films_afficher_data_concat(id_film_sel)
+            data_personne_coordonnees_afficher_concat = obj_actions_personne.nom_coordonnees_afficher_data_concat(id_film_sel)
             # DEBUG bon marché : Pour afficher le résultat et son type.
-            print(" data personne", data_personne_films_afficher_concat, "type ", type(data_personne_films_afficher_concat))
+            print(" data personne", data_personne_coordonnees_afficher_concat, "type ", type(data_personne_coordonnees_afficher_concat))
 
             # Différencier les messages si la table est vide.
-            if data_personne_films_afficher_concat:
+            if data_personne_coordonnees_afficher_concat:
                 # OM 2020.04.09 La ligne ci-dessous permet de donner un sentiment rassurant aux utilisateurs.
                 flash(f"Données personne affichés dans personneFilms!!", "success")
             else:
@@ -39,8 +39,8 @@ def personne_films_afficher_concat (id_film_sel):
             # raise MaBdErreurOperation(f"RGG Exception {msg_erreurs['ErreurNomBD']['message']} {erreur}")
 
     # OM 2020.04.21 Envoie la page "HTML" au serveur.
-    return render_template("personne_films/personne_films_afficher.html",
-                           data=data_personne_films_afficher_concat)
+    return render_template("personne_films/personne_coordonnees_afficher.html",
+                           data=data_personne_coordonnees_afficher_concat)
 
 
 # ---------------------------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ def gf_edit_personne_film_selected ():
             # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données de la table intermédiaire.
             obj_actions_personne = GestionpersonneFilms()
 
-            # OM 2020.04.21 Récupère la valeur de "id_film" du formulaire html "personne_films_afficher.html"
+            # OM 2020.04.21 Récupère la valeur de "id_film" du formulaire html "personne_coordonnees_afficher.html"
             # l'utilisateur clique sur le lien "Modifier personne de ce film" et on récupère la valeur de "id_film" grâce à la variable "id_film_personne_edit_html"
             # <a href="{{ url_for('gf_edit_personne_film_selected', id_film_personne_edit_html=row.id_film) }}">Modifier les personne de ce film</a>
             id_film_personne_edit = request.values['id_film_personne_edit_html']
@@ -82,9 +82,9 @@ def gf_edit_personne_film_selected ():
             # 2) Sélection des personne "déjà" attribués pour le film.
             # 3) Sélection des personne "pas encore" attribués pour le film choisi.
             # Fichier data_gestion_personne_films.py
-            # ATTENTION à l'ordre d'assignation des variables retournées par la fonction "personne_films_afficher_data"
+            # ATTENTION à l'ordre d'assignation des variables retournées par la fonction "personne_coordonnees_afficher_data"
             data_personne_film_selected, data_personne_films_non_attribues, data_personne_films_attribues = \
-                obj_actions_personne.nom_films_afficher_data(valeur_id_film_selected_dictionnaire)
+                obj_actions_personne.nom_coordonnees_afficher_data(valeur_id_film_selected_dictionnaire)
 
             lst_data_film_selected = [item['id_film'] for item in data_personne_film_selected]
             # DEBUG bon marché : Pour afficher le résultat et son type.
@@ -221,12 +221,12 @@ def gf_update_personne_film_selected ():
             # Fichier data_gestion_personne.py
             # Afficher seulement le film dont les personne sont modifiés, ainsi l'utilisateur voit directement
             # les changements qu'il a demandés.
-            data_personne_films_afficher_concat = obj_actions_personne.nom_films_afficher_data_concat(id_film_selected)
+            data_personne_coordonnees_afficher_concat = obj_actions_personne.nom_coordonnees_afficher_data_concat(id_film_selected)
             # DEBUG bon marché : Pour afficher le résultat et son type.
-            print(" data personne", data_personne_films_afficher_concat, "type ", type(data_personne_films_afficher_concat))
+            print(" data personne", data_personne_coordonnees_afficher_concat, "type ", type(data_personne_coordonnees_afficher_concat))
 
             # Différencier les messages si la table est vide.
-            if data_personne_films_afficher_concat == None:
+            if data_personne_coordonnees_afficher_concat == None:
                 flash(f"""Le film demandé n'existe pas. Ou la table "t_personne_films" est vide. !!""", "warning")
             else:
                 # OM 2020.04.09 La ligne ci-dessous permet de donner un sentiment rassurant aux utilisateurs.
@@ -242,5 +242,5 @@ def gf_update_personne_film_selected ():
 
     # Après cette mise à jour de la table intermédiaire "t_personne_films",
     # on affiche les films et le(urs) personne(s) associé(s).
-    return render_template("personne_films/personne_films_afficher.html",
-                           data=data_personne_films_afficher_concat)
+    return render_template("personne_films/personne_coordonnees_afficher.html",
+                           data=data_personne_coordonnees_afficher_concat)

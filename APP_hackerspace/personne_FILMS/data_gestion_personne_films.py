@@ -51,7 +51,7 @@ class GestionpersonneFilms():
             # Ainsi on peut avoir un message d'erreur personnalisé.
             raise MaBdErreurConnexion(f"DGG gad pei {msg_erreurs['ErreurConnexionBD']['message']} {erreur.args[1]}")
 
-    def personne_films_afficher_data (self, valeur_id_film_selected_dict):
+    def personne_coordonnees_afficher_data (self, valeur_id_film_selected_dict):
         print("valeur_id_film_selected_dict...", valeur_id_film_selected_dict)
         try:
 
@@ -115,7 +115,7 @@ class GestionpersonneFilms():
             # Ainsi on peut avoir un message d'erreur personnalisé.
             raise MaBdErreurConnexion(f"DGGF gfad pei {msg_erreurs['ErreurConnexionBD']['message']} {erreur.args[1]}")
 
-    def personne_films_afficher_data_concat (self, id_film_selected):
+    def personne_coordonnees_afficher_data_concat (self, id_film_selected):
         print("id_film_selected  ", id_film_selected)
         try:
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
@@ -123,7 +123,7 @@ class GestionpersonneFilms():
             # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
             # donc, je précise les champs à afficher
 
-            strsql_personne_films_afficher_data_concat = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film,
+            strsql_personne_coordonnees_afficher_data_concat = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film,
                                                             GROUP_CONCAT(intitule_personne) as personneFilms FROM t_personne_films AS T1
                                                             RIGHT JOIN t_films AS T2 ON T2.id_film = T1.fk_film
                                                             LEFT JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
@@ -134,22 +134,22 @@ class GestionpersonneFilms():
                 # le paramètre 0 permet d'afficher tous les films
                 # Sinon le paramètre représente la valeur de l'id du film
                 if id_film_selected == 0:
-                    mc_afficher.execute(strsql_personne_films_afficher_data_concat)
+                    mc_afficher.execute(strsql_personne_coordonnees_afficher_data_concat)
                 else:
                     # Constitution d'un dictionnaire pour associer l'id du film sélectionné avec un nom de variable
                     valeur_id_film_selected_dictionnaire = {"value_id_film_selected": id_film_selected}
-                    strsql_personne_films_afficher_data_concat += """ HAVING id_film= %(value_id_film_selected)s"""
+                    strsql_personne_coordonnees_afficher_data_concat += """ HAVING id_film= %(value_id_film_selected)s"""
                     # Envoi de la commande MySql
-                    mc_afficher.execute(strsql_personne_films_afficher_data_concat, valeur_id_film_selected_dictionnaire)
+                    mc_afficher.execute(strsql_personne_coordonnees_afficher_data_concat, valeur_id_film_selected_dictionnaire)
 
                 # Récupère les données de la requête.
-                data_personne_films_afficher_concat = mc_afficher.fetchall()
+                data_personne_coordonnees_afficher_concat = mc_afficher.fetchall()
                 # Affichage dans la console
-                print("dggf data_personne_films_afficher_concat ", data_personne_films_afficher_concat, " Type : ",
-                      type(data_personne_films_afficher_concat))
+                print("dggf data_personne_coordonnees_afficher_concat ", data_personne_coordonnees_afficher_concat, " Type : ",
+                      type(data_personne_coordonnees_afficher_concat))
 
                 # Retourne les données du "SELECT"
-                return data_personne_films_afficher_concat
+                return data_personne_coordonnees_afficher_concat
 
 
         except pymysql.Error as erreur:
