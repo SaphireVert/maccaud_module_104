@@ -1,5 +1,5 @@
 # data_gestion_films.py
-# OM 2698.03.21 Permet de gérer (CRUD) les données de la table t_films
+# OM 2698.03.21 Permet de gérer (CRUD) les données de la table coordonnees
 
 
 from flask import flash
@@ -27,11 +27,11 @@ class GestionFilms():
     def coordonnees_afficher_data(self):
         try:
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
-            # la commande MySql classique est "SELECT * FROM t_films"
+            # la commande MySql classique est "SELECT * FROM coordonnees"
             # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
             # donc, je précise les champs à afficher
             strsql_coordonnees_afficher = """SELECT id_film, nom_film, duree_film, description_film,
-                                        cover_link_film, date_sortie_film FROM t_films"""
+                                        cover_link_film, date_sortie_film FROM coordonnees"""
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             with MaBaseDeDonnee().connexion_bd.cursor() as mc_afficher:
                 # Envoi de la commande MySql
@@ -63,7 +63,7 @@ class GestionFilms():
             #                                   'date_sortie_film': valeur_ins_3}
             # Montre à la personne qui développe que les valeurs à insérer sont bien à disposition.
             print(valeurs_insertion_dictionnaire)
-            str_sql_insert = "INSERT INTO t_films (id_film, nom_film, duree_film, description_film, " \
+            str_sql_insert = "INSERT INTO coordonnees (id_film, nom_film, duree_film, description_film, " \
                              "cover_link_film, date_sortie_film) VALUES (NULL, %(value_nom_film)s, %(value_duree_film)s, " \
                              "%(value_description_film)s, %(value_cover_link_film)s, %(value_date_sortie_film)s)"
             with MaBaseDeDonnee() as ma_bd_curseur:

@@ -1,10 +1,10 @@
-# routes_gestion_films.py
+# routes_gestion_coordonnees.py
 # OM 2020.04.06 Gestions des "routes" FLASK pour les films.
 
 import pymysql
 from flask import render_template, flash, request
 from APP_hackerspace import obj_mon_application
-from APP_hackerspace.FILMS.data_gestion_films import GestionFilms
+from APP_hackerspace.coordonnees.data_gestion_coordonnees import GestionFilms
 
 # OM 2020.04.16 Afficher un avertissement sympa...mais contraignant
 # Pour la tester http://127.0.0.1:5005/avertissement_sympa_pour_geeks
@@ -36,7 +36,7 @@ def coordonnees_afficher():
                 # OM 2020.04.09 La ligne ci-dessous permet de donner un sentiment rassurant aux utilisateurs.
                 flash("Données films affichées !!", "success")
             else:
-                flash("""La table "t_films" est vide. !!""", "warning")
+                flash("""La table "coordonnees" est vide. !!""", "warning")
         except Exception as erreur:
             print(f"RGF Erreur générale.")
             # OM 2020.04.09 On dérive "Exception" par le "@obj_mon_application.errorhandler(404)" fichier "run_mon_app.py"
@@ -49,10 +49,10 @@ def coordonnees_afficher():
 
 
 # OM 2020.04.06 Pour une simple démo. On insère deux fois des valeurs dans la table films
-# Une fois de manière fixe, vous devez changer les valeurs pour voir le résultat dans la table "t_films"
+# Une fois de manière fixe, vous devez changer les valeurs pour voir le résultat dans la table "coordonnees"
 # La 2ème il faut entrer la valeur du titre du film par le clavier, il ne doit pas être vide.
 # Pour les autres valeurs elles doivent être changées ci-dessous.
-# Une des valeurs est "None" ce qui en MySql donne "NULL" pour l'attribut "t_films.cover_link_film"
+# Une des valeurs est "None" ce qui en MySql donne "NULL" pour l'attribut "coordonnees.cover_link_film"
 # Pour la tester http://127.0.0.1:5005/films_add
 @obj_mon_application.route("/films_add")
 def films_add():

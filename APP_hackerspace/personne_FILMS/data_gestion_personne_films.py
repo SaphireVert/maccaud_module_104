@@ -61,18 +61,18 @@ class GestionpersonneFilms():
             # donc, je précise les champs à afficher
 
             strsql_film_selected = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film, GROUP_CONCAT(id_personne) as personneFilms FROM t_personne_films AS T1
-                                        INNER JOIN t_films AS T2 ON T2.id_film = T1.fk_film
+                                        INNER JOIN coordonnees AS T2 ON T2.id_film = T1.fk_film
                                         INNER JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
                                         WHERE id_film = %(value_id_film_selected)s"""
 
             strsql_personne_films_non_attribues = """SELECT id_personne, intitule_personne FROM t_personne
                                                     WHERE id_personne not in(SELECT id_personne as idpersonneFilms FROM t_personne_films AS T1
-                                                    INNER JOIN t_films AS T2 ON T2.id_film = T1.fk_film
+                                                    INNER JOIN coordonnees AS T2 ON T2.id_film = T1.fk_film
                                                     INNER JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
                                                     WHERE id_film = %(value_id_film_selected)s)"""
 
             strsql_personne_films_attribues = """SELECT id_film, id_personne, intitule_personne FROM t_personne_films AS T1
-                                            INNER JOIN t_films AS T2 ON T2.id_film = T1.fk_film
+                                            INNER JOIN coordonnees AS T2 ON T2.id_film = T1.fk_film
                                             INNER JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
                                             WHERE id_film = %(value_id_film_selected)s"""
 
@@ -125,7 +125,7 @@ class GestionpersonneFilms():
 
             strsql_personne_coordonnees_afficher_data_concat = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film,
                                                             GROUP_CONCAT(intitule_personne) as personneFilms FROM t_personne_films AS T1
-                                                            RIGHT JOIN t_films AS T2 ON T2.id_film = T1.fk_film
+                                                            RIGHT JOIN coordonnees AS T2 ON T2.id_film = T1.fk_film
                                                             LEFT JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
                                                             GROUP BY id_film"""
 
