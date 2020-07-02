@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-                <h1>Effacer le genre :</h1>
+                <h1>Effacer le hobby :</h1>
                 {% for row in data %}
                     {% if loop.first %}
                     <h2>{{ row.mail  }}</h2>
@@ -16,11 +16,11 @@
 			<form method="POST" action="{{ url_for('genres_delete') }}">
                 <table class="table table-bordered table-sm">
                     {% if data_films_associes %}
-                        <h3>Il est associé avec les films suivants :</h3>
+                        <h3> Il est associé avec les personnes suivantes :</h3>
                         <thead>
                             <tr>
                                 <th>
-                                    Nom du film
+                                    Nom de la personne
                                 </th>
                             </tr>
                         </thead>
@@ -28,13 +28,13 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        {{ row.nom }}
+                                        {{ row.prenom }} {{ row.nom }}
                                     </td>
                                 </tr>
                             </tbody>
                         {% endfor %}
                     {% else %}
-                        <h3>Il n'est associé à aucun film.</h3>
+                        <h3>Il n'est associé à aucune personne.</h3>
                     {% endif %}
                 </table>
                 <button class="btn btn-danger" type="submit">EFFACER</button>

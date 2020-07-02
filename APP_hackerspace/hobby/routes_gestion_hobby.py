@@ -280,6 +280,7 @@ def genres_select_delete ():
             print(data_id_hobby)
             print("----------------------------------------")
             print(films_associes_genre_delete)
+            print()
             print("data_films_attribue_genre_delete ",films_associes_genre_delete," data_id_hobby ",data_id_hobby)
             flash(f"EFFACER et c'est terminé pour cette \"POV\" valeur !!!", "warning")
 
