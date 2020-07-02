@@ -17,5 +17,5 @@ obj_mon_application.secret_key = '_vogonAmiral_)?^'
 from APP_hackerspace import routes
 from APP_hackerspace.coordonnees import routes_gestion_coordonnees
 from APP_hackerspace.personne import routes_gestion_personne
-from APP_hackerspace.personne_FILMS import routes_gestion_personne_films
+# from APP_hackerspace.personne_FILMS import routes_gestion_personne_films
 # from APP_hackerspace.coordonnees import routes_gestion_coordonnees
