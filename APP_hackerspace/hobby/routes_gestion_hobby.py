@@ -52,7 +52,7 @@ def hobby_afficher(order_by,id_hobby_sel):
             # raise MaBdErreurOperation(f"RGG Exception {msg_erreurs['ErreurNomBD']['message']} {erreur}")
 
     # OM 2020.04.07 Envoie la page "HTML" au serveur.
-    return render_template("genres/genres_afficher.html", data=data_genres)
+    return render_template("hobby/hobby_afficher.html", data=data_genres)
 
 
 # ---------------------------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ def genres_add ():
             # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données.
             obj_actions_genres = GestionGenres()
             # OM 2020.04.09 Récupère le contenu du champ dans le formulaire HTML "genres_add.html"
-            name_genre = request.form['name_genre_html']
+            name_genre = request.form['name_hobby_html']
             # On ne doit pas accepter des valeurs vides, des valeurs avec des chiffres,
             # des valeurs avec des caractères qui ne sont pas des lettres.
             # Pour comprendre [A-Za-zÀ-ÖØ-öø-ÿ] il faut se reporter à la table ASCII https://www.ascii-code.com/
@@ -82,7 +82,7 @@ def genres_add ():
                 flash(f"Une entrée...incorrecte !! Pas de chiffres, de caractères spéciaux, d'espace à double, "
                       f"de double apostrophe, de double trait union et ne doit pas être vide.", "danger")
                 # On doit afficher à nouveau le formulaire "genres_add.html" à cause des erreurs de "claviotage"
-                return render_template("genres/genres_add.html")
+                return render_template("hobby/hobby_add.html")
             else:
 
                 # Constitution d'un dictionnaire et insertion dans la BD
@@ -119,7 +119,7 @@ def genres_add ():
             raise MaBdErreurConnexion(
                 f"RGG Exception {msg_erreurs['ErreurConnexionBD']['message']} et son status {msg_erreurs['ErreurConnexionBD']['status']}")
     # OM 2020.04.07 Envoie la page "HTML" au serveur.
-    return render_template("genres/genres_add.html")
+    return render_template("hobby/hobby_add.html")
 
 
 # ---------------------------------------------------------------------------------------------------
@@ -344,4 +344,4 @@ def genres_delete ():
                 flash(f"Erreur genres_delete {erreur.args[0], erreur.args[1]}", "danger")
 
             # OM 2019.04.02 Envoie la page "HTML" au serveur.
-    return render_template('genres/genres_afficher.html', data=data_genres)
+    return render_template('hobby/hobby_afficher.html', data=data_genres)
