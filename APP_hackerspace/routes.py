@@ -19,7 +19,7 @@ def home_dans_routes_pour_exemple():
 # OM 2020.04.09 Pour une démonstration du traitement d'erreurs avec "raise"
 # Pour tester cette fonction: http://127.0.0.1:5005/taillepersonne
 @obj_mon_application.route('/taillepersonne')
-def personnes_taille_dict():
+def personne_taille_dict():
     # DEBUG bon marché : Pour afficher dans la console les valeurs des erreurs "customisées"
     # dans le fichier "DATABASE/erreurs.py" et le type de ces valeurs.
     print("msg_erreurs ", msg_erreurs, "type msg_erreurs ",type(msg_erreurs))
@@ -35,7 +35,7 @@ def personnes_taille_dict():
     print("val dans le dict ", msg_erreurs['ErreurDictionnaire'])
 
     # Défini un petit dictionnaire
-    taille_personnes_dict = {"OM" : 194, "Gégé" : 175, "Hugo" : 163}
+    taille_personne_dict = {"OM" : 194, "Gégé" : 175, "Hugo" : 163}
     #
     # OM 2020.04.09 Pour vos essais, il suffit d'enlever le # pour voir comment fonctionne pratiquement
     # le traitement de l'erreur.
@@ -49,7 +49,7 @@ def personnes_taille_dict():
 
     try:
         # Tout se passe normalement
-        print(f'{nom_personne} mesure {taille_personnes_dict[nom_personne]} [cm]')
+        print(f'{nom_personne} mesure {taille_personne_dict[nom_personne]} [cm]')
     except KeyError as erreur:
         # Une personne ne se trouve pas dans le dictionnaire
         # DEBUG bon marché : Pour afficher un message d'erreur dans la console

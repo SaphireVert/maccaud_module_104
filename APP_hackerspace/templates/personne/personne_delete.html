@@ -1,21 +1,27 @@
 {% extends "base.html" %}
-{% block title %}DELETE sexe{% endblock %}
+{% block title %}DELETE personne{% endblock %}
 {% block body %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-				Effacer ce sexe.
+				Effacer ce personne.
 			</p>
-			<form method="POST" action="{{ url_for('sexe_delete') }}">
+			<form method="POST" action="{{ url_for('personne_delete') }}">
                 <table class="table table-bordered table-sm">
                     <thead>
                         <tr>
                             <th>
-                                id sexe
+                                id personne
                             </th>
                             <th>
-                                sexe
+                                nom
+                            </th>
+                            <th>
+                                prénom
+                            </th>
+                            <th>
+                                date de naissance
                             </th>
                         </tr>
                     </thead>
@@ -23,10 +29,16 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="hidden" name="id_sexe_delete_html" value="{{ row.id_sexe }}"/>
+																	{{ row.id_personne }}
                                 </td>
                                 <td>
-                                    {{ row.intitule_sexe }}
+                                    {{ row.nom }}
+                                </td>
+                                <td>
+                                    {{ row.prenom }}
+                                </td>
+                                <td>
+                                    {{ row.date_naissance }}
                                 </td>
                                 <td>
                                     <button class="btn btn-danger" type="submit">EFFACER</button>

@@ -6,7 +6,7 @@
     <title>{% block title %}Mon beau projet{% endblock %}</title>
 
 	<!-- Bootstrap CSS en local -->
-    <!-- OM 2020.05.04 OM JE PREFERE GARDER MES FICHIERS CSS ET JS DANS UN REPERTOIRE "EN LOCAL" 
+    <!-- OM 2020.05.04 OM JE PREFERE GARDER MES FICHIERS CSS ET JS DANS UN REPERTOIRE "EN LOCAL"
         SINON ON EST TOUJOURS DEPENDANT D'UNE LIAISON A L'INTERNET. -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="{{ url_for('static', filename='js/jquery-3.4.1.slim.min.js') }}"></script>
@@ -40,31 +40,30 @@
 <!-- Navigation -->
 <div class="container">
 	<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-	<a class="navbar-brand" href="{{ url_for('home_dans_routes_pour_exemple') }}">MOD 104 OM EPSIC</a>
+	<a class="navbar-brand" href="{{ url_for('home_dans_routes_pour_exemple') }}">JC module 104</a>
 	<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<div class="collapse navbar-collapse" id="navbarResponsive">
 		<ul class="navbar-nav ml-auto">
 		  <li class="nav-item">
-<!--		Afficher la liste des sexe dans l'ordre (ASC) et tous les sexe (0)-->
-			<a class="nav-link" href="{{ url_for('sexe_afficher', order_by='ASC', id_sexe_sel=0) }}">sexe</a>
+<!--		Afficher la liste des personne dans l'ordre (ASC) et tous les personne (0)-->
+        <a class="nav-link" href="{{ url_for('hobby_afficher', order_by='ASC', id_hobby_sel=0) }}">hobby</a>
 		  </li>
-		  <li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			  Films
-			</a>
-			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-			  <a class="dropdown-item" href="{{ url_for('films_afficher') }}">Films</a>
-			  <a class="dropdown-item" href="{{ url_for('sexe_films_afficher_concat', id_film_sel=0) }}">Films et sexe</a>
-			</div>
+		  <li class="nav-item">
+<!--		Afficher la liste des personne dans l'ordre (ASC) et tous les personne (0)-->
+        <a class="nav-link" href="{{ url_for('hobby_personne_afficher_concat', id_personne_sel=0) }}">personne et hobby</a>
+		  </li>
+		  <li class="nav-item">
+<!--		Afficher la liste des personne dans l'ordre (ASC) et tous les personne (0)-->
+        <a class="nav-link" href="{{ url_for('personne_afficher', order_by='ASC', id_personne_sel=0) }}">personne</a>
 		  </li>
 		  <li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			  Autres démos
 			</a>
 			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-			  <a class="dropdown-item" href="{{ url_for('personnes_taille_dict') }}">Démo pour les ERREURS</a>
+			  <a class="dropdown-item" href="{{ url_for('personne_taille_dict') }}">Démo pour les ERREURS</a>
 			  <a class="dropdown-item" href="404.html">404</a>
 			</div>
 		  </li>

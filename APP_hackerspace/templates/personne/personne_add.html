@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} Ajouter un personne{% endblock %}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<p>
+				Clavioter une nouveau personne
+			</p>
+			<form method="POST">
+				<div class="form-group">
+					<label for="Nom_personne">
+						Nom personne
+					</label>
+					<input type ="text" class="form-control" name="name_personne_html" />
+                    <label for="prenom_personne">
+						Prénom personne
+					</label>
+					<input type ="text" class="form-control" name="prenom_personne_html" />
+                    <label for="prenom_personne">
+						Date de naissance personne
+					</label>
+					<input type ="text" class="form-control" name="date_naissance_personne_html" />
+				</div>
+				<button type="submit" class="btn btn-primary">
+					Enregistrer le personne
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

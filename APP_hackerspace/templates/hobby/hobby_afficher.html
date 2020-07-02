@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block title %} Afficher sexe {% endblock %}
+{% block title %} Afficher hobby {% endblock %}
 {% block body %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-				sexe à disposition.
+				hobby à disposition.
 			</p>
             <table class="table table-bordered table-sm">
             {% if data %}
@@ -15,7 +15,7 @@
                             id
                         </th>
                         <th class="align-middle">
-                            sexe
+                            hobby
                         </th>
                         <th class="align-middle">
 
@@ -34,19 +34,19 @@
 				<tbody>
 					<tr>
 						<td class="align-middle">
-							{{ row.id_sexe }}
+							{{ row.id_hobby }}
 						</td>
 						<td class="align-middle">
-							{{ row.sexe }}
+							{{ row.nom_hobby }}
 						</td>
 						<td class="text-center" class="align-middle">
-							<a class="btn btn-primary" href="{{ url_for('sexe_add') }}" role="button">Ajouter</a>
+							<a class="btn btn-primary" href="{{ url_for('hobby_add') }}" role="button">Ajouter</a>
 						</td>
 						<td class="text-center" class="align-middle">
-							<a class="btn btn-warning" href="{{ url_for('sexe_edit', id_sexe_edit_html=row.id_sexe) }}" role="button">Edit</a>
+							<a class="btn btn-warning" href="{{ url_for('hobby_edit', id_hobby_edit_html=row.id_hobby) }}" role="button">Edit</a>
 						</td>
 						<td class="text-center" class="align-middle">
-							<a class="btn btn-danger" href="{{ url_for('sexe_select_delete', id_sexe_delete_html=row.id_sexe) }}" role="button">Delete</a>
+							<a class="btn btn-danger" href="{{ url_for('hobby_select_delete', id_hobby_delete_html=row.id_hobby) }}" role="button">Delete</a>
 						</td>
 					</tr>
 				</tbody>
@@ -54,10 +54,10 @@
 				<tbody>
 					<tr>
 						<td>
-							Aucun sexe.
+							Aucun hobby.
 						</td>
 						<td>
-							<a class="btn btn-primary" href="{{ url_for('sexe_add') }}" role="button">Ajouter</a>
+							<a class="btn btn-primary" href="{{ url_for('hobby_add') }}" role="button">Ajouter</a>
 						</td>
 					</tr>
 				</tbody>
@@ -67,4 +67,3 @@
 	</div>
 </div>
 {% endblock %}
-

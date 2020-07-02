@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Edit hobby{% endblock %}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<p>
+				Modifier ce hobby.
+			</p>
+			<form method="POST" action="{{ url_for('hobby_update') }}">
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>
+                                id hobby
+                            </th>
+                            <th>
+                                hobby
+                            </th>
+                        </tr>
+                    </thead>
+                    {% for row in data %}
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="id_hobby_edit_html" value="{{ row.id_hobby }}"/>
+                                </td>
+                                <td>
+                                    <input type = "text" name = "name_edit_nom_hobby_html" value="{{ row.nom_hobby }}"/>
+                                </td>
+                                <td>
+                                    <button class="btn btn-warning" type="submit">Update</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    {% endfor %}
+                </table>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

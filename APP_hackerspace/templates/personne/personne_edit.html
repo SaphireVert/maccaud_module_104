@@ -1,32 +1,44 @@
 {% extends "base.html" %}
-{% block title %}Edit sexe{% endblock %}
+{% block title %}Edit personne{% endblock %}
 {% block body %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-				Modifier ce sexe.
+				Modifier ce personne.
 			</p>
-			<form method="POST" action="{{ url_for('sexe_update') }}">
+			<form method="POST" action="{{ url_for('personne_update') }}">
                 <table class="table table-bordered table-sm">
                     <thead>
                         <tr>
                             <th>
-                                id sexe
+                                id personne
                             </th>
                             <th>
-                                sexe
+                                nom
+                            </th>
+                            <th>
+                                prénom
+                            </th>
+                            <th>
+                                date de naissance
                             </th>
                         </tr>
                     </thead>
                     {% for row in data %}
                         <tbody>
                             <tr>
+																<td class="align-middle">
+																	{{ row.id_personne }}
+																</td>
                                 <td>
-                                    <input type="hidden" name="id_sexe_edit_html" value="{{ row.id_sexe }}"/>
+                                    <input type = "text" name = "name_edit_intitule_personne_html" value="{{ row.nom }}"/>
                                 </td>
                                 <td>
-                                    <input type = "text" name = "name_edit_intitule_sexe_html" value="{{ row.intitule_sexe }}"/>
+                                    <input type = "text" name = "prenom_personne_edit_html" value="{{ row.prenom }}"/>
+                                </td>
+                                <td>
+                                    <input type = "text" name = "date_naissance_personne_edit_html" value="{{ row.date_naissance }}"/>
                                 </td>
                                 <td>
                                     <button class="btn btn-warning" type="submit">Update</button>

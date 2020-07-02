@@ -39,7 +39,7 @@ def conn_internal_error(error):
 
 
 # OM 2020.04.09 Pour une démonstration "hors projet"
-# Voir .... le fichier "routes.py" dans la fonction "personnes_taille_dict()"
+# Voir .... le fichier "routes.py" dans la fonction "personne_taille_dict()"
 # Dès qu'il y a un erreur "KeyError" dans le bloc try..except
 # il vient "s'échouer"...ici
 # il est possible de définir et de personnaliser chaque erreur comme on le désire
