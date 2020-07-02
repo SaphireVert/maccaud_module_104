@@ -21,7 +21,7 @@ class GestionGenres():
             raise MaBdErreurConnexion(f"{msg_erreurs['ErreurConnexionBD']['message']} {erreur.args[0]}")
         print("Classe constructeur GestionGenres ")
 
-    def genres_afficher_data (self, valeur_order_by, id_personne_coordonnees_sel):
+    def genres_afficher_data (self, valeur_order_by, id_hobby_sel):
         try:
             print("valeur_order_by ", valeur_order_by, type(valeur_order_by))
 
@@ -29,7 +29,7 @@ class GestionGenres():
             with MaBaseDeDonnee().connexion_bd.cursor() as mc_afficher:
                 # Afficher soit la liste des genres dans l'ordre inverse ou simplement le genre sélectionné
                 # par l'action edit
-                if valeur_order_by == "ASC" and id_personne_coordonnees_sel == 0:
+                if valeur_order_by == "ASC" and id_hobby_sel == 0:
                     strsql_genres_afficher = """SELECT id_genre, intitule_genre FROM t_genres ORDER BY id_genre ASC"""
                     mc_afficher.execute(strsql_genres_afficher)
                 elif valeur_order_by == "ASC":
@@ -38,10 +38,10 @@ class GestionGenres():
                     # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
                     # donc, je précise les champs à afficher
                     # Constitution d'un dictionnaire pour associer l'id du genre sélectionné avec un nom de variable
-                    valeur_id_personne_coordonnees_selected_dictionnaire = {"value_id_personne_coordonnees_selected": id_personne_coordonnees_sel}
-                    strsql_genres_afficher = """SELECT id_genre, intitule_genre FROM t_genres  WHERE id_genre = %(value_id_personne_coordonnees_selected)s"""
+                    valeur_id_hobby_selected_dictionnaire = {"value_id_hobby_selected": id_hobby_sel}
+                    strsql_genres_afficher = """SELECT id_genre, intitule_genre FROM t_genres  WHERE id_genre = %(value_id_hobby_selected)s"""
                     # Envoi de la commande MySql
-                    mc_afficher.execute(strsql_genres_afficher, valeur_id_personne_coordonnees_selected_dictionnaire)
+                    mc_afficher.execute(strsql_genres_afficher, valeur_id_hobby_selected_dictionnaire)
                 else:
                     strsql_genres_afficher = """SELECT id_genre, intitule_genre FROM t_genres ORDER BY id_genre DESC"""
                     # Envoi de la commande MySql
