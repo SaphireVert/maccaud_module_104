@@ -32,19 +32,19 @@
 			<tbody>
 				<tr>
 					  <th class="align-middle">
-						  {{ row.id_personne }}
+						  <!-- {{ row.id_personne }} -->
 					  </th>
 					  <th class="align-middle">
-						{{ row.nom }}
+						<!-- {{ row.nom }} -->
 					  </th>
 					  <th class="align-middle">
-						{{ row.prenom|default("", True) }}
+						<!-- {{ row.prenom|default("", True) }} -->
 					  </th>
 					  <th class="align-middle">
-						{{ row.date_naissance|default("", True) }}
+						<!-- {{ row.date_naissance|default("", True) }} -->
 					  </th>
 					  <th class="align-middle">
-						{{ row.date_naissance|default("", True) }}
+						<!-- {{ row.date_naissance|default("", True) }} -->
 					  </th>
 					  <th class="align-middle">
 					  </th>
@@ -62,7 +62,7 @@
 							<a class="btn btn-warning" href="{{ url_for('gf_edit_genre_film_selected', id_personne_genres_edit_html=row.id_personne) }}" role="button">Modifier</a>
 						</td>
 						<td class="align-middle" colspan="5">
-							{{ row.GenresFilms|default("PAS DE GENRES", True) }}
+							<!-- {{ row.HobbyPersonne|default("PAS DE GENRES", True) }} -->
 						</td>
 					</tr>
 				</tr>

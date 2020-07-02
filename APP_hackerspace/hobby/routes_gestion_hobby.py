@@ -276,11 +276,11 @@ def hobby_select_delete ():
 
             # OM 2019.04.02 La commande MySql est envoyée à la BD
             data_id_hobby, films_associes_hobby_delete  = obj_actions_hobby.delete_select_hobby_data(valeur_delete_dictionnaire)
-            print("----------------------------------------")
-            print(data_id_hobby)
-            print("----------------------------------------")
-            print(films_associes_hobby_delete)
-            print()
+            # print("----------------------------------------")
+            # print(data_id_hobby)
+            # print("----------------------------------------")
+            # print(films_associes_hobby_delete)
+            # print()
             print("data_films_attribue_hobby_delete ",films_associes_hobby_delete," data_id_hobby ",data_id_hobby)
             flash(f"EFFACER et c'est terminé pour cette \"POV\" valeur !!!", "warning")
 

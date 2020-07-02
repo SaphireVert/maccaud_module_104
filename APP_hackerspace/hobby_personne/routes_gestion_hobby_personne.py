@@ -4,7 +4,7 @@
 from flask import render_template, request, flash, session
 from APP_hackerspace import obj_mon_application
 from APP_hackerspace.hobby.data_gestion_hobby import Gestionhobby
-from APP_hackerspace.hobby_personne.data_gestion_hobby_personne import GestionGenresFilms
+from APP_hackerspace.hobby_personne.data_gestion_hobby_personne import GestionHobbyPersonne
 
 
 # ---------------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ def hobby_personne_afficher_concat (id_personne_sel):
     if request.method == "GET":
         try:
             # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données.
-            obj_actions_genres = GestionGenresFilms()
+            obj_actions_genres = GestionHobbyPersonne()
             # Récupère les données grâce à une requête MySql définie dans la classe GestionGenres()
             # Fichier data_gestion_genres.py
             data_hobby_personne_afficher_concat = obj_actions_genres.hobby_personne_afficher_data_concat(id_personne_sel)
@@ -27,7 +27,7 @@ def hobby_personne_afficher_concat (id_personne_sel):
             # Différencier les messages si la table est vide.
             if data_hobby_personne_afficher_concat:
                 # OM 2020.04.09 La ligne ci-dessous permet de donner un sentiment rassurant aux utilisateurs.
-                flash(f"Données genres affichés dans GenresFilms!!", "success")
+                flash(f"Données genres affichés dans HobbyPersonne!!", "success")
             else:
                 flash(f"""Le film demandé n'existe pas. Ou la table "hobby_personne" est vide. !!""", "warning")
         except Exception as erreur:
@@ -39,6 +39,7 @@ def hobby_personne_afficher_concat (id_personne_sel):
             # raise MaBdErreurOperation(f"RGG Exception {msg_erreurs['ErreurNomBD']['message']} {erreur}")
 
     # OM 2020.04.21 Envoie la page "HTML" au serveur.
+    print("-----------------------------------------")
     return render_template("hobby_personne/hobby_personne_afficher.html",
                            data=data_hobby_personne_afficher_concat)
 
@@ -62,7 +63,7 @@ def gf_edit_genre_film_selected ():
             data_genres_all = obj_actions_genres.genres_afficher_data('ASC', 0)
 
             # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données de la table intermédiaire.
-            obj_actions_genres = GestionGenresFilms()
+            obj_actions_genres = GestionHobbyPersonne()
 
             # OM 2020.04.21 Récupère la valeur de "id_personne" du formulaire html "hobby_personne_afficher.html"
             # l'utilisateur clique sur le lien "Modifier genres de ce film" et on récupère la valeur de "id_personne" grâce à la variable "id_personne_genres_edit_html"
@@ -77,7 +78,7 @@ def gf_edit_genre_film_selected ():
             # Constitution d'un dictionnaire pour associer l'id du film sélectionné avec un nom de variable
             valeur_id_personne_selected_dictionnaire = {"value_id_personne_selected": id_personne_genres_edit}
 
-            # Récupère les données grâce à 3 requêtes MySql définie dans la classe GestionGenresFilms()
+            # Récupère les données grâce à 3 requêtes MySql définie dans la classe GestionHobbyPersonne()
             # 1) Sélection du film choisi
             # 2) Sélection des genres "déjà" attribués pour le film.
             # 3) Sélection des genres "pas encore" attribués pour le film choisi.
@@ -126,7 +127,7 @@ def gf_edit_genre_film_selected ():
                 flash(f"""Le film demandé n'existe pas. Ou la table "hobby_personne" est vide. !!""", "warning")
             else:
                 # OM 2020.04.09 La ligne ci-dessous permet de donner un sentiment rassurant aux utilisateurs.
-                flash(f"Données genres affichées dans GenresFilms!!", "success")
+                flash(f"Données genres affichées dans HobbyPersonne!!", "success")
 
         except Exception as erreur:
             print(f"RGGF Erreur générale.")
@@ -195,7 +196,7 @@ def gf_update_genre_film_selected ():
             print("lst_diff_genres_insert_a ", lst_diff_genres_insert_a)
 
             # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données.
-            obj_actions_genres = GestionGenresFilms()
+            obj_actions_genres = GestionHobbyPersonne()
 
             # Pour le film sélectionné, parcourir la liste des genres à INSÉRER dans la "hobby_personne".
             # Si la liste est vide, la boucle n'est pas parcourue.
@@ -203,7 +204,7 @@ def gf_update_genre_film_selected ():
                 # Constitution d'un dictionnaire pour associer l'id du film sélectionné avec un nom de variable
                 # et "id_hobby_ins" (l'id du genre dans la liste) associé à une variable.
                 valeurs_film_sel_genre_sel_dictionnaire = {"value_FK_personne": id_personne_selected,
-                                                           "value_fk_genre": id_hobby_ins}
+                                                           "value_FK_hobby": id_hobby_ins}
                 # Insérer une association entre un(des) genre(s) et le film sélectionner.
                 obj_actions_genres.hobby_personne_add(valeurs_film_sel_genre_sel_dictionnaire)
 
@@ -213,7 +214,7 @@ def gf_update_genre_film_selected ():
                 # Constitution d'un dictionnaire pour associer l'id du film sélectionné avec un nom de variable
                 # et "id_hobby_del" (l'id du genre dans la liste) associé à une variable.
                 valeurs_film_sel_genre_sel_dictionnaire = {"value_FK_personne": id_personne_selected,
-                                                           "value_fk_genre": id_hobby_del}
+                                                           "value_FK_hobby": id_hobby_del}
                 # Effacer une association entre un(des) genre(s) et le film sélectionner.
                 obj_actions_genres.hobby_personne_delete(valeurs_film_sel_genre_sel_dictionnaire)
 
@@ -230,7 +231,7 @@ def gf_update_genre_film_selected ():
                 flash(f"""Le film demandé n'existe pas. Ou la table "hobby_personne" est vide. !!""", "warning")
             else:
                 # OM 2020.04.09 La ligne ci-dessous permet de donner un sentiment rassurant aux utilisateurs.
-                flash(f"Données genres affichées dans GenresFilms!!", "success")
+                flash(f"Données genres affichées dans HobbyPersonne!!", "success")
 
         except Exception as erreur:
             print(f"RGGF Erreur générale.")

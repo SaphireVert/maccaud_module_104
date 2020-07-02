@@ -6,7 +6,7 @@ from APP_hackerspace.DATABASE.connect_db_context_manager import MaBaseDeDonnee
 from APP_hackerspace.DATABASE.erreurs import *
 
 
-class GestionGenresFilms():
+class GestionHobbyPersonne():
     def __init__ (self):
         try:
             # DEBUG bon marché : Pour afficher un message dans la console.
@@ -17,10 +17,10 @@ class GestionGenresFilms():
         except Exception as erreur:
             flash("Dans Gestion genres films ...terrible erreur, il faut connecter une base de donnée", "danger")
             # DEBUG bon marché : Pour afficher un message dans la console.
-            print(f"Exception grave Classe constructeur GestionGenresFilms {erreur.args[0]}")
+            print(f"Exception grave Classe constructeur GestionHobbyPersonne {erreur.args[0]}")
             # Ainsi on peut avoir un message d'erreur personnalisé.
             raise MaBdErreurConnexion(f"{msg_erreurs['ErreurConnexionBD']['message']} {erreur.args[0]}")
-        print("Classe constructeur GestionGenresFilms ")
+        print("Classe constructeur GestionHobbyPersonne ")
 
     def genres_afficher_data (self):
         try:
@@ -60,20 +60,20 @@ class GestionGenresFilms():
             # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
             # donc, je précise les champs à afficher
 
-            strsql_film_selected = """SELECT id_personne, nom, prenom, date_naissance, GROUP_CONCAT(id_hobby) as GenresFilms FROM hobby_personne AS T1
+            strsql_film_selected = """SELECT id_personne, nom, prenom, date_naissance, GROUP_CONCAT(id_hobby) as HobbyPersonne FROM hobby_personne AS T1
                                         INNER JOIN personne AS T2 ON T2.id_personne = T1.FK_personne
-                                        INNER JOIN hobby AS T3 ON T3.id_hobby = T1.fk_genre
+                                        INNER JOIN hobby AS T3 ON T3.id_hobby = T1.FK_hobby
                                         WHERE id_personne = %(value_id_personne_selected)s"""
 
             strsql_hobby_personne_non_attribues = """SELECT id_hobby, nom_hobby FROM hobby
-                                                    WHERE id_hobby not in(SELECT id_hobby as idGenresFilms FROM hobby_personne AS T1
+                                                    WHERE id_hobby not in(SELECT id_hobby as idHobbyPersonne FROM hobby_personne AS T1
                                                     INNER JOIN personne AS T2 ON T2.id_personne = T1.FK_personne
-                                                    INNER JOIN hobby AS T3 ON T3.id_hobby = T1.fk_genre
+                                                    INNER JOIN hobby AS T3 ON T3.id_hobby = T1.FK_hobby
                                                     WHERE id_personne = %(value_id_personne_selected)s)"""
 
             strsql_hobby_personne_attribues = """SELECT id_personne, id_hobby, nom_hobby FROM hobby_personne AS T1
                                             INNER JOIN personne AS T2 ON T2.id_personne = T1.FK_personne
-                                            INNER JOIN hobby AS T3 ON T3.id_hobby = T1.fk_genre
+                                            INNER JOIN hobby AS T3 ON T3.id_hobby = T1.FK_hobby
                                             WHERE id_personne = %(value_id_personne_selected)s"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
@@ -124,9 +124,9 @@ class GestionGenresFilms():
             # donc, je précise les champs à afficher
 
             strsql_hobby_personne_afficher_data_concat = """SELECT id_personne, nom, prenom, date_naissance,
-                                                            GROUP_CONCAT(nom_hobby) as GenresFilms FROM hobby_personne AS T1
+                                                            GROUP_CONCAT(nom_hobby) as HobbyPersonne FROM hobby_personne AS T1
                                                             RIGHT JOIN personne AS T2 ON T2.id_personne = T1.FK_personne
-                                                            LEFT JOIN hobby AS T3 ON T3.id_hobby = T1.fk_genre
+                                                            LEFT JOIN hobby AS T3 ON T3.id_hobby = T1.FK_hobby
                                                             GROUP BY id_personne"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
@@ -170,8 +170,8 @@ class GestionGenresFilms():
             print(valeurs_insertion_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Insérer une (des) nouvelle(s) association(s) entre "id_personne" et "id_hobby" dans la "t_genre_film"
-            strsql_insert_genre_film = """INSERT INTO hobby_personne (id_hobby_film, fk_genre, FK_personne)
-                                            VALUES (NULL, %(value_fk_genre)s, %(value_FK_personne)s)"""
+            strsql_insert_genre_film = """INSERT INTO hobby_personne (id_hobby_film, FK_hobby, FK_personne)
+                                            VALUES (NULL, %(value_FK_hobby)s, %(value_FK_personne)s)"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -192,7 +192,7 @@ class GestionGenresFilms():
             print(valeurs_insertion_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Effacer une (des) association(s) existantes entre "id_personne" et "id_hobby" dans la "t_genre_film"
-            strsql_delete_genre_film = """DELETE FROM hobby_personne WHERE fk_genre = %(value_fk_genre)s AND FK_personne = %(value_FK_personne)s"""
+            strsql_delete_genre_film = """DELETE FROM hobby_personne WHERE FK_hobby = %(value_FK_hobby)s AND FK_personne = %(value_FK_personne)s"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
