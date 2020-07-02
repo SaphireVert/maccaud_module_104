@@ -50,14 +50,13 @@
 <!--		Afficher la liste des personne dans l'ordre (ASC) et tous les personne (0)-->
 			<a class="nav-link" href="{{ url_for('personne_afficher', order_by='ASC', id_personne_sel=0) }}">personne</a>
 		  </li>
-		  <li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			  Films
-			</a>
-			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-			  <a class="dropdown-item" href="{{ url_for('coordonnees_afficher') }}">Films</a>
-			  <a class="dropdown-item" href="{{ url_for('personne_coordonnees_afficher_concat', id_coordonnees_sel=0) }}">Films et personne</a>
-			</div>
+		  <li class="nav-item">
+<!--		Afficher la liste des personne dans l'ordre (ASC) et tous les personne (0)-->
+			<a class="nav-link" href="{{ url_for('personne_afficher', order_by='ASC', id_personne_sel=0) }}">personne</a>
+		  </li>
+		  <li class="nav-item">
+<!--		Afficher la liste des personne dans l'ordre (ASC) et tous les personne (0)-->
+			<a class="nav-link" href="{{ url_for('personne_afficher', order_by='ASC', id_personne_sel=0) }}">personne</a>
 		  </li>
 		  <li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

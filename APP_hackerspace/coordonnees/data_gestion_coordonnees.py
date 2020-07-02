@@ -1,8 +1,8 @@
 # data_gestion_genres.py
-# OM 2020.04.09 Permet de gérer (CRUD) les données de la table "t_genres"
+# OM 2020.04.09 Permet de gérer (CRUD) les données de la table "coordonnees"
 from flask import flash
-from APP_FILMS.DATABASE.connect_db_context_manager import MaBaseDeDonnee
-from APP_FILMS.DATABASE.erreurs import *
+from APP_hackerspace.DATABASE.connect_db_context_manager import MaBaseDeDonnee
+from APP_hackerspace.DATABASE.erreurs import *
 
 
 class GestionGenres():
@@ -21,7 +21,7 @@ class GestionGenres():
             raise MaBdErreurConnexion(f"{msg_erreurs['ErreurConnexionBD']['message']} {erreur.args[0]}")
         print("Classe constructeur GestionGenres ")
 
-    def genres_afficher_data (self, valeur_order_by, id_genre_sel):
+    def coordonnees_afficher_data (self, valeur_order_by, id_genre_sel):
         try:
             print("valeur_order_by ", valeur_order_by, type(valeur_order_by))
 
@@ -30,22 +30,22 @@ class GestionGenres():
                 # Afficher soit la liste des genres dans l'ordre inverse ou simplement le genre sélectionné
                 # par l'action edit
                 if valeur_order_by == "ASC" and id_genre_sel == 0:
-                    strsql_genres_afficher = """SELECT id_genre, intitule_genre FROM t_genres ORDER BY id_genre ASC"""
-                    mc_afficher.execute(strsql_genres_afficher)
+                    strsql_coordonnees_afficher = """SELECT id_genre, intitule_genre FROM coordonnees ORDER BY id_genre ASC"""
+                    mc_afficher.execute(strsql_coordonnees_afficher)
                 elif valeur_order_by == "ASC":
                     # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
-                    # la commande MySql classique est "SELECT * FROM t_genres"
+                    # la commande MySql classique est "SELECT * FROM coordonnees"
                     # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
                     # donc, je précise les champs à afficher
                     # Constitution d'un dictionnaire pour associer l'id du genre sélectionné avec un nom de variable
                     valeur_id_genre_selected_dictionnaire = {"value_id_genre_selected": id_genre_sel}
-                    strsql_genres_afficher = """SELECT id_genre, intitule_genre FROM t_genres  WHERE id_genre = %(value_id_genre_selected)s"""
+                    strsql_coordonnees_afficher = """SELECT id_genre, intitule_genre FROM coordonnees  WHERE id_genre = %(value_id_genre_selected)s"""
                     # Envoi de la commande MySql
-                    mc_afficher.execute(strsql_genres_afficher, valeur_id_genre_selected_dictionnaire)
+                    mc_afficher.execute(strsql_coordonnees_afficher, valeur_id_genre_selected_dictionnaire)
                 else:
-                    strsql_genres_afficher = """SELECT id_genre, intitule_genre FROM t_genres ORDER BY id_genre DESC"""
+                    strsql_coordonnees_afficher = """SELECT id_genre, intitule_genre FROM coordonnees ORDER BY id_genre DESC"""
                     # Envoi de la commande MySql
-                    mc_afficher.execute(strsql_genres_afficher)
+                    mc_afficher.execute(strsql_coordonnees_afficher)
                 # Récupère les données de la requête.
                 data_genres = mc_afficher.fetchall()
                 # Affichage dans la console
@@ -68,7 +68,7 @@ class GestionGenres():
         try:
             print(valeurs_insertion_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
-            strsql_insert_genre = """INSERT INTO t_genres (id_genre,intitule_genre) VALUES (NULL,%(value_intitule_genre)s)"""
+            strsql_insert_genre = """INSERT INTO coordonnees (id_genre,intitule_genre) VALUES (NULL,%(value_intitule_genre)s)"""
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
             # ainsi quand elle aura terminé l'insertion des données le destructeur de la classe "MaBaseDeDonnee"
@@ -88,7 +88,7 @@ class GestionGenres():
             print(valeur_id_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Commande MySql pour afficher le genre sélectionné dans le tableau dans le formulaire HTML
-            str_sql_id_genre = "SELECT id_genre, intitule_genre FROM t_genres WHERE id_genre = %(value_id_genre)s"
+            str_sql_id_genre = "SELECT id_genre, intitule_genre FROM coordonnees WHERE id_genre = %(value_id_genre)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -116,7 +116,7 @@ class GestionGenres():
             # OM 2019.04.02 Commande MySql pour la MODIFICATION de la valeur "CLAVIOTTEE" dans le champ "nameEditIntituleGenreHTML" du form HTML "GenresEdit.html"
             # le "%s" permet d'éviter des injections SQL "simples"
             # <td><input type = "text" name = "nameEditIntituleGenreHTML" value="{{ row.intitule_genre }}"/></td>
-            str_sql_update_intitulegenre = "UPDATE t_genres SET intitule_genre = %(value_name_genre)s WHERE id_genre = %(value_id_genre)s"
+            str_sql_update_intitulegenre = "UPDATE coordonnees SET intitule_genre = %(value_name_genre)s WHERE id_genre = %(value_id_genre)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -154,7 +154,7 @@ class GestionGenres():
 
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Commande MySql pour afficher le genre sélectionné dans le tableau dans le formulaire HTML
-            str_sql_select_id_genre = "SELECT id_genre, intitule_genre FROM t_genres WHERE id_genre = %(value_id_genre)s"
+            str_sql_select_id_genre = "SELECT id_genre, intitule_genre FROM coordonnees WHERE id_genre = %(value_id_genre)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -168,9 +168,9 @@ class GestionGenres():
 
 
             # Affiche tous les films qui ont le genre que l'utilisateur veut effacer
-            str_sql_genres_films_delete = """SELECT id_genre_film, nom_film, id_genre, intitule_genre FROM t_genres_films 
-                                            INNER JOIN t_films ON t_genres_films.fk_film = t_films.id_film
-                                            INNER JOIN t_genres ON t_genres_films.fk_genre = t_genres.id_genre
+            str_sql_genres_films_delete = """SELECT id_genre_film, nom_film, id_genre, intitule_genre FROM coordonnees_films
+                                            INNER JOIN t_films ON coordonnees_films.fk_film = t_films.id_film
+                                            INNER JOIN coordonnees ON coordonnees_films.fk_genre = coordonnees.id_genre
                                             WHERE fk_genre = %(value_id_genre)s"""
             with MaBaseDeDonnee().connexion_bd as mconn_bd:
                 with mconn_bd as mc_cur:
@@ -199,9 +199,9 @@ class GestionGenres():
             # OM 2019.04.02 Commande MySql pour EFFACER la valeur sélectionnée par le "bouton" du form HTML "GenresEdit.html"
             # le "%s" permet d'éviter des injections SQL "simples"
             # <td><input type = "text" name = "nameEditIntituleGenreHTML" value="{{ row.intitule_genre }}"/></td>
-            str_sql_delete_films_genre = """DELETE FROM t_genres_films WHERE fk_genre = %(value_id_genre)s"""
+            str_sql_delete_films_genre = """DELETE FROM coordonnees_films WHERE fk_genre = %(value_id_genre)s"""
 
-            str_sql_delete_intitulegenre = "DELETE FROM t_genres WHERE id_genre = %(value_id_genre)s"
+            str_sql_delete_intitulegenre = "DELETE FROM coordonnees WHERE id_genre = %(value_id_genre)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -229,11 +229,11 @@ class GestionGenres():
             # flash(f"Flash. Problèmes Data Gestions Genres numéro de l'erreur : {erreur}", "danger")
             if erreur.args[0] == 1451:
                 # OM 2020.04.09 Traitement spécifique de l'erreur 1451 Cannot delete or update a parent row: a foreign key constraint fails
-                # en MySql le moteur INNODB empêche d'effacer un genre qui est associé à un film dans la table intermédiaire "t_genres_films"
-                # il y a une contrainte sur les FK de la table intermédiaire "t_genres_films"
+                # en MySql le moteur INNODB empêche d'effacer un genre qui est associé à un film dans la table intermédiaire "coordonnees_films"
+                # il y a une contrainte sur les FK de la table intermédiaire "coordonnees_films"
                 # C'est une erreur à signaler à l'utilisateur de cette application WEB.
-                # flash(f"Flash. IMPOSSIBLE d'effacer !!! Ce genre est associé à des films dans la t_genres_films !!! : {erreur}", "danger")
+                # flash(f"Flash. IMPOSSIBLE d'effacer !!! Ce genre est associé à des films dans la coordonnees_films !!! : {erreur}", "danger")
                 # DEBUG bon marché : Pour afficher un message dans la console.
                 print(
-                    f"IMPOSSIBLE d'effacer !!! Ce genre est associé à des films dans la t_genres_films !!! : {erreur}")
+                    f"IMPOSSIBLE d'effacer !!! Ce genre est associé à des films dans la coordonnees_films !!! : {erreur}")
             raise MaBdErreurDelete(f"DGG Exception {msg_erreurs['ErreurDeleteContrainte']['message']} {erreur}")

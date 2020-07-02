@@ -2,22 +2,22 @@
 # OM 2020.04.06 Gestions des "routes" FLASK pour les genres.
 
 from flask import render_template, flash, redirect, url_for, request, session
-from APP_FILMS import obj_mon_application
-from APP_FILMS.GENRES.data_gestion_genres import GestionGenres
-from APP_FILMS.DATABASE.erreurs import *
+from APP_hackerspace import obj_mon_application
+from APP_hackerspace.coordonnees.data_gestion_coordonnees import GestionGenres
+from APP_hackerspace.DATABASE.erreurs import *
 # OM 2020.04.10 Pour utiliser les expressions régulières REGEX
 import re
 
 
 # ---------------------------------------------------------------------------------------------------
-# OM 2020.04.07 Définition d'une "route" /genres_afficher
+# OM 2020.04.07 Définition d'une "route" /coordonnees_afficher
 # cela va permettre de programmer les actions avant d'interagir
 # avec le navigateur par la méthode "render_template"
-# Pour tester http://127.0.0.1:5005/genres_afficher
+# Pour tester http://127.0.0.1:5005/coordonnees_afficher
 # order_by : ASC : Ascendant, DESC : Descendant
 # ---------------------------------------------------------------------------------------------------
-@obj_mon_application.route("/genres_afficher/<string:order_by>/<int:id_genre_sel>", methods=['GET', 'POST'])
-def genres_afficher(order_by,id_genre_sel):
+@obj_mon_application.route("/coordonnees_afficher/<string:order_by>/<int:id_genre_sel>", methods=['GET', 'POST'])
+def coordonnees_afficher(order_by,id_genre_sel):
     # OM 2020.04.09 Pour savoir si les données d'un formulaire sont un affichage
     # ou un envoi de donnée par des champs du formulaire HTML.
     if request.method == "GET":
@@ -27,18 +27,18 @@ def genres_afficher(order_by,id_genre_sel):
             # Récupère les données grâce à une requête MySql définie dans la classe GestionGenres()
             # Fichier data_gestion_genres.py
             # "order_by" permet de choisir l'ordre d'affichage des genres.
-            data_genres = obj_actions_genres.genres_afficher_data(order_by,id_genre_sel)
+            data_genres = obj_actions_genres.coordonnees_afficher_data(order_by,id_genre_sel)
             # DEBUG bon marché : Pour afficher un message dans la console.
             print(" data genres", data_genres, "type ", type(data_genres))
 
             # Différencier les messages si la table est vide.
             if not data_genres and id_genre_sel == 0:
-                flash("""La table "t_genres" est vide. !!""", "warning")
+                flash("""La table "coordonnees" est vide. !!""", "warning")
             elif not data_genres and id_genre_sel > 0:
                 # Si l'utilisateur change l'id_genre dans l'URL et que le genre n'existe pas,
                 flash(f"Le genre demandé n'existe pas !!", "warning")
             else:
-                # Dans tous les autres cas, c'est que la table "t_genres" est vide.
+                # Dans tous les autres cas, c'est que la table "coordonnees" est vide.
                 # OM 2020.04.09 La ligne ci-dessous permet de donner un sentiment rassurant aux utilisateurs.
                 flash(f"Données genres affichés !!", "success")
 
@@ -52,7 +52,7 @@ def genres_afficher(order_by,id_genre_sel):
             # raise MaBdErreurOperation(f"RGG Exception {msg_erreurs['ErreurNomBD']['message']} {erreur}")
 
     # OM 2020.04.07 Envoie la page "HTML" au serveur.
-    return render_template("genres/genres_afficher.html", data=data_genres)
+    return render_template("genres/coordonnees_afficher.html", data=data_genres)
 
 
 # ---------------------------------------------------------------------------------------------------
@@ -92,10 +92,10 @@ def genres_add ():
                 # OM 2019.03.25 Les 2 lignes ci-après permettent de donner un sentiment rassurant aux utilisateurs.
                 flash(f"Données insérées !!", "success")
                 print(f"Données insérées !!")
-                # On va interpréter la "route" 'genres_afficher', car l'utilisateur
+                # On va interpréter la "route" 'coordonnees_afficher', car l'utilisateur
                 # doit voir le nouveau genre qu'il vient d'insérer. Et on l'affiche de manière
                 # à voir le dernier élément inséré.
-                return redirect(url_for('genres_afficher', order_by = 'DESC', id_genre_sel=0))
+                return redirect(url_for('coordonnees_afficher', order_by = 'DESC', id_genre_sel=0))
 
         # OM 2020.04.16 ATTENTION à l'ordre des excepts, il est très important de respecter l'ordre.
         except pymysql.err.IntegrityError as erreur:
@@ -131,10 +131,10 @@ def genres_add ():
 @obj_mon_application.route('/genres_edit', methods=['POST', 'GET'])
 def genres_edit ():
     # OM 2020.04.07 Les données sont affichées dans un formulaire, l'affichage de la sélection
-    # d'une seule ligne choisie par le bouton "edit" dans le formulaire "genres_afficher.html"
+    # d'une seule ligne choisie par le bouton "edit" dans le formulaire "coordonnees_afficher.html"
     if request.method == 'GET':
         try:
-            # Récupère la valeur de "id_genre" du formulaire html "genres_afficher.html"
+            # Récupère la valeur de "id_genre" du formulaire html "coordonnees_afficher.html"
             # l'utilisateur clique sur le lien "edit" et on récupère la valeur de "id_genre"
             # grâce à la variable "id_genre_edit_html"
             # <a href="{{ url_for('genres_edit', id_genre_edit_html=row.id_genre) }}">Edit</a>
@@ -183,7 +183,7 @@ def genres_update ():
     # DEBUG bon marché : Pour afficher les méthodes et autres de la classe "flask.request"
     print(dir(request))
     # OM 2020.04.07 Les données sont affichées dans un formulaire, l'affichage de la sélection
-    # d'une seule ligne choisie par le bouton "edit" dans le formulaire "genres_afficher.html"
+    # d'une seule ligne choisie par le bouton "edit" dans le formulaire "coordonnees_afficher.html"
     # Une fois que l'utilisateur à modifié la valeur du genre alors il va appuyer sur le bouton "UPDATE"
     # donc en "POST"
     if request.method == 'POST':
@@ -237,7 +237,7 @@ def genres_update ():
                 # Message ci-après permettent de donner un sentiment rassurant aux utilisateurs.
                 flash(f"Valeur genre modifiée. ", "success")
                 # On affiche les genres avec celui qui vient d'être edité en tête de liste. (DESC)
-                return redirect(url_for('genres_afficher', order_by="ASC", id_genre_sel=id_genre_edit))
+                return redirect(url_for('coordonnees_afficher', order_by="ASC", id_genre_sel=id_genre_edit))
 
         except (Exception,
                 # pymysql.err.OperationalError,
@@ -321,21 +321,21 @@ def genres_delete ():
             # OM 2019.04.02 Envoie la page "HTML" au serveur. On passe un message d'information dans "message_html"
 
             # On affiche les genres
-            return redirect(url_for('genres_afficher',order_by="ASC",id_genre_sel=0))
+            return redirect(url_for('coordonnees_afficher',order_by="ASC",id_genre_sel=0))
 
 
 
         except (pymysql.err.OperationalError, pymysql.ProgrammingError, pymysql.InternalError, pymysql.IntegrityError,
                 TypeError) as erreur:
             # OM 2020.04.09 Traiter spécifiquement l'erreur MySql 1451
-            # Cette erreur 1451, signifie qu'on veut effacer un "genre" de films qui est associé dans "t_genres_films".
+            # Cette erreur 1451, signifie qu'on veut effacer un "genre" de films qui est associé dans "coordonnees_films".
             if erreur.args[0] == 1451:
                 # C'est une erreur à signaler à l'utilisateur de cette application WEB.
                 flash('IMPOSSIBLE d\'effacer !!! Cette valeur est associée à des films !', "warning")
                 # DEBUG bon marché : Pour afficher un message dans la console.
-                print(f"IMPOSSIBLE d'effacer !! Ce genre est associé à des films dans la t_genres_films !!! : {erreur}")
+                print(f"IMPOSSIBLE d'effacer !! Ce genre est associé à des films dans la coordonnees_films !!! : {erreur}")
                 # Afficher la liste des genres des films
-                return redirect(url_for('genres_afficher', order_by="ASC", id_genre_sel=0))
+                return redirect(url_for('coordonnees_afficher', order_by="ASC", id_genre_sel=0))
             else:
                 # Communiquer qu'une autre erreur que la 1062 est survenue.
                 # DEBUG bon marché : Pour afficher un message dans la console.
@@ -344,4 +344,4 @@ def genres_delete ():
                 flash(f"Erreur genres_delete {erreur.args[0], erreur.args[1]}", "danger")
 
             # OM 2019.04.02 Envoie la page "HTML" au serveur.
-    return render_template('genres/genres_afficher.html', data=data_genres)
+    return render_template('genres/coordonnees_afficher.html', data=data_genres)
