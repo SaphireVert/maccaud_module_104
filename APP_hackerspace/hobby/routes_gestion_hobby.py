@@ -10,13 +10,13 @@ import re
 
 
 # ---------------------------------------------------------------------------------------------------
-# OM 2020.04.07 Définition d'une "route" /genres_afficher
+# OM 2020.04.07 Définition d'une "route" /hobby_afficher
 # cela va permettre de programmer les actions avant d'interagir
 # avec le navigateur par la méthode "render_template"
-# Pour tester http://127.0.0.1:5005/genres_afficher
+# Pour tester http://127.0.0.1:5005/hobby_afficher
 # order_by : ASC : Ascendant, DESC : Descendant
 # ---------------------------------------------------------------------------------------------------
-@obj_mon_application.route("/genres_afficher/<string:order_by>/<int:id_hobby_sel>", methods=['GET', 'POST'])
+@obj_mon_application.route("/hobby_afficher/<string:order_by>/<int:id_hobby_sel>", methods=['GET', 'POST'])
 def hobby_afficher(order_by,id_hobby_sel):
     # OM 2020.04.09 Pour savoir si les données d'un formulaire sont un affichage
     # ou un envoi de donnée par des champs du formulaire HTML.
@@ -27,7 +27,7 @@ def hobby_afficher(order_by,id_hobby_sel):
             # Récupère les données grâce à une requête MySql définie dans la classe GestionGenres()
             # Fichier data_gestion_genres.py
             # "order_by" permet de choisir l'ordre d'affichage des genres.
-            data_genres = obj_actions_genres.genres_afficher_data(order_by,id_hobby_sel)
+            data_genres = obj_actions_genres.hobby_afficher_data(order_by,id_hobby_sel)
             # DEBUG bon marché : Pour afficher un message dans la console.
             print(" data genres", data_genres, "type ", type(data_genres))
 
@@ -92,7 +92,7 @@ def genres_add ():
                 # OM 2019.03.25 Les 2 lignes ci-après permettent de donner un sentiment rassurant aux utilisateurs.
                 flash(f"Données insérées !!", "success")
                 print(f"Données insérées !!")
-                # On va interpréter la "route" 'genres_afficher', car l'utilisateur
+                # On va interpréter la "route" 'hobby_afficher', car l'utilisateur
                 # doit voir le nouveau genre qu'il vient d'insérer. Et on l'affiche de manière
                 # à voir le dernier élément inséré.
                 return redirect(url_for('hobby_afficher', order_by = 'DESC', id_hobby_sel=0))
@@ -131,10 +131,10 @@ def genres_add ():
 @obj_mon_application.route('/genres_edit', methods=['POST', 'GET'])
 def genres_edit ():
     # OM 2020.04.07 Les données sont affichées dans un formulaire, l'affichage de la sélection
-    # d'une seule ligne choisie par le bouton "edit" dans le formulaire "genres_afficher.html"
+    # d'une seule ligne choisie par le bouton "edit" dans le formulaire "hobby_afficher.html"
     if request.method == 'GET':
         try:
-            # Récupère la valeur de "id_hobby" du formulaire html "genres_afficher.html"
+            # Récupère la valeur de "id_hobby" du formulaire html "hobby_afficher.html"
             # l'utilisateur clique sur le lien "edit" et on récupère la valeur de "id_hobby"
             # grâce à la variable "id_hobby_edit_html"
             # <a href="{{ url_for('genres_edit', id_hobby_edit_html=row.id_hobby) }}">Edit</a>
@@ -183,7 +183,7 @@ def hobby_update ():
     # DEBUG bon marché : Pour afficher les méthodes et autres de la classe "flask.request"
     print(dir(request))
     # OM 2020.04.07 Les données sont affichées dans un formulaire, l'affichage de la sélection
-    # d'une seule ligne choisie par le bouton "edit" dans le formulaire "genres_afficher.html"
+    # d'une seule ligne choisie par le bouton "edit" dans le formulaire "hobby_afficher.html"
     # Une fois que l'utilisateur à modifié la valeur du genre alors il va appuyer sur le bouton "UPDATE"
     # donc en "POST"
     if request.method == 'POST':
@@ -321,7 +321,7 @@ def genres_delete ():
             # OM 2019.04.02 Envoie la page "HTML" au serveur. On passe un message d'information dans "message_html"
 
             # On affiche les genres
-            return redirect(url_for('genres_afficher',order_by="ASC",id_hobby_sel=0))
+            return redirect(url_for('hobby_afficher',order_by="ASC",id_hobby_sel=0))
 
 
 
@@ -335,7 +335,7 @@ def genres_delete ():
                 # DEBUG bon marché : Pour afficher un message dans la console.
                 print(f"IMPOSSIBLE d'effacer !! Ce genre est associé à des films dans la hobby_personne !!! : {erreur}")
                 # Afficher la liste des genres des films
-                return redirect(url_for('genres_afficher', order_by="ASC", id_hobby_sel=0))
+                return redirect(url_for('hobby_afficher', order_by="ASC", id_hobby_sel=0))
             else:
                 # Communiquer qu'une autre erreur que la 1062 est survenue.
                 # DEBUG bon marché : Pour afficher un message dans la console.

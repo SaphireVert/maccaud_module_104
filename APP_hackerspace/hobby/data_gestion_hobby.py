@@ -21,7 +21,7 @@ class GestionGenres():
             raise MaBdErreurConnexion(f"{msg_erreurs['ErreurConnexionBD']['message']} {erreur.args[0]}")
         print("Classe constructeur GestionGenres ")
 
-    def genres_afficher_data (self, valeur_order_by, id_hobby_sel):
+    def hobby_afficher_data (self, valeur_order_by, id_hobby_sel):
         try:
             print("valeur_order_by ", valeur_order_by, type(valeur_order_by))
 
@@ -30,8 +30,8 @@ class GestionGenres():
                 # Afficher soit la liste des genres dans l'ordre inverse ou simplement le genre sélectionné
                 # par l'action edit
                 if valeur_order_by == "ASC" and id_hobby_sel == 0:
-                    strsql_genres_afficher = """SELECT id_hobby, nom_hobby FROM hobby ORDER BY id_hobby ASC"""
-                    mc_afficher.execute(strsql_genres_afficher)
+                    strsql_hobby_afficher = """SELECT id_hobby, nom_hobby FROM hobby ORDER BY id_hobby ASC"""
+                    mc_afficher.execute(strsql_hobby_afficher)
                 elif valeur_order_by == "ASC":
                     # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
                     # la commande MySql classique est "SELECT * FROM hobby"
@@ -39,13 +39,13 @@ class GestionGenres():
                     # donc, je précise les champs à afficher
                     # Constitution d'un dictionnaire pour associer l'id du genre sélectionné avec un nom de variable
                     valeur_id_hobby_selected_dictionnaire = {"value_id_hobby_selected": id_hobby_sel}
-                    strsql_genres_afficher = """SELECT id_hobby, nom_hobby FROM hobby  WHERE id_hobby = %(value_id_hobby_selected)s"""
+                    strsql_hobby_afficher = """SELECT id_hobby, nom_hobby FROM hobby  WHERE id_hobby = %(value_id_hobby_selected)s"""
                     # Envoi de la commande MySql
-                    mc_afficher.execute(strsql_genres_afficher, valeur_id_hobby_selected_dictionnaire)
+                    mc_afficher.execute(strsql_hobby_afficher, valeur_id_hobby_selected_dictionnaire)
                 else:
-                    strsql_genres_afficher = """SELECT id_hobby, nom_hobby FROM hobby ORDER BY id_hobby DESC"""
+                    strsql_hobby_afficher = """SELECT id_hobby, nom_hobby FROM hobby ORDER BY id_hobby DESC"""
                     # Envoi de la commande MySql
-                    mc_afficher.execute(strsql_genres_afficher)
+                    mc_afficher.execute(strsql_hobby_afficher)
                 # Récupère les données de la requête.
                 data_genres = mc_afficher.fetchall()
                 # Affichage dans la console
