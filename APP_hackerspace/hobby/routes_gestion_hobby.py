@@ -33,12 +33,12 @@ def hobby_afficher(order_by,id_hobby_sel):
 
             # Différencier les messages si la table est vide.
             if not data_genres and id_hobby_sel == 0:
-                flash("""La table "t_genres" est vide. !!""", "warning")
+                flash("""La table "hobby" est vide. !!""", "warning")
             elif not data_genres and id_hobby_sel > 0:
                 # Si l'utilisateur change l'id_genre dans l'URL et que le genre n'existe pas,
                 flash(f"Le genre demandé n'existe pas !!", "warning")
             else:
-                # Dans tous les autres cas, c'est que la table "t_genres" est vide.
+                # Dans tous les autres cas, c'est que la table "hobby" est vide.
                 # OM 2020.04.09 La ligne ci-dessous permet de donner un sentiment rassurant aux utilisateurs.
                 flash(f"Données genres affichés !!", "success")
 
@@ -328,12 +328,12 @@ def genres_delete ():
         except (pymysql.err.OperationalError, pymysql.ProgrammingError, pymysql.InternalError, pymysql.IntegrityError,
                 TypeError) as erreur:
             # OM 2020.04.09 Traiter spécifiquement l'erreur MySql 1451
-            # Cette erreur 1451, signifie qu'on veut effacer un "genre" de films qui est associé dans "t_genres_films".
+            # Cette erreur 1451, signifie qu'on veut effacer un "genre" de films qui est associé dans "hobby_films".
             if erreur.args[0] == 1451:
                 # C'est une erreur à signaler à l'utilisateur de cette application WEB.
                 flash('IMPOSSIBLE d\'effacer !!! Cette valeur est associée à des films !', "warning")
                 # DEBUG bon marché : Pour afficher un message dans la console.
-                print(f"IMPOSSIBLE d'effacer !! Ce genre est associé à des films dans la t_genres_films !!! : {erreur}")
+                print(f"IMPOSSIBLE d'effacer !! Ce genre est associé à des films dans la hobby_films !!! : {erreur}")
                 # Afficher la liste des genres des films
                 return redirect(url_for('genres_afficher', order_by="ASC", id_hobby_sel=0))
             else:
