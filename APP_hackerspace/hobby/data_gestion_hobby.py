@@ -168,8 +168,8 @@ class GestionGenres():
 
 
             # Affiche tous les films qui ont le genre que l'utilisateur veut effacer
-            str_sql_genres_films_delete = """SELECT id_hobby_film, nom_film, id_hobby, nom_hobby FROM hobby_personne
-                                            INNER JOIN personne ON hobby_personne.fk_personne = personne.id_film
+            str_sql_genres_films_delete = """SELECT id_hobby_personne, nom, id_hobby, nom_hobby FROM hobby_personne
+                                            INNER JOIN personne ON hobby_personne.fk_personne = personne.id_personne
                                             INNER JOIN hobby ON hobby_personne.fk_hobby = hobby.id_hobby
                                             WHERE fk_hobby = %(value_id_hobby)s"""
             with MaBaseDeDonnee().connexion_bd as mconn_bd:

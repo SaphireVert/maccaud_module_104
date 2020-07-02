@@ -292,7 +292,7 @@ def genres_select_delete ():
             flash(f"Erreur genres_delete {erreur.args[0], erreur.args[1]}", "danger")
 
     # Envoie la page "HTML" au serveur.
-    return render_template('genres/genres_delete.html',
+    return render_template('hobby/hobby_delete.html',
                            data=data_id_hobby,
                            data_films_associes = films_associes_genre_delete)
 
