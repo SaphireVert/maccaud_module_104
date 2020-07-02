@@ -147,6 +147,7 @@ class GestionGenres():
 
     def delete_select_genre_data (self, valeur_delete_dictionnaire):
         try:
+            print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
             print(valeur_delete_dictionnaire)
             # OM 2019.04.02 Commande MySql pour la MODIFICATION de la valeur "CLAVIOTTEE" dans le champ "nameEditIntituleGenreHTML" du form HTML "GenresEdit.html"
             # le "%s" permet d'éviter des injections SQL "simples"
@@ -165,6 +166,7 @@ class GestionGenres():
                     mc_cur.execute(str_sql_select_id_hobby, valeur_delete_dictionnaire)
                     data_one = mc_cur.fetchall()
                     print("valeur_id_dictionnaire...", data_one)
+
 
 
             # Affiche tous les films qui ont le genre que l'utilisateur veut effacer

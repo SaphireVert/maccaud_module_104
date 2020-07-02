@@ -276,6 +276,10 @@ def genres_select_delete ():
 
             # OM 2019.04.02 La commande MySql est envoyée à la BD
             data_id_hobby, films_associes_genre_delete  = obj_actions_genres.delete_select_genre_data(valeur_delete_dictionnaire)
+            print("----------------------------------------")
+            print(data_id_hobby)
+            print("----------------------------------------")
+            print(films_associes_genre_delete)
             print("data_films_attribue_genre_delete ",films_associes_genre_delete," data_id_hobby ",data_id_hobby)
             flash(f"EFFACER et c'est terminé pour cette \"POV\" valeur !!!", "warning")
 
