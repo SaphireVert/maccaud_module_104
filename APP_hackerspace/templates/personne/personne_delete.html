@@ -17,16 +17,28 @@
                             <th>
                                 nom
                             </th>
+                            <th>
+                                prénom
+                            </th>
+                            <th>
+                                date de naissance
+                            </th>
                         </tr>
                     </thead>
                     {% for row in data %}
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="hidden" name="id_personne_delete_html" value="{{ row.id_personne }}"/>
+																	{{ row.id_personne }}
                                 </td>
                                 <td>
                                     {{ row.nom }}
+                                </td>
+                                <td>
+                                    {{ row.prenom }}
+                                </td>
+                                <td>
+                                    {{ row.date_naissance }}
                                 </td>
                                 <td>
                                     <button class="btn btn-danger" type="submit">EFFACER</button>

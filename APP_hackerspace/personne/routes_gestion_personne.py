@@ -290,7 +290,6 @@ def personne_select_delete ():
             print(f"Erreur personne_delete {erreur.args[0], erreur.args[1]}")
             # C'est une erreur à signaler à l'utilisateur de cette application WEB.
             flash(f"Erreur personne_delete {erreur.args[0], erreur.args[1]}", "danger")
-
     # Envoie la page "HTML" au serveur.
     return render_template('personne/personne_delete.html', data=data_id_personne)
 
@@ -308,10 +307,11 @@ def personne_delete ():
             # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données.
             obj_actions_personne = Gestionpersonne()
             # OM 2019.04.02 Récupère la valeur de "id_personne" du formulaire html "personneAfficher.html"
+            print("---------------------gggggggggg")
             id_personne_delete = request.form['id_personne_delete_html']
             # Constitution d'un dictionnaire et insertion dans la BD
             valeur_delete_dictionnaire = {"value_id_personne": id_personne_delete}
-
+            print(valeur_delete_dictionnaire)
             data_personne = obj_actions_personne.delete_personne_data(valeur_delete_dictionnaire)
             # OM 2019.04.02 On va afficher la liste des personne des films
             # OM 2019.04.02 Envoie la page "HTML" au serveur. On passe un message d'information dans "message_html"
