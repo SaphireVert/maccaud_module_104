@@ -93,7 +93,7 @@ def gf_edit_genre_film_selected ():
 
             # Dans le composant "tags-selector-tagselect" on doit connaître
             # les genres qui ne sont pas encore sélectionnés.
-            lst_data_hobby_personne_non_attribues = [item['id_genre'] for item in data_hobby_personne_non_attribues]
+            lst_data_hobby_personne_non_attribues = [item['id_hobby'] for item in data_hobby_personne_non_attribues]
             session['session_lst_data_hobby_personne_non_attribues'] = lst_data_hobby_personne_non_attribues
             # DEBUG bon marché : Pour afficher le résultat et son type.
             print("lst_data_hobby_personne_non_attribues  ", lst_data_hobby_personne_non_attribues,
@@ -101,7 +101,7 @@ def gf_edit_genre_film_selected ():
 
             # Dans le composant "tags-selector-tagselect" on doit connaître
             # les genres qui sont déjà sélectionnés.
-            lst_data_hobby_personne_old_attribues = [item['id_genre'] for item in data_hobby_personne_attribues]
+            lst_data_hobby_personne_old_attribues = [item['id_hobby'] for item in data_hobby_personne_attribues]
             session['session_lst_data_hobby_personne_old_attribues'] = lst_data_hobby_personne_old_attribues
             # DEBUG bon marché : Pour afficher le résultat et son type.
             print("lst_data_hobby_personne_old_attribues  ", lst_data_hobby_personne_old_attribues,
@@ -115,7 +115,7 @@ def gf_edit_genre_film_selected ():
                   type(data_hobby_personne_attribues))
 
             # Extrait les valeurs contenues dans la table "hobby", colonne "nom_hobby"
-            # Le composant javascript "tagify" pour afficher les tags n'a pas besoin de l'id_genre
+            # Le composant javascript "tagify" pour afficher les tags n'a pas besoin de l'id_hobby
             lst_data_hobby_personne_non_attribues = [item['nom_hobby'] for item in data_hobby_personne_non_attribues]
             # DEBUG bon marché : Pour afficher le résultat et son type.
             print("lst_all_genres gf_edit_genre_film_selected ", lst_data_hobby_personne_non_attribues,
@@ -182,13 +182,13 @@ def gf_update_genre_film_selected ():
 
             # Pour apprécier la facilité de la vie en Python... "les ensembles en Python"
             # https://fr.wikibooks.org/wiki/Programmation_Python/Ensembles
-            # OM 2020.04.29 Une liste de "id_genre" qui doivent être effacés de la table intermédiaire "hobby_personne".
+            # OM 2020.04.29 Une liste de "id_hobby" qui doivent être effacés de la table intermédiaire "hobby_personne".
             lst_diff_genres_delete_b = list(
                 set(old_lst_data_hobby_personne_attribues) - set(new_lst_inhobby_personne_old))
             # DEBUG bon marché : Pour afficher le résultat de la liste.
             print("lst_diff_genres_delete_b ", lst_diff_genres_delete_b)
 
-            # OM 2020.04.29 Une liste de "id_genre" qui doivent être ajoutés à la BD
+            # OM 2020.04.29 Une liste de "id_hobby" qui doivent être ajoutés à la BD
             lst_diff_genres_insert_a = list(
                 set(new_lst_inhobby_personne_old) - set(old_lst_data_hobby_personne_attribues))
             # DEBUG bon marché : Pour afficher le résultat de la liste.
@@ -199,21 +199,21 @@ def gf_update_genre_film_selected ():
 
             # Pour le film sélectionné, parcourir la liste des genres à INSÉRER dans la "hobby_personne".
             # Si la liste est vide, la boucle n'est pas parcourue.
-            for id_genre_ins in lst_diff_genres_insert_a:
+            for id_hobby_ins in lst_diff_genres_insert_a:
                 # Constitution d'un dictionnaire pour associer l'id du film sélectionné avec un nom de variable
-                # et "id_genre_ins" (l'id du genre dans la liste) associé à une variable.
+                # et "id_hobby_ins" (l'id du genre dans la liste) associé à une variable.
                 valeurs_film_sel_genre_sel_dictionnaire = {"value_FK_personne": id_personne_selected,
-                                                           "value_fk_genre": id_genre_ins}
+                                                           "value_fk_genre": id_hobby_ins}
                 # Insérer une association entre un(des) genre(s) et le film sélectionner.
                 obj_actions_genres.hobby_personne_add(valeurs_film_sel_genre_sel_dictionnaire)
 
             # Pour le film sélectionné, parcourir la liste des genres à EFFACER dans la "hobby_personne".
             # Si la liste est vide, la boucle n'est pas parcourue.
-            for id_genre_del in lst_diff_genres_delete_b:
+            for id_hobby_del in lst_diff_genres_delete_b:
                 # Constitution d'un dictionnaire pour associer l'id du film sélectionné avec un nom de variable
-                # et "id_genre_del" (l'id du genre dans la liste) associé à une variable.
+                # et "id_hobby_del" (l'id du genre dans la liste) associé à une variable.
                 valeurs_film_sel_genre_sel_dictionnaire = {"value_FK_personne": id_personne_selected,
-                                                           "value_fk_genre": id_genre_del}
+                                                           "value_fk_genre": id_hobby_del}
                 # Effacer une association entre un(des) genre(s) et le film sélectionner.
                 obj_actions_genres.hobby_personne_delete(valeurs_film_sel_genre_sel_dictionnaire)
 

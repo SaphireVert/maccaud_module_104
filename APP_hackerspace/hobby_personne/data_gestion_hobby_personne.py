@@ -28,7 +28,7 @@ class GestionGenresFilms():
             # la commande MySql classique est "SELECT * FROM hobby"
             # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
             # donc, je précise les champs à afficher
-            strsql_genres_afficher = """SELECT id_genre, nom_hobby FROM hobby ORDER BY id_genre ASC"""
+            strsql_genres_afficher = """SELECT id_hobby, nom_hobby FROM hobby ORDER BY id_hobby ASC"""
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             with MaBaseDeDonnee().connexion_bd.cursor() as mc_afficher:
                 # Envoi de la commande MySql
@@ -60,20 +60,20 @@ class GestionGenresFilms():
             # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
             # donc, je précise les champs à afficher
 
-            strsql_film_selected = """SELECT id_personne, nom, prenom, date_naissance, GROUP_CONCAT(id_genre) as GenresFilms FROM hobby_personne AS T1
+            strsql_film_selected = """SELECT id_personne, nom, prenom, date_naissance, GROUP_CONCAT(id_hobby) as GenresFilms FROM hobby_personne AS T1
                                         INNER JOIN personne AS T2 ON T2.id_personne = T1.FK_personne
-                                        INNER JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
+                                        INNER JOIN hobby AS T3 ON T3.id_hobby = T1.fk_genre
                                         WHERE id_personne = %(value_id_personne_selected)s"""
 
-            strsql_hobby_personne_non_attribues = """SELECT id_genre, nom_hobby FROM hobby
-                                                    WHERE id_genre not in(SELECT id_genre as idGenresFilms FROM hobby_personne AS T1
+            strsql_hobby_personne_non_attribues = """SELECT id_hobby, nom_hobby FROM hobby
+                                                    WHERE id_hobby not in(SELECT id_hobby as idGenresFilms FROM hobby_personne AS T1
                                                     INNER JOIN personne AS T2 ON T2.id_personne = T1.FK_personne
-                                                    INNER JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
+                                                    INNER JOIN hobby AS T3 ON T3.id_hobby = T1.fk_genre
                                                     WHERE id_personne = %(value_id_personne_selected)s)"""
 
-            strsql_hobby_personne_attribues = """SELECT id_personne, id_genre, nom_hobby FROM hobby_personne AS T1
+            strsql_hobby_personne_attribues = """SELECT id_personne, id_hobby, nom_hobby FROM hobby_personne AS T1
                                             INNER JOIN personne AS T2 ON T2.id_personne = T1.FK_personne
-                                            INNER JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
+                                            INNER JOIN hobby AS T3 ON T3.id_hobby = T1.fk_genre
                                             WHERE id_personne = %(value_id_personne_selected)s"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
@@ -126,7 +126,7 @@ class GestionGenresFilms():
             strsql_hobby_personne_afficher_data_concat = """SELECT id_personne, nom, prenom, date_naissance,
                                                             GROUP_CONCAT(nom_hobby) as GenresFilms FROM hobby_personne AS T1
                                                             RIGHT JOIN personne AS T2 ON T2.id_personne = T1.FK_personne
-                                                            LEFT JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
+                                                            LEFT JOIN hobby AS T3 ON T3.id_hobby = T1.fk_genre
                                                             GROUP BY id_personne"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
@@ -169,8 +169,8 @@ class GestionGenresFilms():
         try:
             print(valeurs_insertion_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
-            # Insérer une (des) nouvelle(s) association(s) entre "id_personne" et "id_genre" dans la "t_genre_film"
-            strsql_insert_genre_film = """INSERT INTO hobby_personne (id_genre_film, fk_genre, FK_personne)
+            # Insérer une (des) nouvelle(s) association(s) entre "id_personne" et "id_hobby" dans la "t_genre_film"
+            strsql_insert_genre_film = """INSERT INTO hobby_personne (id_hobby_film, fk_genre, FK_personne)
                                             VALUES (NULL, %(value_fk_genre)s, %(value_FK_personne)s)"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
@@ -191,7 +191,7 @@ class GestionGenresFilms():
         try:
             print(valeurs_insertion_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
-            # Effacer une (des) association(s) existantes entre "id_personne" et "id_genre" dans la "t_genre_film"
+            # Effacer une (des) association(s) existantes entre "id_personne" et "id_hobby" dans la "t_genre_film"
             strsql_delete_genre_film = """DELETE FROM hobby_personne WHERE fk_genre = %(value_fk_genre)s AND FK_personne = %(value_FK_personne)s"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
@@ -218,7 +218,7 @@ class GestionGenresFilms():
             print(valeur_id_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Commande MySql pour afficher le genre sélectionné dans le tableau dans le formulaire HTML
-            str_sql_id_genre = "SELECT id_genre, nom_hobby FROM hobby WHERE id_genre = %(value_id_genre)s"
+            str_sql_id_hobby = "SELECT id_hobby, nom_hobby FROM hobby WHERE id_hobby = %(value_id_hobby)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -226,7 +226,7 @@ class GestionGenresFilms():
             # sera interprété, ainsi on fera automatiquement un commit
             with MaBaseDeDonnee().connexion_bd as mconn_bd:
                 with mconn_bd as mc_cur:
-                    mc_cur.execute(str_sql_id_genre, valeur_id_dictionnaire)
+                    mc_cur.execute(str_sql_id_hobby, valeur_id_dictionnaire)
                     data_one = mc_cur.fetchall()
                     print("valeur_id_dictionnaire...", data_one)
                     return data_one
@@ -246,7 +246,7 @@ class GestionGenresFilms():
             # OM 2019.04.02 Commande MySql pour la MODIFICATION de la valeur "CLAVIOTTEE" dans le champ "nameEditIntituleGenreHTML" du form HTML "GenresEdit.html"
             # le "%s" permet d'éviter des injections SQL "simples"
             # <td><input type = "text" name = "nameEditIntituleGenreHTML" value="{{ row.nom_hobby }}"/></td>
-            str_sql_update_intitulegenre = "UPDATE hobby SET nom_hobby = %(value_name_genre)s WHERE id_genre = %(value_id_genre)s"
+            str_sql_update_intitulegenre = "UPDATE hobby SET nom_hobby = %(value_name_genre)s WHERE id_hobby = %(value_id_hobby)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -284,7 +284,7 @@ class GestionGenresFilms():
 
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Commande MySql pour afficher le genre sélectionné dans le tableau dans le formulaire HTML
-            str_sql_select_id_genre = "SELECT id_genre, nom_hobby FROM hobby WHERE id_genre = %(value_id_genre)s"
+            str_sql_select_id_hobby = "SELECT id_hobby, nom_hobby FROM hobby WHERE id_hobby = %(value_id_hobby)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode"mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -292,7 +292,7 @@ class GestionGenresFilms():
             # sera interprété, ainsi on fera automatiquement un commit
             with MaBaseDeDonnee().connexion_bd as mconn_bd:
                 with mconn_bd as mc_cur:
-                    mc_cur.execute(str_sql_select_id_genre, valeur_delete_dictionnaire)
+                    mc_cur.execute(str_sql_select_id_hobby, valeur_delete_dictionnaire)
                     data_one = mc_cur.fetchall()
                     print("valeur_id_dictionnaire...", data_one)
                     return data_one
@@ -316,7 +316,7 @@ class GestionGenresFilms():
             # OM 2019.04.02 Commande MySql pour EFFACER la valeur sélectionnée par le "bouton" du form HTML "GenresEdit.html"
             # le "%s" permet d'éviter des injections SQL "simples"
             # <td><input type = "text" name = "nameEditIntituleGenreHTML" value="{{ row.nom_hobby }}"/></td>
-            str_sql_delete_intitulegenre = "DELETE FROM hobby WHERE id_genre = %(value_id_genre)s"
+            str_sql_delete_intitulegenre = "DELETE FROM hobby WHERE id_hobby = %(value_id_hobby)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
