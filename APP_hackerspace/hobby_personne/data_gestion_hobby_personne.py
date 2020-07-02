@@ -28,7 +28,7 @@ class GestionGenresFilms():
             # la commande MySql classique est "SELECT * FROM hobby"
             # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
             # donc, je précise les champs à afficher
-            strsql_genres_afficher = """SELECT id_genre, intitule_genre FROM hobby ORDER BY id_genre ASC"""
+            strsql_genres_afficher = """SELECT id_genre, nom_hobby FROM hobby ORDER BY id_genre ASC"""
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             with MaBaseDeDonnee().connexion_bd.cursor() as mc_afficher:
                 # Envoi de la commande MySql
@@ -65,13 +65,13 @@ class GestionGenresFilms():
                                         INNER JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
                                         WHERE id_personne = %(value_id_personne_selected)s"""
 
-            strsql_hobby_personne_non_attribues = """SELECT id_genre, intitule_genre FROM hobby
+            strsql_hobby_personne_non_attribues = """SELECT id_genre, nom_hobby FROM hobby
                                                     WHERE id_genre not in(SELECT id_genre as idGenresFilms FROM hobby_personne AS T1
                                                     INNER JOIN personne AS T2 ON T2.id_personne = T1.fk_film
                                                     INNER JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
                                                     WHERE id_personne = %(value_id_personne_selected)s)"""
 
-            strsql_hobby_personne_attribues = """SELECT id_personne, id_genre, intitule_genre FROM hobby_personne AS T1
+            strsql_hobby_personne_attribues = """SELECT id_personne, id_genre, nom_hobby FROM hobby_personne AS T1
                                             INNER JOIN personne AS T2 ON T2.id_personne = T1.fk_film
                                             INNER JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
                                             WHERE id_personne = %(value_id_personne_selected)s"""
@@ -124,7 +124,7 @@ class GestionGenresFilms():
             # donc, je précise les champs à afficher
 
             strsql_hobby_personne_afficher_data_concat = """SELECT id_personne, nom, prenom, date_naissance,
-                                                            GROUP_CONCAT(intitule_genre) as GenresFilms FROM hobby_personne AS T1
+                                                            GROUP_CONCAT(nom_hobby) as GenresFilms FROM hobby_personne AS T1
                                                             RIGHT JOIN personne AS T2 ON T2.id_personne = T1.fk_film
                                                             LEFT JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
                                                             GROUP BY id_personne"""
@@ -218,7 +218,7 @@ class GestionGenresFilms():
             print(valeur_id_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Commande MySql pour afficher le genre sélectionné dans le tableau dans le formulaire HTML
-            str_sql_id_genre = "SELECT id_genre, intitule_genre FROM hobby WHERE id_genre = %(value_id_genre)s"
+            str_sql_id_genre = "SELECT id_genre, nom_hobby FROM hobby WHERE id_genre = %(value_id_genre)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -245,8 +245,8 @@ class GestionGenresFilms():
             print(valeur_update_dictionnaire)
             # OM 2019.04.02 Commande MySql pour la MODIFICATION de la valeur "CLAVIOTTEE" dans le champ "nameEditIntituleGenreHTML" du form HTML "GenresEdit.html"
             # le "%s" permet d'éviter des injections SQL "simples"
-            # <td><input type = "text" name = "nameEditIntituleGenreHTML" value="{{ row.intitule_genre }}"/></td>
-            str_sql_update_intitulegenre = "UPDATE hobby SET intitule_genre = %(value_name_genre)s WHERE id_genre = %(value_id_genre)s"
+            # <td><input type = "text" name = "nameEditIntituleGenreHTML" value="{{ row.nom_hobby }}"/></td>
+            str_sql_update_intitulegenre = "UPDATE hobby SET nom_hobby = %(value_name_genre)s WHERE id_genre = %(value_id_genre)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -280,11 +280,11 @@ class GestionGenresFilms():
             print(valeur_delete_dictionnaire)
             # OM 2019.04.02 Commande MySql pour la MODIFICATION de la valeur "CLAVIOTTEE" dans le champ "nameEditIntituleGenreHTML" du form HTML "GenresEdit.html"
             # le "%s" permet d'éviter des injections SQL "simples"
-            # <td><input type = "text" name = "nameEditIntituleGenreHTML" value="{{ row.intitule_genre }}"/></td>
+            # <td><input type = "text" name = "nameEditIntituleGenreHTML" value="{{ row.nom_hobby }}"/></td>
 
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Commande MySql pour afficher le genre sélectionné dans le tableau dans le formulaire HTML
-            str_sql_select_id_genre = "SELECT id_genre, intitule_genre FROM hobby WHERE id_genre = %(value_id_genre)s"
+            str_sql_select_id_genre = "SELECT id_genre, nom_hobby FROM hobby WHERE id_genre = %(value_id_genre)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode"mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -315,7 +315,7 @@ class GestionGenresFilms():
             print(valeur_delete_dictionnaire)
             # OM 2019.04.02 Commande MySql pour EFFACER la valeur sélectionnée par le "bouton" du form HTML "GenresEdit.html"
             # le "%s" permet d'éviter des injections SQL "simples"
-            # <td><input type = "text" name = "nameEditIntituleGenreHTML" value="{{ row.intitule_genre }}"/></td>
+            # <td><input type = "text" name = "nameEditIntituleGenreHTML" value="{{ row.nom_hobby }}"/></td>
             str_sql_delete_intitulegenre = "DELETE FROM hobby WHERE id_genre = %(value_id_genre)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".

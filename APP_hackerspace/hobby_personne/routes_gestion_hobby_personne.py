@@ -114,9 +114,9 @@ def gf_edit_genre_film_selected ():
             print(" data_hobby_personne_attribues ", data_hobby_personne_attribues, "type ",
                   type(data_hobby_personne_attribues))
 
-            # Extrait les valeurs contenues dans la table "hobby", colonne "intitule_genre"
+            # Extrait les valeurs contenues dans la table "hobby", colonne "nom_hobby"
             # Le composant javascript "tagify" pour afficher les tags n'a pas besoin de l'id_genre
-            lst_data_hobby_personne_non_attribues = [item['intitule_genre'] for item in data_hobby_personne_non_attribues]
+            lst_data_hobby_personne_non_attribues = [item['nom_hobby'] for item in data_hobby_personne_non_attribues]
             # DEBUG bon marché : Pour afficher le résultat et son type.
             print("lst_all_genres gf_edit_genre_film_selected ", lst_data_hobby_personne_non_attribues,
                   type(lst_data_hobby_personne_non_attribues))

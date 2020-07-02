@@ -108,11 +108,11 @@
                 <div class="qtagselect isw360">
                     <select id="OM_JTSD" name="name_select_tags" class="qtagselect__select" multiple>
                         {% for row in data_genres_non_attribues %}
-                            <option value="{{ row.id_genre }}" name="name_tags_non_attribues_html" class="isblue" >{{ row.intitule_genre }}</option>
+                            <option value="{{ row.id_genre }}" name="name_tags_non_attribues_html" class="isblue" >{{ row.nom_hobby }}</option>
                         {% endfor %}
 
                         {% for row in data_genres_attribues %}
-                            <option value="{{ row.id_genre }}" name="name_tags_attribues_html" class="ispurple" selected>{{ row.intitule_genre }}</option>
+                            <option value="{{ row.id_genre }}" name="name_tags_attribues_html" class="ispurple" selected>{{ row.nom_hobby }}</option>
                         {% endfor %}
                     </select>
                 </div>
