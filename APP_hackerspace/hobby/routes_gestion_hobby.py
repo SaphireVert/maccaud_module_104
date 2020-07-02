@@ -95,7 +95,7 @@ def genres_add ():
                 # On va interpréter la "route" 'genres_afficher', car l'utilisateur
                 # doit voir le nouveau genre qu'il vient d'insérer. Et on l'affiche de manière
                 # à voir le dernier élément inséré.
-                return redirect(url_for('genres_afficher', order_by = 'DESC', id_hobby_sel=0))
+                return redirect(url_for('hobby_afficher', order_by = 'DESC', id_hobby_sel=0))
 
         # OM 2020.04.16 ATTENTION à l'ordre des excepts, il est très important de respecter l'ordre.
         except pymysql.err.IntegrityError as erreur:
@@ -170,16 +170,16 @@ def genres_edit ():
             raise MaBdErreurConnexion(f"RGG Exception {msg_erreurs['ErreurConnexionBD']['message']}"
                                       f"et son status {msg_erreurs['ErreurConnexionBD']['status']}")
 
-    return render_template("genres/genres_edit.html", data=data_id_hobby)
+    return render_template("hobby/hobby_edit.html", data=data_id_hobby)
 
 
 # ---------------------------------------------------------------------------------------------------
-# OM 2020.04.07 Définition d'une "route" /genres_update , cela va permettre de programmer quelles actions sont réalisées avant de l'envoyer
+# OM 2020.04.07 Définition d'une "route" /hobby_update , cela va permettre de programmer quelles actions sont réalisées avant de l'envoyer
 # au navigateur par la méthode "render_template".
 # On change la valeur d'un genre de films par la commande MySql "UPDATE"
 # ---------------------------------------------------------------------------------------------------
-@obj_mon_application.route('/genres_update', methods=['POST', 'GET'])
-def genres_update ():
+@obj_mon_application.route('/hobby_update', methods=['POST', 'GET'])
+def hobby_update ():
     # DEBUG bon marché : Pour afficher les méthodes et autres de la classe "flask.request"
     print(dir(request))
     # OM 2020.04.07 Les données sont affichées dans un formulaire, l'affichage de la sélection
@@ -198,14 +198,14 @@ def genres_update ():
             id_hobby_edit = request.values['id_hobby_edit_html']
 
             # Récupère le contenu du champ "nom_hobby" dans le formulaire HTML "GenresEdit.html"
-            name_genre = request.values['name_edit_nom_hobby_html']
-            valeur_edit_list = [{'id_hobby': id_hobby_edit, 'nom_hobby': name_genre}]
+            name_hobby = request.values['name_edit_nom_hobby_html']
+            valeur_edit_list = [{'id_hobby': id_hobby_edit, 'nom_hobby': name_hobby}]
             # On ne doit pas accepter des valeurs vides, des valeurs avec des chiffres,
             # des valeurs avec des caractères qui ne sont pas des lettres.
             # Pour comprendre [A-Za-zÀ-ÖØ-öø-ÿ] il faut se reporter à la table ASCII https://www.ascii-code.com/
             # Accepte le trait d'union ou l'apostrophe, et l'espace entre deux mots, mais pas plus d'une occurence.
             if not re.match("^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$",
-                            name_genre):
+                            name_hobby):
                 # En cas d'erreur, conserve la saisie fausse, afin que l'utilisateur constate sa misérable faute
                 # Récupère le contenu du champ "nom_hobby" dans le formulaire HTML "GenresEdit.html"
                 # name_genre = request.values['name_edit_nom_hobby_html']
@@ -217,15 +217,15 @@ def genres_update ():
                 # Constitution d'une liste pour que le formulaire d'édition "genres_edit.html" affiche à nouveau
                 # la possibilité de modifier l'entrée
                 # Exemple d'une liste : [{'id_hobby': 13, 'nom_hobby': 'philosophique'}]
-                valeur_edit_list = [{'id_hobby': id_hobby_edit, 'nom_hobby': name_genre}]
+                valeur_edit_list = [{'id_hobby': id_hobby_edit, 'nom_hobby': name_hobby}]
 
                 # DEBUG bon marché :
                 # Pour afficher le contenu et le type de valeurs passées au formulaire "genres_edit.html"
                 print(valeur_edit_list, "type ..", type(valeur_edit_list))
-                return render_template('genres/genres_edit.html', data=valeur_edit_list)
+                return render_template('hobby/hobby_edit.html ', data=valeur_edit_list)
             else:
                 # Constitution d'un dictionnaire et insertion dans la BD
-                valeur_update_dictionnaire = {"value_id_hobby": id_hobby_edit, "value_name_genre": name_genre}
+                valeur_update_dictionnaire = {"value_id_hobby": id_hobby_edit, "value_name_genre": name_hobby}
 
                 # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données.
                 obj_actions_genres = GestionGenres()
@@ -237,7 +237,7 @@ def genres_update ():
                 # Message ci-après permettent de donner un sentiment rassurant aux utilisateurs.
                 flash(f"Valeur genre modifiée. ", "success")
                 # On affiche les genres avec celui qui vient d'être edité en tête de liste. (DESC)
-                return redirect(url_for('genres_afficher', order_by="ASC", id_hobby_sel=id_hobby_edit))
+                return redirect(url_for('hobby_afficher', order_by="ASC", id_hobby_sel=id_hobby_edit))
 
         except (Exception,
                 # pymysql.err.OperationalError,
@@ -249,7 +249,7 @@ def genres_update ():
             flash(f"problème genres ____lllupdate{erreur.args[0]}", "danger")
             # En cas de problème, mais surtout en cas de non respect
             # des régles "REGEX" dans le champ "name_edit_nom_hobby_html" alors on renvoie le formulaire "EDIT"
-    return render_template('genres/genres_edit.html', data=valeur_edit_list)
+    return render_template('hobby/hobby_edit.html ', data=valeur_edit_list)
 
 
 # ---------------------------------------------------------------------------------------------------
@@ -328,12 +328,12 @@ def genres_delete ():
         except (pymysql.err.OperationalError, pymysql.ProgrammingError, pymysql.InternalError, pymysql.IntegrityError,
                 TypeError) as erreur:
             # OM 2020.04.09 Traiter spécifiquement l'erreur MySql 1451
-            # Cette erreur 1451, signifie qu'on veut effacer un "genre" de films qui est associé dans "hobby_films".
+            # Cette erreur 1451, signifie qu'on veut effacer un "genre" de films qui est associé dans "hobby_personne".
             if erreur.args[0] == 1451:
                 # C'est une erreur à signaler à l'utilisateur de cette application WEB.
                 flash('IMPOSSIBLE d\'effacer !!! Cette valeur est associée à des films !', "warning")
                 # DEBUG bon marché : Pour afficher un message dans la console.
-                print(f"IMPOSSIBLE d'effacer !! Ce genre est associé à des films dans la hobby_films !!! : {erreur}")
+                print(f"IMPOSSIBLE d'effacer !! Ce genre est associé à des films dans la hobby_personne !!! : {erreur}")
                 # Afficher la liste des genres des films
                 return redirect(url_for('genres_afficher', order_by="ASC", id_hobby_sel=0))
             else:

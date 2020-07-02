@@ -90,7 +90,7 @@ INSERT INTO `t_personne` (`id_personne`, `intitule_personne`) VALUES
 CREATE TABLE `t_personne_films` (
   `id_personne_film` int(11) NOT NULL,
   `fk_personne` int(11) DEFAULT NULL,
-  `fk_film` int(11) DEFAULT NULL,
+  `fk_personne` int(11) DEFAULT NULL,
   `date_insert_personne` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -98,7 +98,7 @@ CREATE TABLE `t_personne_films` (
 -- Contenu de la table `t_personne_films`
 --
 
-INSERT INTO `t_personne_films` (`id_personne_film`, `fk_personne`, `fk_film`, `date_insert_personne`) VALUES
+INSERT INTO `t_personne_films` (`id_personne_film`, `fk_personne`, `fk_personne`, `date_insert_personne`) VALUES
 (141, 14, 3, '2020-02-12 21:30:33'),
 (142, 1, 4, '2020-02-12 21:31:31'),
 (143, 4, 4, '2020-02-12 21:31:31'),
@@ -140,7 +140,7 @@ ALTER TABLE `t_personne`
 ALTER TABLE `t_personne_films`
   ADD PRIMARY KEY (`id_personne_film`),
   ADD KEY `fk_personne` (`fk_personne`),
-  ADD KEY `fk_film` (`fk_film`);
+  ADD KEY `fk_personne` (`fk_personne`);
 
 --
 -- AUTO_INCREMENT pour les tables exportées
@@ -170,4 +170,4 @@ ALTER TABLE `t_personne_films`
 --
 ALTER TABLE `t_personne_films`
   ADD CONSTRAINT `t_personne_films_ibfk_1` FOREIGN KEY (`fk_personne`) REFERENCES `t_personne` (`id_personne`),
-  ADD CONSTRAINT `t_personne_films_ibfk_2` FOREIGN KEY (`fk_film`) REFERENCES `coordonnees` (`id_coordonnees`);
+  ADD CONSTRAINT `t_personne_films_ibfk_2` FOREIGN KEY (`fk_personne`) REFERENCES `coordonnees` (`id_coordonnees`);

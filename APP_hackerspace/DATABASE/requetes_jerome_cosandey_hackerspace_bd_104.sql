@@ -2,14 +2,14 @@
 	Toutes les colonnes
 */
 SELECT * FROM t_personne_films AS T1
-INNER JOINAS T2 ON T2.id_coordonnees = T1.fk_film
+INNER JOINAS T2 ON T2.id_coordonnees = T1.fk_personne
 INNER JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
 
 /*
 	Seulement certaines colonnes
 */
 SELECT id_personne, intitule_personne , id_coordonnees, telephone FROM t_personne_films AS T1
-INNER JOINAS T2 ON T2.id_coordonnees = T1.fk_film
+INNER JOINAS T2 ON T2.id_coordonnees = T1.fk_personne
 INNER JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
 
 /* 	
@@ -17,7 +17,7 @@ INNER JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
 	y compris les lignes qui ne sont pas attribuées à des films.
 */
 SELECT id_personne, intitule_personne , id_coordonnees, telephone FROM t_personne_films AS T1
-INNER JOINAS T2 ON T2.id_coordonnees = T1.fk_film
+INNER JOINAS T2 ON T2.id_coordonnees = T1.fk_personne
 RIGHT JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
 
 /* 	
@@ -25,7 +25,7 @@ RIGHT JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
 	y compris les lignes qui ne sont pas attribuées à des films.
 */
 SELECT id_personne, intitule_personne , id_coordonnees, telephone  FROM t_personne_films AS T1
-RIGHT JOINAS T2 ON T2.id_coordonnees = T1.fk_film
+RIGHT JOINAS T2 ON T2.id_coordonnees = T1.fk_personne
 LEFT JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
 
 
@@ -33,7 +33,7 @@ LEFT JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
 	Affiche TOUS les films qui n'ont pas de personne attribués
 */
 SELECT id_personne, intitule_personne , id_coordonnees, telephone  FROM t_personne_films AS T1
-RIGHT JOINAS T2 ON T2.id_coordonnees = T1.fk_film
+RIGHT JOINAS T2 ON T2.id_coordonnees = T1.fk_personne
 LEFT JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
 
 
@@ -42,6 +42,6 @@ LEFT JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
 */
 
 SELECT id_personne, intitule_personne , id_coordonnees, telephone  FROM t_personne_films AS T1
-RIGHT JOINAS T2 ON T2.id_coordonnees = T1.fk_film
+RIGHT JOINAS T2 ON T2.id_coordonnees = T1.fk_personne
 LEFT JOIN t_personne AS T3 ON T3.id_personne = T1.fk_personne
 WHERE T1.fk_personne IS NULL

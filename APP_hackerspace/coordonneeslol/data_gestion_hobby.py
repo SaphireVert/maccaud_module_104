@@ -169,7 +169,7 @@ class GestionGenres():
 
             # Affiche tous les films qui ont le genre que l'utilisateur veut effacer
             str_sql_coordonnees_films_delete = """SELECT id_coordonnees_film, nom_film, id_coordonnees, mail _films
-                                            INNER JOIN t_films ON coordonnees_films.fk_film = t_films.id_film
+                                            INNER JOIN personne ON coordonnees_films.fk_personne = personne.id_film
                                             INNER JOINON coordonnees_films.fk_coordonnees = coordonnees.id_coordonnees
                                             WHERE fk_coordonnees = %(value_id_coordonnees)s"""
             with MaBaseDeDonnee().connexion_bd as mconn_bd:

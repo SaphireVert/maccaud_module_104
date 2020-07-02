@@ -7,7 +7,7 @@
 			<p>
 				Modifier ce genre.
 			</p>
-			<form method="POST" action="{{ url_for('genres_update') }}">
+			<form method="POST" action="{{ url_for('hobby_update') }}">
                 <table class="table table-bordered table-sm">
                     <thead>
                         <tr>
@@ -23,10 +23,10 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="hidden" name="id_coordonnees_edit_html" value="{{ row.id_coordonnees }}"/>
+                                    <input type="hidden" name="id_hobby_edit_html" value="{{ row.id_hobby }}"/>
                                 </td>
                                 <td>
-                                    <input type = "text" name = "name_edit_mail_html" value="{{ row.mail }}"/>
+                                    <input type = "text" name = "name_edit_nom_hobby_html" value="{{ row.nom_hobby }}"/>
                                 </td>
                                 <td>
                                     <button class="btn btn-warning" type="submit">Update</button>

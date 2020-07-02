@@ -168,10 +168,10 @@ class GestionGenres():
 
 
             # Affiche tous les films qui ont le genre que l'utilisateur veut effacer
-            str_sql_genres_films_delete = """SELECT id_hobby_film, nom_film, id_hobby, nom_hobby FROM hobby_films
-                                            INNER JOIN t_films ON hobby_films.fk_film = t_films.id_film
-                                            INNER JOIN hobby ON hobby_films.fk_genre = hobby.id_hobby
-                                            WHERE fk_genre = %(value_id_hobby)s"""
+            str_sql_genres_films_delete = """SELECT id_hobby_film, nom_film, id_hobby, nom_hobby FROM hobby_personne
+                                            INNER JOIN personne ON hobby_personne.fk_personne = personne.id_film
+                                            INNER JOIN hobby ON hobby_personne.fk_hobby = hobby.id_hobby
+                                            WHERE fk_hobby = %(value_id_hobby)s"""
             with MaBaseDeDonnee().connexion_bd as mconn_bd:
                 with mconn_bd as mc_cur:
                     mc_cur.execute(str_sql_genres_films_delete, valeur_delete_dictionnaire)
@@ -199,7 +199,7 @@ class GestionGenres():
             # OM 2019.04.02 Commande MySql pour EFFACER la valeur sélectionnée par le "bouton" du form HTML "GenresEdit.html"
             # le "%s" permet d'éviter des injections SQL "simples"
             # <td><input type = "text" name = "nameEditIntituleGenreHTML" value="{{ row.nom_hobby }}"/></td>
-            str_sql_delete_films_genre = """DELETE FROM hobby_films WHERE fk_genre = %(value_id_hobby)s"""
+            str_sql_delete_films_genre = """DELETE FROM hobby_personne WHERE fk_hobby = %(value_id_hobby)s"""
 
             str_sql_delete_intitulegenre = "DELETE FROM hobby WHERE id_hobby = %(value_id_hobby)s"
 
@@ -229,11 +229,11 @@ class GestionGenres():
             # flash(f"Flash. Problèmes Data Gestions Genres numéro de l'erreur : {erreur}", "danger")
             if erreur.args[0] == 1451:
                 # OM 2020.04.09 Traitement spécifique de l'erreur 1451 Cannot delete or update a parent row: a foreign key constraint fails
-                # en MySql le moteur INNODB empêche d'effacer un genre qui est associé à un film dans la table intermédiaire "hobby_films"
-                # il y a une contrainte sur les FK de la table intermédiaire "hobby_films"
+                # en MySql le moteur INNODB empêche d'effacer un genre qui est associé à un film dans la table intermédiaire "hobby_personne"
+                # il y a une contrainte sur les FK de la table intermédiaire "hobby_personne"
                 # C'est une erreur à signaler à l'utilisateur de cette application WEB.
-                # flash(f"Flash. IMPOSSIBLE d'effacer !!! Ce genre est associé à des films dans la hobby_films !!! : {erreur}", "danger")
+                # flash(f"Flash. IMPOSSIBLE d'effacer !!! Ce genre est associé à des films dans la hobby_personne !!! : {erreur}", "danger")
                 # DEBUG bon marché : Pour afficher un message dans la console.
                 print(
-                    f"IMPOSSIBLE d'effacer !!! Ce genre est associé à des films dans la hobby_films !!! : {erreur}")
+                    f"IMPOSSIBLE d'effacer !!! Ce genre est associé à des films dans la hobby_personne !!! : {erreur}")
             raise MaBdErreurDelete(f"DGG Exception {msg_erreurs['ErreurDeleteContrainte']['message']} {erreur}")
