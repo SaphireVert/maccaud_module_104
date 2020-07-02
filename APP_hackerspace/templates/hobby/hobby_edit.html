@@ -1,21 +1,21 @@
 {% extends "base.html" %}
-{% block title %}Edit GENRE{% endblock %}
+{% block title %}Edit hobby{% endblock %}
 {% block body %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-				Modifier ce genre.
+				Modifier ce hobby.
 			</p>
 			<form method="POST" action="{{ url_for('hobby_update') }}">
                 <table class="table table-bordered table-sm">
                     <thead>
                         <tr>
                             <th>
-                                id genre
+                                id hobby
                             </th>
                             <th>
-                                Genre
+                                hobby
                             </th>
                         </tr>
                     </thead>

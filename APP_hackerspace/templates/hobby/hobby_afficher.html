@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block title %} Afficher GENRES {% endblock %}
+{% block title %} Afficher hobby {% endblock %}
 {% block body %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-				Genres à disposition.
+				hobby à disposition.
 			</p>
             <table class="table table-bordered table-sm">
             {% if data %}
@@ -15,7 +15,7 @@
                             id
                         </th>
                         <th class="align-middle">
-                            Genre
+                            hobby
                         </th>
                         <th class="align-middle">
 
@@ -40,13 +40,13 @@
 							{{ row.nom_hobby }}
 						</td>
 						<td class="text-center" class="align-middle">
-							<a class="btn btn-primary" href="{{ url_for('genres_add') }}" role="button">Ajouter</a>
+							<a class="btn btn-primary" href="{{ url_for('hobby_add') }}" role="button">Ajouter</a>
 						</td>
 						<td class="text-center" class="align-middle">
-							<a class="btn btn-warning" href="{{ url_for('genres_edit', id_hobby_edit_html=row.id_hobby) }}" role="button">Edit</a>
+							<a class="btn btn-warning" href="{{ url_for('hobby_edit', id_hobby_edit_html=row.id_hobby) }}" role="button">Edit</a>
 						</td>
 						<td class="text-center" class="align-middle">
-							<a class="btn btn-danger" href="{{ url_for('genres_select_delete', id_hobby_delete_html=row.id_hobby) }}" role="button">Delete</a>
+							<a class="btn btn-danger" href="{{ url_for('hobby_select_delete', id_hobby_delete_html=row.id_hobby) }}" role="button">Delete</a>
 						</td>
 					</tr>
 				</tbody>
@@ -54,10 +54,10 @@
 				<tbody>
 					<tr>
 						<td>
-							Aucun genre.
+							Aucun hobby.
 						</td>
 						<td>
-							<a class="btn btn-primary" href="{{ url_for('genres_add') }}" role="button">Ajouter</a>
+							<a class="btn btn-primary" href="{{ url_for('hobby_add') }}" role="button">Ajouter</a>
 						</td>
 					</tr>
 				</tbody>

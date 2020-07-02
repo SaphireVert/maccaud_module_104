@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}DELETE GENRE{% endblock %}
+{% block title %}DELETE hobby{% endblock %}
 {% block body %}
 <div class="container">
 	<div class="row">
@@ -13,7 +13,7 @@
                 {% endfor %}
 			</p>
 
-			<form method="POST" action="{{ url_for('genres_delete') }}">
+			<form method="POST" action="{{ url_for('hobby_delete') }}">
                 <table class="table table-bordered table-sm">
                     {% if data_films_associes %}
                         <h3> Il est associé avec les personnes suivantes :</h3>
