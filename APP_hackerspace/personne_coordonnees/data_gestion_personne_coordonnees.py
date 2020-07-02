@@ -1,8 +1,8 @@
 # data_gestion_genres.py
 # OM 2020.04.09 Permet de gérer (CRUD) les données de la table "t_genres"
 from flask import flash
-from APP_FILMS.DATABASE.connect_db_context_manager import MaBaseDeDonnee
-from APP_FILMS.DATABASE.erreurs import *
+from APP_hackerspace.DATABASE.connect_db_context_manager import MaBaseDeDonnee
+from APP_hackerspace.DATABASE.erreurs import *
 
 
 class GestionGenres():
@@ -168,7 +168,7 @@ class GestionGenres():
 
 
             # Affiche tous les films qui ont le genre que l'utilisateur veut effacer
-            str_sql_genres_films_delete = """SELECT id_genre_film, nom_film, id_genre, intitule_genre FROM t_genres_films 
+            str_sql_genres_films_delete = """SELECT id_genre_film, nom_film, id_genre, intitule_genre FROM t_genres_films
                                             INNER JOIN t_films ON t_genres_films.fk_film = t_films.id_film
                                             INNER JOIN t_genres ON t_genres_films.fk_genre = t_genres.id_genre
                                             WHERE fk_genre = %(value_id_genre)s"""

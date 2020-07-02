@@ -2,9 +2,9 @@
 # OM 2020.04.06 Gestions des "routes" FLASK pour les genres.
 
 from flask import render_template, flash, redirect, url_for, request, session
-from APP_FILMS import obj_mon_application
-from APP_FILMS.GENRES.data_gestion_genres import GestionGenres
-from APP_FILMS.DATABASE.erreurs import *
+from APP_hackerspace import obj_mon_application
+from APP_hackerspace.personne_coordonnees.data_gestion_personne_coordonnees import GestionGenres
+from APP_hackerspace.DATABASE.erreurs import *
 # OM 2020.04.10 Pour utiliser les expressions régulières REGEX
 import re
 
