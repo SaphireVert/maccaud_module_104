@@ -34,19 +34,19 @@
 				<tbody>
 					<tr>
 						<td class="align-middle">
-							{{ row.id_genre }}
+							{{ row.id_coordonnees }}
 						</td>
 						<td class="align-middle">
-							{{ row.intitule_genre }}
+							{{ row.mail }}
 						</td>
 						<td class="text-center" class="align-middle">
 							<a class="btn btn-primary" href="{{ url_for('genres_add') }}" role="button">Ajouter</a>
 						</td>
 						<td class="text-center" class="align-middle">
-							<a class="btn btn-warning" href="{{ url_for('genres_edit', id_genre_edit_html=row.id_genre) }}" role="button">Edit</a>
+							<a class="btn btn-warning" href="{{ url_for('genres_edit', id_coordonnees_edit_html=row.id_coordonnees) }}" role="button">Edit</a>
 						</td>
 						<td class="text-center" class="align-middle">
-							<a class="btn btn-danger" href="{{ url_for('genres_select_delete', id_genre_delete_html=row.id_genre) }}" role="button">Delete</a>
+							<a class="btn btn-danger" href="{{ url_for('genres_select_delete', id_coordonnees_delete_html=row.id_coordonnees) }}" role="button">Delete</a>
 						</td>
 					</tr>
 				</tbody>
