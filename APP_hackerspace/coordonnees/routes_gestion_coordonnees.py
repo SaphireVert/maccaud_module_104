@@ -1,4 +1,4 @@
-# routes_gestion_genres.py
+# routes_gestion_coordonnees.py
 # OM 2020.04.06 Gestions des "routes" FLASK pour les genres.
 
 from flask import render_template, flash, redirect, url_for, request, session
@@ -23,18 +23,18 @@ def coordonnees_afficher(order_by,id_coordonnees_sel):
     if request.method == "GET":
         try:
             # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données.
-            obj_actions_genres = GestionGenres()
+            obj_actions_coordonnees = GestionGenres()
             # Récupère les données grâce à une requête MySql définie dans la classe GestionGenres()
-            # Fichier data_gestion_genres.py
+            # Fichier data_gestion_coordonnees.py
             # "order_by" permet de choisir l'ordre d'affichage des genres.
-            data_genres = obj_actions_genres.coordonnees_afficher_data(order_by,id_coordonnees_sel)
+            data_coordonnees = obj_actions_coordonnees.coordonnees_afficher_data(order_by,id_coordonnees_sel)
             # DEBUG bon marché : Pour afficher un message dans la console.
-            print(" data genres", data_genres, "type ", type(data_genres))
+            print(" data genres", data_coordonnees, "type ", type(data_coordonnees))
 
             # Différencier les messages si la table est vide.
-            if not data_genres and id_coordonnees_sel == 0:
+            if not data_coordonnees and id_coordonnees_sel == 0:
                 flash("""La table "coordonnees" est vide. !!""", "warning")
-            elif not data_genres and id_coordonnees_sel > 0:
+            elif not data_coordonnees and id_coordonnees_sel > 0:
                 # Si l'utilisateur change l'id_coordonnees dans l'URL et que le genre n'existe pas,
                 flash(f"Le genre demandé n'existe pas !!", "warning")
             else:
@@ -52,42 +52,42 @@ def coordonnees_afficher(order_by,id_coordonnees_sel):
             # raise MaBdErreurOperation(f"RGG Exception {msg_erreurs['ErreurNomBD']['message']} {erreur}")
 
     # OM 2020.04.07 Envoie la page "HTML" au serveur.
-    return render_template("coordonnees/coordonnees_afficher.html", data=data_genres)
+    return render_template("coordonnees/coordonnees_afficher.html", data=data_coordonnees)
 
 
 # ---------------------------------------------------------------------------------------------------
-# OM 2020.04.07 Définition d'une "route" /genres_add ,
+# OM 2020.04.07 Définition d'une "route" /coordonnees_add ,
 # cela va permettre de programmer quelles actions sont réalisées avant de l'envoyer
 # au navigateur par la méthode "render_template"
-# En cas d'erreur on affiche à nouveau la page "genres_add.html"
-# Pour la tester http://127.0.0.1:5005/genres_add
+# En cas d'erreur on affiche à nouveau la page "coordonnees_add.html"
+# Pour la tester http://127.0.0.1:5005/coordonnees_add
 # ---------------------------------------------------------------------------------------------------
-@obj_mon_application.route("/genres_add", methods=['GET', 'POST'])
-def genres_add ():
+@obj_mon_application.route("/coordonnees_add", methods=['GET', 'POST'])
+def coordonnees_add ():
     # OM 2019.03.25 Pour savoir si les données d'un formulaire sont un affichage
     # ou un envoi de donnée par des champs utilisateurs.
     if request.method == "POST":
         try:
             # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données.
-            obj_actions_genres = GestionGenres()
-            # OM 2020.04.09 Récupère le contenu du champ dans le formulaire HTML "genres_add.html"
-            name_genre = request.form['name_genre_html']
+            obj_actions_coordonnees = GestionGenres()
+            # OM 2020.04.09 Récupère le contenu du champ dans le formulaire HTML "coordonnees_add.html"
+            name_coordonnees = request.form['name_coordonnees_html']
             # On ne doit pas accepter des valeurs vides, des valeurs avec des chiffres,
             # des valeurs avec des caractères qui ne sont pas des lettres.
             # Pour comprendre [A-Za-zÀ-ÖØ-öø-ÿ] il faut se reporter à la table ASCII https://www.ascii-code.com/
             # Accepte le trait d'union ou l'apostrophe, et l'espace entre deux mots, mais pas plus d'une occurence.
             if not re.match("^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$",
-                            name_genre):
+                            name_coordonnees):
                 # OM 2019.03.28 Message humiliant à l'attention de l'utilisateur.
                 flash(f"Une entrée...incorrecte !! Pas de chiffres, de caractères spéciaux, d'espace à double, "
                       f"de double apostrophe, de double trait union et ne doit pas être vide.", "danger")
-                # On doit afficher à nouveau le formulaire "genres_add.html" à cause des erreurs de "claviotage"
-                return render_template("genres/genres_add.html")
+                # On doit afficher à nouveau le formulaire "coordonnees_add.html" à cause des erreurs de "claviotage"
+                return render_template("coordonnees/coordonnees_add.html")
             else:
 
                 # Constitution d'un dictionnaire et insertion dans la BD
-                valeurs_insertion_dictionnaire = {"value_mail": name_genre}
-                obj_actions_genres.add_genre_data(valeurs_insertion_dictionnaire)
+                valeurs_insertion_dictionnaire = {"value_mail": name_coordonnees}
+                obj_actions_coordonnees.add_coordonnees_data(valeurs_insertion_dictionnaire)
 
                 # OM 2019.03.25 Les 2 lignes ci-après permettent de donner un sentiment rassurant aux utilisateurs.
                 flash(f"Données insérées !!", "success")
@@ -119,17 +119,17 @@ def genres_add ():
             raise MaBdErreurConnexion(
                 f"RGG Exception {msg_erreurs['ErreurConnexionBD']['message']} et son status {msg_erreurs['ErreurConnexionBD']['status']}")
     # OM 2020.04.07 Envoie la page "HTML" au serveur.
-    return render_template("genres/genres_add.html")
+    return render_template("coordonnees/coordonnees_add.html")
 
 
 # ---------------------------------------------------------------------------------------------------
-# OM 2020.04.07 Définition d'une "route" /genres_edit ,
+# OM 2020.04.07 Définition d'une "route" /coordonnees_edit ,
 # cela va permettre de programmer quelles actions sont réalisées avant de l'envoyer
 # au navigateur par la méthode "render_template".
 # On change la valeur d'un genre de films par la commande MySql "UPDATE"
 # ---------------------------------------------------------------------------------------------------
-@obj_mon_application.route('/genres_edit', methods=['POST', 'GET'])
-def genres_edit ():
+@obj_mon_application.route('/coordonnees_edit', methods=['POST', 'GET'])
+def coordonnees_edit ():
     # OM 2020.04.07 Les données sont affichées dans un formulaire, l'affichage de la sélection
     # d'une seule ligne choisie par le bouton "edit" dans le formulaire "coordonnees_afficher.html"
     if request.method == 'GET':
@@ -137,7 +137,7 @@ def genres_edit ():
             # Récupère la valeur de "id_coordonnees" du formulaire html "coordonnees_afficher.html"
             # l'utilisateur clique sur le lien "edit" et on récupère la valeur de "id_coordonnees"
             # grâce à la variable "id_coordonnees_edit_html"
-            # <a href="{{ url_for('genres_edit', id_coordonnees_edit_html=row.id_coordonnees) }}">Edit</a>
+            # <a href="{{ url_for('coordonnees_edit', id_coordonnees_edit_html=row.id_coordonnees) }}">Edit</a>
             id_coordonnees_edit = request.values['id_coordonnees_edit_html']
 
             # Pour afficher dans la console la valeur de "id_coordonnees_edit", une façon simple de se rassurer,
@@ -148,10 +148,10 @@ def genres_edit ():
             valeur_select_dictionnaire = {"value_id_coordonnees": id_coordonnees_edit}
 
             # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données.
-            obj_actions_genres = GestionGenres()
+            obj_actions_coordonnees = GestionGenres()
 
             # OM 2019.04.02 La commande MySql est envoyée à la BD
-            data_id_coordonnees = obj_actions_genres.edit_genre_data(valeur_select_dictionnaire)
+            data_id_coordonnees = obj_actions_coordonnees.edit_coordonnees_data(valeur_select_dictionnaire)
             print("dataIdGenre ", data_id_coordonnees, "type ", type(data_id_coordonnees))
             # Message ci-après permettent de donner un sentiment rassurant aux utilisateurs.
             flash(f"Editer le genre d'un film !!!", "success")
@@ -170,16 +170,16 @@ def genres_edit ():
             raise MaBdErreurConnexion(f"RGG Exception {msg_erreurs['ErreurConnexionBD']['message']}"
                                       f"et son status {msg_erreurs['ErreurConnexionBD']['status']}")
 
-    return render_template("genres/genres_edit.html", data=data_id_coordonnees)
+    return render_template("coordonnees/coordonnees_edit.html", data=data_id_coordonnees)
 
 
 # ---------------------------------------------------------------------------------------------------
-# OM 2020.04.07 Définition d'une "route" /genres_update , cela va permettre de programmer quelles actions sont réalisées avant de l'envoyer
+# OM 2020.04.07 Définition d'une "route" /coordonnees_update , cela va permettre de programmer quelles actions sont réalisées avant de l'envoyer
 # au navigateur par la méthode "render_template".
 # On change la valeur d'un genre de films par la commande MySql "UPDATE"
 # ---------------------------------------------------------------------------------------------------
-@obj_mon_application.route('/genres_update', methods=['POST', 'GET'])
-def genres_update ():
+@obj_mon_application.route('/coordonnees_update', methods=['POST', 'GET'])
+def coordonnees_update ():
     # DEBUG bon marché : Pour afficher les méthodes et autres de la classe "flask.request"
     print(dir(request))
     # OM 2020.04.07 Les données sont affichées dans un formulaire, l'affichage de la sélection
@@ -191,47 +191,47 @@ def genres_update ():
             # DEBUG bon marché : Pour afficher les valeurs contenues dans le formulaire
             print("request.values ", request.values)
 
-            # Récupère la valeur de "id_coordonnees" du formulaire html "genres_edit.html"
+            # Récupère la valeur de "id_coordonnees" du formulaire html "coordonnees_edit.html"
             # l'utilisateur clique sur le lien "edit" et on récupère la valeur de "id_coordonnees"
             # grâce à la variable "id_coordonnees_edit_html"
-            # <a href="{{ url_for('genres_edit', id_coordonnees_edit_html=row.id_coordonnees) }}">Edit</a>
+            # <a href="{{ url_for('coordonnees_edit', id_coordonnees_edit_html=row.id_coordonnees) }}">Edit</a>
             id_coordonnees_edit = request.values['id_coordonnees_edit_html']
 
             # Récupère le contenu du champ "mail" dans le formulaire HTML "GenresEdit.html"
-            name_genre = request.values['name_edit_mail_html']
-            valeur_edit_list = [{'id_coordonnees': id_coordonnees_edit, 'mail': name_genre}]
+            name_coordonnees = request.values['name_edit_mail_html']
+            valeur_edit_list = [{'id_coordonnees': id_coordonnees_edit, 'mail': name_coordonnees}]
             # On ne doit pas accepter des valeurs vides, des valeurs avec des chiffres,
             # des valeurs avec des caractères qui ne sont pas des lettres.
             # Pour comprendre [A-Za-zÀ-ÖØ-öø-ÿ] il faut se reporter à la table ASCII https://www.ascii-code.com/
             # Accepte le trait d'union ou l'apostrophe, et l'espace entre deux mots, mais pas plus d'une occurence.
             if not re.match("^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$",
-                            name_genre):
+                            name_coordonnees):
                 # En cas d'erreur, conserve la saisie fausse, afin que l'utilisateur constate sa misérable faute
                 # Récupère le contenu du champ "mail" dans le formulaire HTML "GenresEdit.html"
-                # name_genre = request.values['name_edit_mail_html']
+                # name_coordonnees = request.values['name_edit_mail_html']
                 # Message humiliant à l'attention de l'utilisateur.
                 flash(f"Une entrée...incorrecte !! Pas de chiffres, de caractères spéciaux, d'espace à double, "
                       f"de double apostrophe, de double trait union et ne doit pas être vide.", "danger")
 
-                # On doit afficher à nouveau le formulaire "genres_edit.html" à cause des erreurs de "claviotage"
-                # Constitution d'une liste pour que le formulaire d'édition "genres_edit.html" affiche à nouveau
+                # On doit afficher à nouveau le formulaire "coordonnees_edit.html" à cause des erreurs de "claviotage"
+                # Constitution d'une liste pour que le formulaire d'édition "coordonnees_edit.html" affiche à nouveau
                 # la possibilité de modifier l'entrée
                 # Exemple d'une liste : [{'id_coordonnees': 13, 'mail': 'philosophique'}]
-                valeur_edit_list = [{'id_coordonnees': id_coordonnees_edit, 'mail': name_genre}]
+                valeur_edit_list = [{'id_coordonnees': id_coordonnees_edit, 'mail': name_coordonnees}]
 
                 # DEBUG bon marché :
-                # Pour afficher le contenu et le type de valeurs passées au formulaire "genres_edit.html"
+                # Pour afficher le contenu et le type de valeurs passées au formulaire "coordonnees_edit.html"
                 print(valeur_edit_list, "type ..", type(valeur_edit_list))
-                return render_template('genres/genres_edit.html', data=valeur_edit_list)
+                return render_template('coordonnees/coordonnees_edit.html', data=valeur_edit_list)
             else:
                 # Constitution d'un dictionnaire et insertion dans la BD
-                valeur_update_dictionnaire = {"value_id_coordonnees": id_coordonnees_edit, "value_name_genre": name_genre}
+                valeur_update_dictionnaire = {"value_id_coordonnees": id_coordonnees_edit, "value_name_coordonnees": name_coordonnees}
 
                 # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données.
-                obj_actions_genres = GestionGenres()
+                obj_actions_coordonnees = GestionGenres()
 
                 # La commande MySql est envoyée à la BD
-                data_id_coordonnees = obj_actions_genres.update_genre_data(valeur_update_dictionnaire)
+                data_id_coordonnees = obj_actions_coordonnees.update_coordonnees_data(valeur_update_dictionnaire)
                 # DEBUG bon marché :
                 print("dataIdGenre ", data_id_coordonnees, "type ", type(data_id_coordonnees))
                 # Message ci-après permettent de donner un sentiment rassurant aux utilisateurs.
@@ -249,21 +249,21 @@ def genres_update ():
             flash(f"problème genres ____lllupdate{erreur.args[0]}", "danger")
             # En cas de problème, mais surtout en cas de non respect
             # des régles "REGEX" dans le champ "name_edit_mail_html" alors on renvoie le formulaire "EDIT"
-    return render_template('genres/genres_edit.html', data=valeur_edit_list)
+    return render_template('coordonnees/coordonnees_edit.html', data=valeur_edit_list)
 
 
 # ---------------------------------------------------------------------------------------------------
-# OM 2020.04.07 Définition d'une "route" /genres_select_delete , cela va permettre de programmer quelles actions sont réalisées avant de l'envoyer
+# OM 2020.04.07 Définition d'une "route" /coordonnees_select_delete , cela va permettre de programmer quelles actions sont réalisées avant de l'envoyer
 # au navigateur par la méthode "render_template".
 # On change la valeur d'un genre de films par la commande MySql "UPDATE"
 # ---------------------------------------------------------------------------------------------------
-@obj_mon_application.route('/genres_select_delete', methods=['POST', 'GET'])
-def genres_select_delete ():
+@obj_mon_application.route('/coordonnees_select_delete', methods=['POST', 'GET'])
+def coordonnees_select_delete ():
     if request.method == 'GET':
         try:
 
             # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données.
-            obj_actions_genres = GestionGenres()
+            obj_actions_coordonnees = GestionGenres()
             # OM 2019.04.04 Récupère la valeur de "idGenreDeleteHTML" du formulaire html "GenresDelete.html"
             id_coordonnees_delete = request.args.get('id_coordonnees_delete_html')
             # OM 2020.04.21 Mémorise l'id du film dans une variable de session
@@ -275,8 +275,8 @@ def genres_select_delete ():
             valeur_delete_dictionnaire = {"value_id_coordonnees": id_coordonnees_delete}
 
             # OM 2019.04.02 La commande MySql est envoyée à la BD
-            data_id_coordonnees, films_associes_genre_delete  = obj_actions_genres.delete_select_genre_data(valeur_delete_dictionnaire)
-            print("data_films_attribue_genre_delete ",films_associes_genre_delete," data_id_coordonnees ",data_id_coordonnees)
+            data_id_coordonnees, films_associes_coordonnees_delete  = obj_actions_coordonnees.delete_select_coordonnees_data(valeur_delete_dictionnaire)
+            print("data_films_attribue_coordonnees_delete ",films_associes_coordonnees_delete," data_id_coordonnees ",data_id_coordonnees)
             flash(f"EFFACER et c'est terminé pour cette \"POV\" valeur !!!", "warning")
 
         except (Exception,
@@ -287,14 +287,14 @@ def genres_select_delete ():
                 TypeError) as erreur:
             # Communiquer qu'une erreur est survenue.
             # DEBUG bon marché : Pour afficher un message dans la console.
-            print(f"Erreur genres_delete {erreur.args[0], erreur.args[1]}")
+            print(f"Erreur coordonnees_delete {erreur.args[0], erreur.args[1]}")
             # C'est une erreur à signaler à l'utilisateur de cette application WEB.
-            flash(f"Erreur genres_delete {erreur.args[0], erreur.args[1]}", "danger")
+            flash(f"Erreur coordonnees_delete {erreur.args[0], erreur.args[1]}", "danger")
 
     # Envoie la page "HTML" au serveur.
-    return render_template('genres/genres_delete.html',
+    return render_template('coordonnees/coordonnees_delete.html',
                            data=data_id_coordonnees,
-                           data_films_associes = films_associes_genre_delete)
+                           data_films_associes = films_associes_coordonnees_delete)
 
 
 # ---------------------------------------------------------------------------------------------------
@@ -302,21 +302,21 @@ def genres_select_delete ():
 # au navigateur par la méthode "render_template".
 # Permettre à l'utilisateur de modifier un genre, et de filtrer son entrée grâce à des expressions régulières REGEXP
 # ---------------------------------------------------------------------------------------------------
-@obj_mon_application.route('/genres_delete', methods=['POST', 'GET'])
-def genres_delete ():
+@obj_mon_application.route('/coordonnees_delete', methods=['POST', 'GET'])
+def coordonnees_delete ():
     # OM 2019.04.02 Pour savoir si les données d'un formulaire sont un affichage ou un envoi de donnée par des champs utilisateurs.
     if request.method == 'POST':
         try:
 
             # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données.
-            obj_actions_genres = GestionGenres()
-            # OM 2019.04.02 Récupère la valeur de "id_coordonnees" par une variable de session de "genres_select_delete"
+            obj_actions_coordonnees = GestionGenres()
+            # OM 2019.04.02 Récupère la valeur de "id_coordonnees" par une variable de session de "coordonnees_select_delete"
             id_coordonnees_delete = session['session_id_coordonnees_delete']
-            print(" genres_delete id_coordonnees_delete ", id_coordonnees_delete)
+            print(" coordonnees_delete id_coordonnees_delete ", id_coordonnees_delete)
             # Constitution d'un dictionnaire et insertion dans la BD
             valeur_delete_dictionnaire = {"value_id_coordonnees": id_coordonnees_delete}
 
-            data_genres = obj_actions_genres.delete_genre_data(valeur_delete_dictionnaire)
+            data_coordonnees = obj_actions_coordonnees.delete_coordonnees_data(valeur_delete_dictionnaire)
             # OM 2019.04.02 On va afficher la liste des genres des films
             # OM 2019.04.02 Envoie la page "HTML" au serveur. On passe un message d'information dans "message_html"
 
@@ -339,9 +339,9 @@ def genres_delete ():
             else:
                 # Communiquer qu'une autre erreur que la 1062 est survenue.
                 # DEBUG bon marché : Pour afficher un message dans la console.
-                print(f"Erreur genres_delete {erreur.args[0], erreur.args[1]}")
+                print(f"Erreur coordonnees_delete {erreur.args[0], erreur.args[1]}")
                 # C'est une erreur à signaler à l'utilisateur de cette application WEB.
-                flash(f"Erreur genres_delete {erreur.args[0], erreur.args[1]}", "danger")
+                flash(f"Erreur coordonnees_delete {erreur.args[0], erreur.args[1]}", "danger")
 
             # OM 2019.04.02 Envoie la page "HTML" au serveur.
-    return render_template('coordonnees/coordonnees_afficher.html', data=data_genres)
+    return render_template('coordonnees/coordonnees_afficher.html', data=data_coordonnees)
