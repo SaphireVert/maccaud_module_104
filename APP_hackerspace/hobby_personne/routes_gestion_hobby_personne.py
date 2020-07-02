@@ -202,7 +202,7 @@ def gf_update_genre_film_selected ():
             for id_genre_ins in lst_diff_genres_insert_a:
                 # Constitution d'un dictionnaire pour associer l'id du film sélectionné avec un nom de variable
                 # et "id_genre_ins" (l'id du genre dans la liste) associé à une variable.
-                valeurs_film_sel_genre_sel_dictionnaire = {"value_fk_film": id_personne_selected,
+                valeurs_film_sel_genre_sel_dictionnaire = {"value_FK_personne": id_personne_selected,
                                                            "value_fk_genre": id_genre_ins}
                 # Insérer une association entre un(des) genre(s) et le film sélectionner.
                 obj_actions_genres.hobby_personne_add(valeurs_film_sel_genre_sel_dictionnaire)
@@ -212,7 +212,7 @@ def gf_update_genre_film_selected ():
             for id_genre_del in lst_diff_genres_delete_b:
                 # Constitution d'un dictionnaire pour associer l'id du film sélectionné avec un nom de variable
                 # et "id_genre_del" (l'id du genre dans la liste) associé à une variable.
-                valeurs_film_sel_genre_sel_dictionnaire = {"value_fk_film": id_personne_selected,
+                valeurs_film_sel_genre_sel_dictionnaire = {"value_FK_personne": id_personne_selected,
                                                            "value_fk_genre": id_genre_del}
                 # Effacer une association entre un(des) genre(s) et le film sélectionner.
                 obj_actions_genres.hobby_personne_delete(valeurs_film_sel_genre_sel_dictionnaire)
