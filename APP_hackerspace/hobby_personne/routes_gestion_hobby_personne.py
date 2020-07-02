@@ -64,18 +64,18 @@ def gf_edit_genre_film_selected ():
             # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données de la table intermédiaire.
             obj_actions_genres = GestionGenresFilms()
 
-            # OM 2020.04.21 Récupère la valeur de "id_film" du formulaire html "hobby_personne_afficher.html"
-            # l'utilisateur clique sur le lien "Modifier genres de ce film" et on récupère la valeur de "id_film" grâce à la variable "id_film_genres_edit_html"
-            # <a href="{{ url_for('gf_edit_genre_film_selected', id_film_genres_edit_html=row.id_film) }}">Modifier les genres de ce film</a>
-            id_film_genres_edit = request.values['id_film_genres_edit_html']
+            # OM 2020.04.21 Récupère la valeur de "id_personne" du formulaire html "hobby_personne_afficher.html"
+            # l'utilisateur clique sur le lien "Modifier genres de ce film" et on récupère la valeur de "id_personne" grâce à la variable "id_personne_genres_edit_html"
+            # <a href="{{ url_for('gf_edit_genre_film_selected', id_personne_genres_edit_html=row.id_personne) }}">Modifier les genres de ce film</a>
+            id_personne_genres_edit = request.values['id_personne_genres_edit_html']
 
             # OM 2020.04.21 Mémorise l'id du film dans une variable de session
             # (ici la sécurité de l'application n'est pas engagée)
             # il faut éviter de stocker des données sensibles dans des variables de sessions.
-            session['session_id_film_genres_edit'] = id_film_genres_edit
+            session['session_id_personne_genres_edit'] = id_personne_genres_edit
 
             # Constitution d'un dictionnaire pour associer l'id du film sélectionné avec un nom de variable
-            valeur_id_personne_selected_dictionnaire = {"value_id_personne_selected": id_film_genres_edit}
+            valeur_id_personne_selected_dictionnaire = {"value_id_personne_selected": id_personne_genres_edit}
 
             # Récupère les données grâce à 3 requêtes MySql définie dans la classe GestionGenresFilms()
             # 1) Sélection du film choisi
@@ -86,7 +86,7 @@ def gf_edit_genre_film_selected ():
             data_genre_film_selected, data_hobby_personne_non_attribues, data_hobby_personne_attribues = \
                 obj_actions_genres.hobby_personne_afficher_data(valeur_id_personne_selected_dictionnaire)
 
-            lst_data_film_selected = [item['id_film'] for item in data_genre_film_selected]
+            lst_data_film_selected = [item['id_personne'] for item in data_genre_film_selected]
             # DEBUG bon marché : Pour afficher le résultat et son type.
             print("lst_data_film_selected  ", lst_data_film_selected,
                   type(lst_data_film_selected))
@@ -155,8 +155,8 @@ def gf_update_genre_film_selected ():
     if request.method == "POST":
         try:
             # Récupère l'id du film sélectionné
-            id_personne_selected = session['session_id_film_genres_edit']
-            print("session['session_id_film_genres_edit'] ", session['session_id_film_genres_edit'])
+            id_personne_selected = session['session_id_personne_genres_edit']
+            print("session['session_id_personne_genres_edit'] ", session['session_id_personne_genres_edit'])
 
             # Récupère la liste des genres qui ne sont pas associés au film sélectionné.
             old_lst_data_hobby_personne_non_attribues = session['session_lst_data_hobby_personne_non_attribues']

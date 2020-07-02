@@ -60,21 +60,21 @@ class GestionGenresFilms():
             # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
             # donc, je précise les champs à afficher
 
-            strsql_film_selected = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film, GROUP_CONCAT(id_genre) as GenresFilms FROM hobby_personne AS T1
-                                        INNER JOIN personne AS T2 ON T2.id_film = T1.fk_film
+            strsql_film_selected = """SELECT id_personne, nom_film, duree_film, description_film, cover_link_film, date_sortie_film, GROUP_CONCAT(id_genre) as GenresFilms FROM hobby_personne AS T1
+                                        INNER JOIN personne AS T2 ON T2.id_personne = T1.fk_film
                                         INNER JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
-                                        WHERE id_film = %(value_id_personne_selected)s"""
+                                        WHERE id_personne = %(value_id_personne_selected)s"""
 
             strsql_hobby_personne_non_attribues = """SELECT id_genre, intitule_genre FROM hobby
                                                     WHERE id_genre not in(SELECT id_genre as idGenresFilms FROM hobby_personne AS T1
-                                                    INNER JOIN personne AS T2 ON T2.id_film = T1.fk_film
+                                                    INNER JOIN personne AS T2 ON T2.id_personne = T1.fk_film
                                                     INNER JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
-                                                    WHERE id_film = %(value_id_personne_selected)s)"""
+                                                    WHERE id_personne = %(value_id_personne_selected)s)"""
 
-            strsql_hobby_personne_attribues = """SELECT id_film, id_genre, intitule_genre FROM hobby_personne AS T1
-                                            INNER JOIN personne AS T2 ON T2.id_film = T1.fk_film
+            strsql_hobby_personne_attribues = """SELECT id_personne, id_genre, intitule_genre FROM hobby_personne AS T1
+                                            INNER JOIN personne AS T2 ON T2.id_personne = T1.fk_film
                                             INNER JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
-                                            WHERE id_film = %(value_id_personne_selected)s"""
+                                            WHERE id_personne = %(value_id_personne_selected)s"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             with MaBaseDeDonnee().connexion_bd.cursor() as mc_afficher:
@@ -123,11 +123,11 @@ class GestionGenresFilms():
             # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
             # donc, je précise les champs à afficher
 
-            strsql_hobby_personne_afficher_data_concat = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film,
+            strsql_hobby_personne_afficher_data_concat = """SELECT id_personne, nom_film, duree_film, description_film, cover_link_film, date_sortie_film,
                                                             GROUP_CONCAT(intitule_genre) as GenresFilms FROM hobby_personne AS T1
-                                                            RIGHT JOIN personne AS T2 ON T2.id_film = T1.fk_film
+                                                            RIGHT JOIN personne AS T2 ON T2.id_personne = T1.fk_film
                                                             LEFT JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
-                                                            GROUP BY id_film"""
+                                                            GROUP BY id_personne"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             with MaBaseDeDonnee().connexion_bd.cursor() as mc_afficher:
@@ -138,7 +138,7 @@ class GestionGenresFilms():
                 else:
                     # Constitution d'un dictionnaire pour associer l'id du film sélectionné avec un nom de variable
                     valeur_id_personne_selected_dictionnaire = {"value_id_personne_selected": id_personne_selected}
-                    strsql_hobby_personne_afficher_data_concat += """ HAVING id_film= %(value_id_personne_selected)s"""
+                    strsql_hobby_personne_afficher_data_concat += """ HAVING id_personne= %(value_id_personne_selected)s"""
                     # Envoi de la commande MySql
                     mc_afficher.execute(strsql_hobby_personne_afficher_data_concat, valeur_id_personne_selected_dictionnaire)
 
@@ -169,7 +169,7 @@ class GestionGenresFilms():
         try:
             print(valeurs_insertion_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
-            # Insérer une (des) nouvelle(s) association(s) entre "id_film" et "id_genre" dans la "t_genre_film"
+            # Insérer une (des) nouvelle(s) association(s) entre "id_personne" et "id_genre" dans la "t_genre_film"
             strsql_insert_genre_film = """INSERT INTO hobby_personne (id_genre_film, fk_genre, fk_film)
                                             VALUES (NULL, %(value_fk_genre)s, %(value_fk_film)s)"""
 
@@ -191,7 +191,7 @@ class GestionGenresFilms():
         try:
             print(valeurs_insertion_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
-            # Effacer une (des) association(s) existantes entre "id_film" et "id_genre" dans la "t_genre_film"
+            # Effacer une (des) association(s) existantes entre "id_personne" et "id_genre" dans la "t_genre_film"
             strsql_delete_genre_film = """DELETE FROM hobby_personne WHERE fk_genre = %(value_fk_genre)s AND fk_film = %(value_fk_film)s"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
