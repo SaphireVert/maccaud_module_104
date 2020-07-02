@@ -35,7 +35,7 @@ def hobby_afficher(order_by,id_hobby_sel):
             if not data_genres and id_hobby_sel == 0:
                 flash("""La table "hobby" est vide. !!""", "warning")
             elif not data_genres and id_hobby_sel > 0:
-                # Si l'utilisateur change l'id_genre dans l'URL et que le genre n'existe pas,
+                # Si l'utilisateur change l'id_hobby dans l'URL et que le genre n'existe pas,
                 flash(f"Le genre demandé n'existe pas !!", "warning")
             else:
                 # Dans tous les autres cas, c'est que la table "hobby" est vide.
@@ -86,7 +86,7 @@ def genres_add ():
             else:
 
                 # Constitution d'un dictionnaire et insertion dans la BD
-                valeurs_insertion_dictionnaire = {"value_intitule_genre": name_genre}
+                valeurs_insertion_dictionnaire = {"value_nom_hobby": name_genre}
                 obj_actions_genres.add_genre_data(valeurs_insertion_dictionnaire)
 
                 # OM 2019.03.25 Les 2 lignes ci-après permettent de donner un sentiment rassurant aux utilisateurs.
@@ -134,25 +134,25 @@ def genres_edit ():
     # d'une seule ligne choisie par le bouton "edit" dans le formulaire "genres_afficher.html"
     if request.method == 'GET':
         try:
-            # Récupère la valeur de "id_genre" du formulaire html "genres_afficher.html"
-            # l'utilisateur clique sur le lien "edit" et on récupère la valeur de "id_genre"
-            # grâce à la variable "id_genre_edit_html"
-            # <a href="{{ url_for('genres_edit', id_genre_edit_html=row.id_genre) }}">Edit</a>
-            id_genre_edit = request.values['id_genre_edit_html']
+            # Récupère la valeur de "id_hobby" du formulaire html "genres_afficher.html"
+            # l'utilisateur clique sur le lien "edit" et on récupère la valeur de "id_hobby"
+            # grâce à la variable "id_hobby_edit_html"
+            # <a href="{{ url_for('genres_edit', id_hobby_edit_html=row.id_hobby) }}">Edit</a>
+            id_hobby_edit = request.values['id_hobby_edit_html']
 
-            # Pour afficher dans la console la valeur de "id_genre_edit", une façon simple de se rassurer,
+            # Pour afficher dans la console la valeur de "id_hobby_edit", une façon simple de se rassurer,
             # sans utiliser le DEBUGGER
-            print(id_genre_edit)
+            print(id_hobby_edit)
 
             # Constitution d'un dictionnaire et insertion dans la BD
-            valeur_select_dictionnaire = {"value_id_genre": id_genre_edit}
+            valeur_select_dictionnaire = {"value_id_hobby": id_hobby_edit}
 
             # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données.
             obj_actions_genres = GestionGenres()
 
             # OM 2019.04.02 La commande MySql est envoyée à la BD
-            data_id_genre = obj_actions_genres.edit_genre_data(valeur_select_dictionnaire)
-            print("dataIdGenre ", data_id_genre, "type ", type(data_id_genre))
+            data_id_hobby = obj_actions_genres.edit_genre_data(valeur_select_dictionnaire)
+            print("dataIdGenre ", data_id_hobby, "type ", type(data_id_hobby))
             # Message ci-après permettent de donner un sentiment rassurant aux utilisateurs.
             flash(f"Editer le genre d'un film !!!", "success")
 
@@ -170,7 +170,7 @@ def genres_edit ():
             raise MaBdErreurConnexion(f"RGG Exception {msg_erreurs['ErreurConnexionBD']['message']}"
                                       f"et son status {msg_erreurs['ErreurConnexionBD']['status']}")
 
-    return render_template("genres/genres_edit.html", data=data_id_genre)
+    return render_template("genres/genres_edit.html", data=data_id_hobby)
 
 
 # ---------------------------------------------------------------------------------------------------
@@ -191,15 +191,15 @@ def genres_update ():
             # DEBUG bon marché : Pour afficher les valeurs contenues dans le formulaire
             print("request.values ", request.values)
 
-            # Récupère la valeur de "id_genre" du formulaire html "genres_edit.html"
-            # l'utilisateur clique sur le lien "edit" et on récupère la valeur de "id_genre"
-            # grâce à la variable "id_genre_edit_html"
-            # <a href="{{ url_for('genres_edit', id_genre_edit_html=row.id_genre) }}">Edit</a>
-            id_genre_edit = request.values['id_genre_edit_html']
+            # Récupère la valeur de "id_hobby" du formulaire html "genres_edit.html"
+            # l'utilisateur clique sur le lien "edit" et on récupère la valeur de "id_hobby"
+            # grâce à la variable "id_hobby_edit_html"
+            # <a href="{{ url_for('genres_edit', id_hobby_edit_html=row.id_hobby) }}">Edit</a>
+            id_hobby_edit = request.values['id_hobby_edit_html']
 
-            # Récupère le contenu du champ "intitule_genre" dans le formulaire HTML "GenresEdit.html"
-            name_genre = request.values['name_edit_intitule_genre_html']
-            valeur_edit_list = [{'id_genre': id_genre_edit, 'intitule_genre': name_genre}]
+            # Récupère le contenu du champ "nom_hobby" dans le formulaire HTML "GenresEdit.html"
+            name_genre = request.values['name_edit_nom_hobby_html']
+            valeur_edit_list = [{'id_hobby': id_hobby_edit, 'nom_hobby': name_genre}]
             # On ne doit pas accepter des valeurs vides, des valeurs avec des chiffres,
             # des valeurs avec des caractères qui ne sont pas des lettres.
             # Pour comprendre [A-Za-zÀ-ÖØ-öø-ÿ] il faut se reporter à la table ASCII https://www.ascii-code.com/
@@ -207,8 +207,8 @@ def genres_update ():
             if not re.match("^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$",
                             name_genre):
                 # En cas d'erreur, conserve la saisie fausse, afin que l'utilisateur constate sa misérable faute
-                # Récupère le contenu du champ "intitule_genre" dans le formulaire HTML "GenresEdit.html"
-                # name_genre = request.values['name_edit_intitule_genre_html']
+                # Récupère le contenu du champ "nom_hobby" dans le formulaire HTML "GenresEdit.html"
+                # name_genre = request.values['name_edit_nom_hobby_html']
                 # Message humiliant à l'attention de l'utilisateur.
                 flash(f"Une entrée...incorrecte !! Pas de chiffres, de caractères spéciaux, d'espace à double, "
                       f"de double apostrophe, de double trait union et ne doit pas être vide.", "danger")
@@ -216,8 +216,8 @@ def genres_update ():
                 # On doit afficher à nouveau le formulaire "genres_edit.html" à cause des erreurs de "claviotage"
                 # Constitution d'une liste pour que le formulaire d'édition "genres_edit.html" affiche à nouveau
                 # la possibilité de modifier l'entrée
-                # Exemple d'une liste : [{'id_genre': 13, 'intitule_genre': 'philosophique'}]
-                valeur_edit_list = [{'id_genre': id_genre_edit, 'intitule_genre': name_genre}]
+                # Exemple d'une liste : [{'id_hobby': 13, 'nom_hobby': 'philosophique'}]
+                valeur_edit_list = [{'id_hobby': id_hobby_edit, 'nom_hobby': name_genre}]
 
                 # DEBUG bon marché :
                 # Pour afficher le contenu et le type de valeurs passées au formulaire "genres_edit.html"
@@ -225,19 +225,19 @@ def genres_update ():
                 return render_template('genres/genres_edit.html', data=valeur_edit_list)
             else:
                 # Constitution d'un dictionnaire et insertion dans la BD
-                valeur_update_dictionnaire = {"value_id_genre": id_genre_edit, "value_name_genre": name_genre}
+                valeur_update_dictionnaire = {"value_id_hobby": id_hobby_edit, "value_name_genre": name_genre}
 
                 # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données.
                 obj_actions_genres = GestionGenres()
 
                 # La commande MySql est envoyée à la BD
-                data_id_genre = obj_actions_genres.update_genre_data(valeur_update_dictionnaire)
+                data_id_hobby = obj_actions_genres.update_genre_data(valeur_update_dictionnaire)
                 # DEBUG bon marché :
-                print("dataIdGenre ", data_id_genre, "type ", type(data_id_genre))
+                print("dataIdGenre ", data_id_hobby, "type ", type(data_id_hobby))
                 # Message ci-après permettent de donner un sentiment rassurant aux utilisateurs.
                 flash(f"Valeur genre modifiée. ", "success")
                 # On affiche les genres avec celui qui vient d'être edité en tête de liste. (DESC)
-                return redirect(url_for('genres_afficher', order_by="ASC", id_hobby_sel=id_genre_edit))
+                return redirect(url_for('genres_afficher', order_by="ASC", id_hobby_sel=id_hobby_edit))
 
         except (Exception,
                 # pymysql.err.OperationalError,
@@ -248,7 +248,7 @@ def genres_update ():
             print(erreur.args[0])
             flash(f"problème genres ____lllupdate{erreur.args[0]}", "danger")
             # En cas de problème, mais surtout en cas de non respect
-            # des régles "REGEX" dans le champ "name_edit_intitule_genre_html" alors on renvoie le formulaire "EDIT"
+            # des régles "REGEX" dans le champ "name_edit_nom_hobby_html" alors on renvoie le formulaire "EDIT"
     return render_template('genres/genres_edit.html', data=valeur_edit_list)
 
 
@@ -265,18 +265,18 @@ def genres_select_delete ():
             # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données.
             obj_actions_genres = GestionGenres()
             # OM 2019.04.04 Récupère la valeur de "idGenreDeleteHTML" du formulaire html "GenresDelete.html"
-            id_genre_delete = request.args.get('id_genre_delete_html')
+            id_hobby_delete = request.args.get('id_hobby_delete_html')
             # OM 2020.04.21 Mémorise l'id du film dans une variable de session
             # (ici la sécurité de l'application n'est pas engagée)
             # il faut éviter de stocker des données sensibles dans des variables de sessions.
-            session['session_id_genre_delete'] = id_genre_delete
+            session['session_id_hobby_delete'] = id_hobby_delete
 
             # Constitution d'un dictionnaire et insertion dans la BD
-            valeur_delete_dictionnaire = {"value_id_genre": id_genre_delete}
+            valeur_delete_dictionnaire = {"value_id_hobby": id_hobby_delete}
 
             # OM 2019.04.02 La commande MySql est envoyée à la BD
-            data_id_genre, films_associes_genre_delete  = obj_actions_genres.delete_select_genre_data(valeur_delete_dictionnaire)
-            print("data_films_attribue_genre_delete ",films_associes_genre_delete," data_id_genre ",data_id_genre)
+            data_id_hobby, films_associes_genre_delete  = obj_actions_genres.delete_select_genre_data(valeur_delete_dictionnaire)
+            print("data_films_attribue_genre_delete ",films_associes_genre_delete," data_id_hobby ",data_id_hobby)
             flash(f"EFFACER et c'est terminé pour cette \"POV\" valeur !!!", "warning")
 
         except (Exception,
@@ -293,7 +293,7 @@ def genres_select_delete ():
 
     # Envoie la page "HTML" au serveur.
     return render_template('genres/genres_delete.html',
-                           data=data_id_genre,
+                           data=data_id_hobby,
                            data_films_associes = films_associes_genre_delete)
 
 
@@ -310,11 +310,11 @@ def genres_delete ():
 
             # OM 2020.04.09 Objet contenant toutes les méthodes pour gérer (CRUD) les données.
             obj_actions_genres = GestionGenres()
-            # OM 2019.04.02 Récupère la valeur de "id_genre" par une variable de session de "genres_select_delete"
-            id_genre_delete = session['session_id_genre_delete']
-            print(" genres_delete id_genre_delete ", id_genre_delete)
+            # OM 2019.04.02 Récupère la valeur de "id_hobby" par une variable de session de "genres_select_delete"
+            id_hobby_delete = session['session_id_hobby_delete']
+            print(" genres_delete id_hobby_delete ", id_hobby_delete)
             # Constitution d'un dictionnaire et insertion dans la BD
-            valeur_delete_dictionnaire = {"value_id_genre": id_genre_delete}
+            valeur_delete_dictionnaire = {"value_id_hobby": id_hobby_delete}
 
             data_genres = obj_actions_genres.delete_genre_data(valeur_delete_dictionnaire)
             # OM 2019.04.02 On va afficher la liste des genres des films
