@@ -1,5 +1,5 @@
 # data_gestion_hobby_personne.py
-# OM 2020.04.22 Permet de gérer (CRUD) les données de la table intermédiaire "t_hobby_personne"
+# OM 2020.04.22 Permet de gérer (CRUD) les données de la table intermédiaire "hobby_personne"
 
 from flask import flash
 from APP_hackerspace.DATABASE.connect_db_context_manager import MaBaseDeDonnee
@@ -25,10 +25,10 @@ class GestionGenresFilms():
     def genres_afficher_data (self):
         try:
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
-            # la commande MySql classique est "SELECT * FROM t_genres"
+            # la commande MySql classique est "SELECT * FROM hobby"
             # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
             # donc, je précise les champs à afficher
-            strsql_genres_afficher = """SELECT id_genre, intitule_genre FROM t_genres ORDER BY id_genre ASC"""
+            strsql_genres_afficher = """SELECT id_genre, intitule_genre FROM hobby ORDER BY id_genre ASC"""
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             with MaBaseDeDonnee().connexion_bd.cursor() as mc_afficher:
                 # Envoi de la commande MySql
@@ -56,24 +56,24 @@ class GestionGenresFilms():
         try:
 
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
-            # la commande MySql classique est "SELECT * FROM t_genres"
+            # la commande MySql classique est "SELECT * FROM hobby"
             # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
             # donc, je précise les champs à afficher
 
-            strsql_film_selected = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film, GROUP_CONCAT(id_genre) as GenresFilms FROM t_hobby_personne AS T1
-                                        INNER JOIN t_films AS T2 ON T2.id_film = T1.fk_film
-                                        INNER JOIN t_genres AS T3 ON T3.id_genre = T1.fk_genre
+            strsql_film_selected = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film, GROUP_CONCAT(id_genre) as GenresFilms FROM hobby_personne AS T1
+                                        INNER JOIN personne AS T2 ON T2.id_film = T1.fk_film
+                                        INNER JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
                                         WHERE id_film = %(value_id_personne_selected)s"""
 
-            strsql_hobby_personne_non_attribues = """SELECT id_genre, intitule_genre FROM t_genres
-                                                    WHERE id_genre not in(SELECT id_genre as idGenresFilms FROM t_hobby_personne AS T1
-                                                    INNER JOIN t_films AS T2 ON T2.id_film = T1.fk_film
-                                                    INNER JOIN t_genres AS T3 ON T3.id_genre = T1.fk_genre
+            strsql_hobby_personne_non_attribues = """SELECT id_genre, intitule_genre FROM hobby
+                                                    WHERE id_genre not in(SELECT id_genre as idGenresFilms FROM hobby_personne AS T1
+                                                    INNER JOIN personne AS T2 ON T2.id_film = T1.fk_film
+                                                    INNER JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
                                                     WHERE id_film = %(value_id_personne_selected)s)"""
 
-            strsql_hobby_personne_attribues = """SELECT id_film, id_genre, intitule_genre FROM t_hobby_personne AS T1
-                                            INNER JOIN t_films AS T2 ON T2.id_film = T1.fk_film
-                                            INNER JOIN t_genres AS T3 ON T3.id_genre = T1.fk_genre
+            strsql_hobby_personne_attribues = """SELECT id_film, id_genre, intitule_genre FROM hobby_personne AS T1
+                                            INNER JOIN personne AS T2 ON T2.id_film = T1.fk_film
+                                            INNER JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
                                             WHERE id_film = %(value_id_personne_selected)s"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
@@ -119,14 +119,14 @@ class GestionGenresFilms():
         print("id_personne_selected  ", id_personne_selected)
         try:
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
-            # la commande MySql classique est "SELECT * FROM t_genres"
+            # la commande MySql classique est "SELECT * FROM hobby"
             # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
             # donc, je précise les champs à afficher
 
             strsql_hobby_personne_afficher_data_concat = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film,
-                                                            GROUP_CONCAT(intitule_genre) as GenresFilms FROM t_hobby_personne AS T1
-                                                            RIGHT JOIN t_films AS T2 ON T2.id_film = T1.fk_film
-                                                            LEFT JOIN t_genres AS T3 ON T3.id_genre = T1.fk_genre
+                                                            GROUP_CONCAT(intitule_genre) as GenresFilms FROM hobby_personne AS T1
+                                                            RIGHT JOIN personne AS T2 ON T2.id_film = T1.fk_film
+                                                            LEFT JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
                                                             GROUP BY id_film"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
@@ -170,7 +170,7 @@ class GestionGenresFilms():
             print(valeurs_insertion_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Insérer une (des) nouvelle(s) association(s) entre "id_film" et "id_genre" dans la "t_genre_film"
-            strsql_insert_genre_film = """INSERT INTO t_hobby_personne (id_genre_film, fk_genre, fk_film)
+            strsql_insert_genre_film = """INSERT INTO hobby_personne (id_genre_film, fk_genre, fk_film)
                                             VALUES (NULL, %(value_fk_genre)s, %(value_fk_film)s)"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
@@ -192,7 +192,7 @@ class GestionGenresFilms():
             print(valeurs_insertion_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Effacer une (des) association(s) existantes entre "id_film" et "id_genre" dans la "t_genre_film"
-            strsql_delete_genre_film = """DELETE FROM t_hobby_personne WHERE fk_genre = %(value_fk_genre)s AND fk_film = %(value_fk_film)s"""
+            strsql_delete_genre_film = """DELETE FROM hobby_personne WHERE fk_genre = %(value_fk_genre)s AND fk_film = %(value_fk_film)s"""
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -218,7 +218,7 @@ class GestionGenresFilms():
             print(valeur_id_dictionnaire)
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Commande MySql pour afficher le genre sélectionné dans le tableau dans le formulaire HTML
-            str_sql_id_genre = "SELECT id_genre, intitule_genre FROM t_genres WHERE id_genre = %(value_id_genre)s"
+            str_sql_id_genre = "SELECT id_genre, intitule_genre FROM hobby WHERE id_genre = %(value_id_genre)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -246,7 +246,7 @@ class GestionGenresFilms():
             # OM 2019.04.02 Commande MySql pour la MODIFICATION de la valeur "CLAVIOTTEE" dans le champ "nameEditIntituleGenreHTML" du form HTML "GenresEdit.html"
             # le "%s" permet d'éviter des injections SQL "simples"
             # <td><input type = "text" name = "nameEditIntituleGenreHTML" value="{{ row.intitule_genre }}"/></td>
-            str_sql_update_intitulegenre = "UPDATE t_genres SET intitule_genre = %(value_name_genre)s WHERE id_genre = %(value_id_genre)s"
+            str_sql_update_intitulegenre = "UPDATE hobby SET intitule_genre = %(value_name_genre)s WHERE id_genre = %(value_id_genre)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -284,7 +284,7 @@ class GestionGenresFilms():
 
             # OM 2020.04.07 C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
             # Commande MySql pour afficher le genre sélectionné dans le tableau dans le formulaire HTML
-            str_sql_select_id_genre = "SELECT id_genre, intitule_genre FROM t_genres WHERE id_genre = %(value_id_genre)s"
+            str_sql_select_id_genre = "SELECT id_genre, intitule_genre FROM hobby WHERE id_genre = %(value_id_genre)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode"mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -316,7 +316,7 @@ class GestionGenresFilms():
             # OM 2019.04.02 Commande MySql pour EFFACER la valeur sélectionnée par le "bouton" du form HTML "GenresEdit.html"
             # le "%s" permet d'éviter des injections SQL "simples"
             # <td><input type = "text" name = "nameEditIntituleGenreHTML" value="{{ row.intitule_genre }}"/></td>
-            str_sql_delete_intitulegenre = "DELETE FROM t_genres WHERE id_genre = %(value_id_genre)s"
+            str_sql_delete_intitulegenre = "DELETE FROM hobby WHERE id_genre = %(value_id_genre)s"
 
             # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
             # la subtilité consiste à avoir une méthode "mabd_execute" dans la classe "MaBaseDeDonnee"
@@ -339,10 +339,10 @@ class GestionGenresFilms():
             flash(f"Flash. Problèmes Data Gestions Genres numéro de l'erreur : {erreur}", "danger")
             if erreur.args[0] == 1451:
                 # OM 2020.04.09 Traitement spécifique de l'erreur 1451 Cannot delete or update a parent row: a foreign key constraint fails
-                # en MySql le moteur INNODB empêche d'effacer un genre qui est associé à un film dans la table intermédiaire "t_hobby_personne"
-                # il y a une contrainte sur les FK de la table intermédiaire "t_hobby_personne"
+                # en MySql le moteur INNODB empêche d'effacer un genre qui est associé à un film dans la table intermédiaire "hobby_personne"
+                # il y a une contrainte sur les FK de la table intermédiaire "hobby_personne"
                 # C'est une erreur à signaler à l'utilisateur de cette application WEB.
-                flash(f"Flash. IMPOSSIBLE d'effacer !!! Ce genre est associé à des films dans la t_hobby_personne !!! : {erreur}", "danger")
+                flash(f"Flash. IMPOSSIBLE d'effacer !!! Ce genre est associé à des films dans la hobby_personne !!! : {erreur}", "danger")
                 # DEBUG bon marché : Pour afficher un message dans la console.
-                print(f"IMPOSSIBLE d'effacer !!! Ce genre est associé à des films dans la t_hobby_personne !!! : {erreur}")
+                print(f"IMPOSSIBLE d'effacer !!! Ce genre est associé à des films dans la hobby_personne !!! : {erreur}")
             raise MaBdErreurDelete(f"DGG Exception {msg_erreurs['ErreurDeleteContrainte']['message']} {erreur}")
