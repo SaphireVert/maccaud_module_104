@@ -60,7 +60,7 @@ class GestionGenresFilms():
             # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
             # donc, je précise les champs à afficher
 
-            strsql_film_selected = """SELECT id_personne, nom_film, duree_film, description_film, cover_link_film, date_sortie_film, GROUP_CONCAT(id_genre) as GenresFilms FROM hobby_personne AS T1
+            strsql_film_selected = """SELECT id_personne, nom, duree_film, description_film, cover_link_film, date_sortie_film, GROUP_CONCAT(id_genre) as GenresFilms FROM hobby_personne AS T1
                                         INNER JOIN personne AS T2 ON T2.id_personne = T1.fk_film
                                         INNER JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
                                         WHERE id_personne = %(value_id_personne_selected)s"""
@@ -123,7 +123,7 @@ class GestionGenresFilms():
             # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
             # donc, je précise les champs à afficher
 
-            strsql_hobby_personne_afficher_data_concat = """SELECT id_personne, nom_film, duree_film, description_film, cover_link_film, date_sortie_film,
+            strsql_hobby_personne_afficher_data_concat = """SELECT id_personne, nom, duree_film, description_film, cover_link_film, date_sortie_film,
                                                             GROUP_CONCAT(intitule_genre) as GenresFilms FROM hobby_personne AS T1
                                                             RIGHT JOIN personne AS T2 ON T2.id_personne = T1.fk_film
                                                             LEFT JOIN hobby AS T3 ON T3.id_genre = T1.fk_genre
